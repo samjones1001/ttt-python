@@ -13,3 +13,8 @@ class Game:
     def get_current_player(self):
         return self._current_player
 
+    def switch_current_player(self):
+        if self._current_player == self._player_one:
+            self._current_player = self._player_two
+        else:
+            self._current_player = self._player_one

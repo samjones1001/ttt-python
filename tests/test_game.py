@@ -33,3 +33,17 @@ def test_returns_current_player(standard_game):
     assert standard_game.get_current_player() == current_player_at_start
 
 
+def test_can_switch_current_player(standard_game):
+    current_player_after_switch = standard_game.get_player_two()
+    standard_game.switch_current_player()
+    assert standard_game.get_current_player() == current_player_after_switch
+
+
+def test_can_switch_back_to_player_one(standard_game):
+    current_player_on_turn_three = standard_game.get_player_one()
+    standard_game.switch_current_player()
+    standard_game.switch_current_player()
+    assert standard_game.get_current_player() == current_player_on_turn_three
+
+
+
