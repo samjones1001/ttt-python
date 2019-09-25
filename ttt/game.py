@@ -1,5 +1,6 @@
 from ttt import board
 
+
 class Game:
     def __init__(self, game_board=board.Board(), player_one='O', player_two='X'):
         self._board = game_board
@@ -24,3 +25,6 @@ class Game:
             self._current_player = self._player_two
         else:
             self._current_player = self._player_one
+
+    def game_over(self):
+        return self.get_board().is_full()

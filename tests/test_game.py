@@ -2,14 +2,14 @@ import pytest
 from ttt import game
 
 
-class MockBoard():
+class MockBoard:
     def is_full(self):
         return False
 
 
-@pytest.fixture
-def board():
-    return MockBoard
+class MockEndStateBoard:
+    def is_full(self):
+        return True
 
 
 @pytest.fixture
@@ -60,5 +60,12 @@ def test_can_switch_back_to_player_one(standard_game):
     assert standard_game.get_current_player() == current_player_on_turn_three
 
 
+def test_the_game_is_not_over_when_board_is_not_full(standard_game):
+    assert standard_game.game_over() is False
+
+
+def test_the_game_is_over_when_board_is_full():
+    end_state_game = game.Game(game_board=MockEndStateBoard())
+    assert end_state_game.game_over() is True
 
 
