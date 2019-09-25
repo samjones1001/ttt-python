@@ -6,6 +6,7 @@ from ttt import game
 def standard_game():
     return game.Game()
 
+
 @pytest.fixture
 def custom_names_game():
     return game.Game(player_one='!', player_two='@')
@@ -25,3 +26,10 @@ def test_returns_player_two(standard_game):
 
 def test_player_two_can_have_custom_symbol(custom_names_game):
     assert custom_names_game.get_player_two() == '@'
+
+
+def test_returns_current_player(standard_game):
+    current_player_at_start = standard_game.get_player_one()
+    assert standard_game.get_current_player() == current_player_at_start
+
+
