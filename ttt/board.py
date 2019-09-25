@@ -8,6 +8,9 @@ class Board:
     def get_spaces(self):
         return self._spaces
 
+    def occupy_space(self, space_index, symbol):
+        self.get_spaces()[space_index] = symbol
+
     def _generate_spaces(self, space_count):
         if not self._is_square_number(space_count):
             raise Exception("Please set the number of spaces to a square number")
