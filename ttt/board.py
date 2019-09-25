@@ -11,11 +11,14 @@ class Board:
     def occupy_space(self, space_index, symbol):
         self.get_spaces()[space_index] = symbol
 
+    def is_full(self):
+        return self.get_spaces().count("-") == 0
+
     def _generate_spaces(self, space_count):
         if not self._is_square_number(space_count):
             raise Exception("Please set the number of spaces to a square number")
         for _ in range(space_count):
-            yield '-'
+            yield "-"
 
     def _is_square_number(self, num):
         return int(math.sqrt(num) + 0.5) ** 2 == num
