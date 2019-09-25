@@ -1,5 +1,5 @@
 import pytest
-from ttt import game
+from ttt.game import Game
 
 
 class MockBoard:
@@ -14,12 +14,12 @@ class MockEndStateBoard:
 
 @pytest.fixture
 def standard_game():
-    return game.Game(game_board=MockBoard())
+    return Game(game_board=MockBoard())
 
 
 @pytest.fixture
 def custom_names_game():
-    return game.Game(player_one='!', player_two='@')
+    return Game(game_board=MockBoard(), player_one='!', player_two='@')
 
 
 def test_returns_player_one(standard_game):
@@ -38,8 +38,10 @@ def test_player_two_can_have_custom_symbol(custom_names_game):
     assert custom_names_game.get_player_two() == '@'
 
 
-def test_returns_a_game_board(standard_game):
-    assert isinstance(standard_game.get_board(), MockBoard) == True
+def test_returns_the_game_board(standard_game):
+    board = MockBoard()
+    new_game = Game(game_board=board)
+    assert new_game.get_board() == board
 
 
 def test_returns_current_player(standard_game):
@@ -65,7 +67,7 @@ def test_the_game_is_not_over_when_board_is_not_full(standard_game):
 
 
 def test_the_game_is_over_when_board_is_full():
-    end_state_game = game.Game(game_board=MockEndStateBoard())
+    end_state_game = Game(game_board=MockEndStateBoard())
     assert end_state_game.game_over() is True
 
 
