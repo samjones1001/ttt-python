@@ -31,9 +31,13 @@ def test_can_occupy_a_space(standard_board, space):
     assert standard_board.get_spaces()[space] == 'x'
 
 
+def test_knows_when_no_spaces_are_occupied(standard_board):
+    assert standard_board.is_full() is False
+
+
 def test_knows_when_all_spaces_are_not_occupied(standard_board):
-    space_index = 0
-    standard_board.occupy_space(space_index, 'x')
+    for _ in range(len(standard_board.get_spaces()) -1):
+        standard_board.occupy_space(_, 'x')
     assert standard_board.is_full() is False
 
 
