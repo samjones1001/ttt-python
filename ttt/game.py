@@ -1,8 +1,8 @@
-from ttt import board
+from ttt.ttt_board import TTTBoard
 
 
 class Game:
-    def __init__(self, game_board=board.Board(), player_one='O', player_two='X'):
+    def __init__(self, game_board=TTTBoard(9), player_one='O', player_two='X'):
         self._board = game_board
         self._player_one = player_one
         self._player_two = player_two
