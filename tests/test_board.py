@@ -36,7 +36,8 @@ def test_knows_when_no_spaces_are_occupied(standard_board):
 
 
 def test_knows_when_all_spaces_are_not_occupied(standard_board):
-    for _ in range(len(standard_board.get_spaces()) -1):
+    num_of_spaces_minus_one = len(standard_board.get_spaces()) - 1
+    for _ in range(num_of_spaces_minus_one):
         standard_board.occupy_space(_, 'x')
     assert standard_board.is_full() is False
 

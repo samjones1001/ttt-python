@@ -15,10 +15,13 @@ class Board:
         return self.get_spaces().count("-") == 0
 
     def _generate_spaces(self, space_count):
-        if not self._is_square_number(space_count):
-            raise Exception("Please set the number of spaces to a square number")
+        self._is_square_board(space_count)
         for _ in range(space_count):
             yield "-"
+
+    def _is_square_board(self, space_count):
+        if not self._is_square_number(space_count):
+            raise Exception("Please set the number of spaces to a square number")
 
     def _is_square_number(self, num):
         return int(math.sqrt(num) + 0.5) ** 2 == num
