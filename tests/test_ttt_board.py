@@ -1,6 +1,7 @@
 import pytest
 from ttt.ttt_board import TTTBoard
 
+
 @pytest.fixture
 def board():
     return TTTBoard()
@@ -13,10 +14,6 @@ def space(request):
 
 def test_board_has_nine_spaces_by_default(board):
     assert len(board.get_spaces()) == 9
-
-
-def test_board_can_have_custom_number_of_spaces():
-    assert len(TTTBoard(16).get_spaces()) == 16
 
 
 def test_can_occupy_a_space(board, space):
