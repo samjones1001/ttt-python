@@ -7,3 +7,4 @@ class GameRunner():
 
     def get_game(self):
         return self._game
+

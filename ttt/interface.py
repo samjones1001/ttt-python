@@ -5,6 +5,13 @@ def render_board(board_state):
     print(_build_board_output(board_state))
 
 
+def get_int():
+    try:
+        return int(input())
+    except ValueError:
+        raise Exception("Input was not a number!")
+
+
 def _build_board_output(board_state):
     spaces_per_line = _find_board_size(board_state)
     lines = _build_lines(board_state, spaces_per_line)
