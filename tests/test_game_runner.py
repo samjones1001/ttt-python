@@ -36,19 +36,19 @@ class MockInterface:
 
 @pytest.fixture
 def game_runner():
-    return GameRunner(game=MockGame(), output=MockInterface())
+    return GameRunner(game=MockGame(), interface=MockInterface())
 
 
 def test_returns_a_game():
     game = MockGame()
-    runner = GameRunner(game=game, output=MockInterface())
+    runner = GameRunner(game=game, interface=MockInterface())
     assert runner.get_game() == game
 
 
-def test_returns_an_output():
-    output = MockInterface()
-    runner = GameRunner(game=MockGame(), output=output)
-    assert runner.get_output() == output
+def test_returns_the_interface():
+    interface = MockInterface()
+    runner = GameRunner(game=MockGame(), interface=interface)
+    assert runner.get_interface() == interface
 
 
 def test_play_turn_requests_current_board_state(game_runner):
@@ -58,12 +58,12 @@ def test_play_turn_requests_current_board_state(game_runner):
 
 def test_play_turn_requests_board_to_be_printed(game_runner):
     game_runner.play_turn()
-    assert game_runner.get_output().render_board_call_count == 1
+    assert game_runner.get_interface().render_board_call_count == 1
 
 
 def test_play_turn_requests_input(game_runner):
     game_runner.play_turn()
-    assert game_runner.get_output().get_int_call_count == 1
+    assert game_runner.get_interface().get_int_call_count == 1
 
 
 def test_play_turn_requests_move_to_be_made(game_runner):
