@@ -18,6 +18,9 @@ class GameRunner:
         self._place_marker()
         self._switch_players()
 
+    def is_game_over(self):
+        self.get_game().game_over()
+
     def _render_board(self):
         current_state = self.get_game().get_board_state()
         self._output.render_board(current_state)
