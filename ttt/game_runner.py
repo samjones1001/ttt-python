@@ -19,7 +19,7 @@ class GameRunner:
         self._switch_players()
 
     def is_game_over(self):
-        self.get_game().game_over()
+        return self.get_game().game_over()
 
     def _render_board(self):
         current_state = self.get_game().get_board_state()
