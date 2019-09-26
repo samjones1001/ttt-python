@@ -5,6 +5,7 @@ from ttt.game import Game
 class MockBoard:
     def __init__(self):
         self.occupy_space_call_count = 0
+        self.get_spaces_call_count = 0
 
     def is_full(self):
         return False
@@ -12,7 +13,8 @@ class MockBoard:
     def occupy_space(self, space_index, symbol):
         self.occupy_space_call_count += 1
 
-
+    def get_spaces(self):
+        self.get_spaces_call_count += 1
 
 
 class MockEndStateBoard:
@@ -50,6 +52,12 @@ def test_returns_the_game_board(standard_game):
     board = MockBoard()
     new_game = Game(game_board=board)
     assert new_game.get_board() == board
+
+
+def test_requests_the_boards_current_state(standard_game):
+    board = standard_game.get_board()
+    standard_game.get_board_state()
+    assert board.get_spaces_call_count == 1
 
 
 def test_returns_current_player(standard_game):

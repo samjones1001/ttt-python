@@ -1,6 +1,7 @@
 import pytest
 import ttt.interface as interface
 
+
 class Runner():
     def __init__(self, capfd):
         self._capfd = capfd

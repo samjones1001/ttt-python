@@ -20,6 +20,9 @@ class Game:
     def get_board(self):
         return self._board
 
+    def get_board_state(self):
+        return self.get_board().get_spaces()
+
     def switch_current_player(self):
         if self._current_player == self._player_one:
             self._current_player = self._player_two
