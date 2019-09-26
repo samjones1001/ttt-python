@@ -28,3 +28,10 @@ class Game:
 
     def game_over(self):
         return self.get_board().is_full()
+
+    def play_turn(self, space_index):
+        self.get_board().occupy_space(
+            space_index=space_index,
+            symbol=self.get_current_player()
+        )
+

@@ -3,8 +3,16 @@ from ttt.game import Game
 
 
 class MockBoard:
+    def __init__(self):
+        self.occupy_space_call_count = 0
+
     def is_full(self):
         return False
+
+    def occupy_space(self, space_index, symbol):
+        self.occupy_space_call_count += 1
+
+
 
 
 class MockEndStateBoard:
@@ -71,3 +79,7 @@ def test_the_game_is_over_when_board_is_full():
     assert end_state_game.game_over() is True
 
 
+def test_play_turn_instructs_board_to_occupy_space(standard_game):
+    board = standard_game.get_board()
+    standard_game.play_turn(space_index='1')
+    assert board.occupy_space_call_count == 1
