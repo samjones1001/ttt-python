@@ -1,13 +1,13 @@
 import pytest
-from ttt.cl_interface import CLInterface
+from ttt.console import Console
 
 
-class MockConsoleErrorInput:
+class MockConsoleIOErrorInput:
     def get_input(self, message=""):
         return "Not a number!"
 
 
-class MockConsoleValidInput:
+class MockConsoleIOValidInput:
     def get_input(self, message=""):
         return "1"
 
@@ -20,7 +20,7 @@ class Runner:
         self._capfd = capfd
 
     def render_board(self, board_state):
-        interface = CLInterface(console=MockConsoleValidInput())
+        interface = Console(console=MockConsoleIOValidInput())
         interface.render_board(board_state)
         out, err = self._capfd.readouterr()
 
@@ -32,12 +32,12 @@ class Runner:
 
 @pytest.fixture
 def valid_interface():
-    return CLInterface(console=MockConsoleValidInput())
+    return Console(console=MockConsoleIOValidInput())
 
 
 @pytest.fixture
 def error_interface():
-    return CLInterface(console=MockConsoleErrorInput())
+    return Console(console=MockConsoleIOErrorInput())
 
 
 @pytest.fixture
@@ -61,9 +61,9 @@ def runner(capfd):
 
 
 def test_returns_a_console():
-    console = MockConsoleValidInput()
-    interface = CLInterface(console=console)
-    assert interface.get_console() == console
+    console_io = MockConsoleIOValidInput()
+    interface = Console(console=console_io)
+    assert interface.get_console() == console_io
 
 
 def test_prints_an_empty_grid_correctly(empty_board_output, runner):
