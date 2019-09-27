@@ -1,9 +1,9 @@
 from ttt.game import Game
-import ttt.interface as cl_interface
+from ttt.interface import Interface
 
 
 class GameRunner:
-    def __init__(self, game=Game(), interface=cl_interface):
+    def __init__(self, game=Game(), interface=Interface()):
         self._game = game
         self._interface = interface
 

@@ -1,5 +1,18 @@
 import pytest
-import ttt.interface as interface
+from ttt.interface import Interface
+
+
+class MockConsoleErrorInput:
+    def get_input(self, message=""):
+        return "Not a number!"
+
+
+class MockConsoleValidInput:
+    def get_input(self, message=""):
+        return "1"
+
+    def print_output(self, output):
+        print(output)
 
 
 class Runner:
@@ -7,6 +20,7 @@ class Runner:
         self._capfd = capfd
 
     def render_board(self, board_state):
+        interface = Interface(console=MockConsoleValidInput())
         interface.render_board(board_state)
         out, err = self._capfd.readouterr()
 
@@ -14,6 +28,16 @@ class Runner:
             print(err)
         else:
             return out
+
+
+@pytest.fixture
+def valid_interface():
+    return Interface(console=MockConsoleValidInput())
+
+
+@pytest.fixture
+def error_interface():
+    return Interface(console=MockConsoleErrorInput())
 
 
 @pytest.fixture
@@ -36,6 +60,12 @@ def runner(capfd):
     return Runner(capfd)
 
 
+def test_returns_a_console():
+    console = MockConsoleValidInput()
+    interface = Interface(console=console)
+    assert interface.get_console() == console
+
+
 def test_prints_an_empty_grid_correctly(empty_board_output, runner):
     empty_board_state = ['-', '-', '-', '-', '-', '-', '-', '-', '-']
     assert runner.render_board(empty_board_state) == empty_board_output
@@ -51,15 +81,13 @@ def test_prints_a_fully_filled_grid(filled_board_output, runner):
     assert runner.render_board(filled_board_state) == filled_board_output
 
 
-def test_accepts_an_integer_from_the_user():
-    interface.input = lambda: '1'
-    assert interface.get_int() == 1
+def test_accepts_an_integer_from_the_user(valid_interface):
+    assert valid_interface.get_int() == 1
 
 
-def test_errors_if_provided_non_numeric_input():
+def test_errors_if_provided_non_numeric_input(error_interface):
     with pytest.raises(Exception) as err:
-        interface.input = lambda: 'not a number!'
-        interface.get_int()
+        error_interface.get_int()
     assert "Input was not a number!" in str(err.value)
 
 

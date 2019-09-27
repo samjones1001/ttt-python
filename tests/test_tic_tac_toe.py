@@ -1,5 +1,5 @@
 import tic_tac_toe as app
-import ttt.interface as interface
+from ttt.interface import Interface
 
 
 class Runner:
@@ -12,8 +12,3 @@ class Runner:
         self._current_index += 1
         return current_value
 
-
-def test_can_play_a_full_game():
-    runner = Runner()
-    interface.input = lambda: runner.fake_input()
-    assert app.main() == ['O', 'X', 'O', 'X', 'O', 'X', 'O', 'X', 'O']
