@@ -1,5 +1,5 @@
 import pytest
-from ttt.interface import Interface
+from ttt.cl_interface import CLInterface
 
 
 class MockConsoleErrorInput:
@@ -20,7 +20,7 @@ class Runner:
         self._capfd = capfd
 
     def render_board(self, board_state):
-        interface = Interface(console=MockConsoleValidInput())
+        interface = CLInterface(console=MockConsoleValidInput())
         interface.render_board(board_state)
         out, err = self._capfd.readouterr()
 
@@ -32,12 +32,12 @@ class Runner:
 
 @pytest.fixture
 def valid_interface():
-    return Interface(console=MockConsoleValidInput())
+    return CLInterface(console=MockConsoleValidInput())
 
 
 @pytest.fixture
 def error_interface():
-    return Interface(console=MockConsoleErrorInput())
+    return CLInterface(console=MockConsoleErrorInput())
 
 
 @pytest.fixture
@@ -62,7 +62,7 @@ def runner(capfd):
 
 def test_returns_a_console():
     console = MockConsoleValidInput()
-    interface = Interface(console=console)
+    interface = CLInterface(console=console)
     assert interface.get_console() == console
 
 

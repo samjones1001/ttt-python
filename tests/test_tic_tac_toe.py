@@ -1,5 +1,5 @@
 import tic_tac_toe as app
-from ttt.interface import Interface
+from ttt.cl_interface import CLInterface
 
 
 class Runner:

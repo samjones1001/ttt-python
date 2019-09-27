@@ -4,3 +4,4 @@ class Console:
 
     def print_output(self, output):
         print(output)
+
