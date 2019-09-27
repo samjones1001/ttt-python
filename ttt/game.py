@@ -17,23 +17,24 @@ class Game:
     def get_current_player(self):
         return self._current_player
 
-    def get_board(self):
-        return self._board
-
     def get_board_state(self):
-        return self.get_board().get_spaces()
+        return self._board.get_spaces()
 
-    def switch_current_player(self):
+    def game_over(self):
+        return self._board.is_full()
+
+    def play_turn(self, space_index):
+        self._place_symbol(space_index)
+        self._switch_current_player()
+
+    def _place_symbol(self, space_index):
+        self._board.place_marker(
+            space_index=space_index,
+            symbol=self.get_current_player()
+        )
+
+    def _switch_current_player(self):
         if self._current_player == self._player_one:
             self._current_player = self._player_two
         else:
             self._current_player = self._player_one
-
-    def game_over(self):
-        return self.get_board().is_full()
-
-    def play_turn(self, space_index):
-        self.get_board().place_symbol(
-            space_index=space_index,
-            symbol=self.get_current_player()
-        )

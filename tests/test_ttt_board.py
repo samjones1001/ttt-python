@@ -17,7 +17,7 @@ def test_board_has_nine_spaces_by_default(board):
 
 
 def test_can_occupy_a_space(board, space):
-    board.place_symbol(space, 'x')
+    board.place_marker(space, 'x')
     assert board.get_spaces()[space] == 'x'
 
 
@@ -28,11 +28,11 @@ def test_knows_when_no_spaces_are_occupied(board):
 def test_knows_when_all_spaces_are_not_occupied(board):
     num_of_spaces_minus_one = len(board.get_spaces()) - 1
     for _ in range(num_of_spaces_minus_one):
-        board.place_symbol(_, 'x')
+        board.place_marker(_, 'x')
     assert board.is_full() is False
 
 
 def test_knows_when_all_spaces_are_occupied(board):
     for _ in range(len(board.get_spaces())):
-        board.place_symbol(_, 'x')
+        board.place_marker(_, 'x')
     assert board.is_full() is True

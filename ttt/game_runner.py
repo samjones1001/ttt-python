@@ -13,12 +13,17 @@ class GameRunner:
     def get_interface(self):
         return self._interface
 
-    def play_turn(self):
-        self._render_board()
-        self._place_marker()
-        self._switch_players()
+    def run(self):
+        game_in_progress = True
 
-    def is_game_over(self):
+        while game_in_progress:
+            self._render_board()
+            self._place_marker()
+            if self._is_game_over():
+                self._render_board()
+                game_in_progress = False
+
+    def _is_game_over(self):
         return self.get_game().game_over()
 
     def _render_board(self):
@@ -29,5 +34,3 @@ class GameRunner:
         space_index = self._interface.get_int()
         self.get_game().play_turn(space_index)
 
-    def _switch_players(self):
-        self.get_game().switch_current_player()

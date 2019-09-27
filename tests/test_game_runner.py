@@ -15,11 +15,10 @@ class MockGame:
     def play_turn(self, _):
         self.play_turn_call_count += 1
 
-    def switch_current_player(self):
-        self.switch_player_call_count += 1
-
     def game_over(self):
         self.game_over_call_count += 1
+        if self.game_over_call_count >= 9:
+            return True
 
 
 class MockInterface:
@@ -51,33 +50,33 @@ def test_returns_the_interface():
     assert runner.get_interface() == interface
 
 
-def test_play_turn_requests_current_board_state(game_runner):
-    game_runner.play_turn()
-    assert game_runner.get_game().get_board_state_call_count == 1
+def test_run_requests_current_board_state_each_turn_and_on_game_over(game_runner):
+    number_of_turns_plus_game_over = 10
+    game_runner.run()
+    assert game_runner.get_game().get_board_state_call_count == number_of_turns_plus_game_over
 
 
-def test_play_turn_requests_board_to_be_printed(game_runner):
-    game_runner.play_turn()
-    assert game_runner.get_interface().render_board_call_count == 1
+def test_run_requests_board_to_be_printed_each_turn_and_on_game_over(game_runner):
+    number_of_turns_plus_game_over = 10
+    game_runner.run()
+    assert game_runner.get_interface().render_board_call_count == number_of_turns_plus_game_over
 
 
-def test_play_turn_requests_input(game_runner):
-    game_runner.play_turn()
-    assert game_runner.get_interface().get_int_call_count == 1
+def test_run_requests_input_each_turn(game_runner):
+    number_of_turns = 9
+    game_runner.run()
+    assert game_runner.get_interface().get_int_call_count == number_of_turns
 
 
-def test_play_turn_requests_move_to_be_made(game_runner):
-    game_runner.play_turn()
-    assert game_runner.get_game().play_turn_call_count == 1
+def test_run_requests_move_to_be_made_each_turn(game_runner):
+    number_of_turns = 9
+    game_runner.run()
+    assert game_runner.get_game().play_turn_call_count == number_of_turns
 
 
-def test_play_turn_requests_current_player_switch(game_runner):
-    game_runner.play_turn()
-    assert game_runner.get_game().switch_player_call_count == 1
-
-
-def test_checks_game_for_game_over_state(game_runner):
-    game_runner.is_game_over()
-    assert game_runner.get_game().game_over_call_count == 1
+def test__run_checks_game_for_game_over_state_each_turn(game_runner):
+    number_of_turns = 9
+    game_runner.run()
+    assert game_runner.get_game().game_over_call_count == number_of_turns
 
 
