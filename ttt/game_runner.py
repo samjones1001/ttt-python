@@ -3,15 +3,15 @@ from ttt.console import Console
 
 
 class GameRunner:
-    def __init__(self, game=Game(), interface=Console()):
+    def __init__(self, game=Game(), console=Console()):
         self._game = game
-        self._interface = interface
+        self._console = console
 
     def get_game(self):
         return self._game
 
-    def get_interface(self):
-        return self._interface
+    def get_console(self):
+        return self._console
 
     def run(self):
         game_in_progress = True
@@ -28,9 +28,9 @@ class GameRunner:
 
     def _render_board(self):
         current_state = self.get_game().get_board_state()
-        self._interface.render_board(current_state)
+        self._console.render_board(current_state)
 
     def _place_marker(self):
-        space_index = self._interface.get_int()
+        space_index = self._console.get_int()
         self.get_game().play_turn(space_index)
 

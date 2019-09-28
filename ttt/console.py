@@ -2,18 +2,18 @@ from ttt.consoleio import ConsoleIO
 
 
 class Console:
-    def __init__(self, console=ConsoleIO()):
-        self._console = console
+    def __init__(self, console_io=ConsoleIO()):
+        self._console_io = console_io
 
-    def get_console(self):
-        return self._console
+    def get_console_io(self):
+        return self._console_io
 
     def render_board(self, board_state):
-        self.get_console().print_output(self._build_board_output(board_state))
+        self.get_console_io().print_output(self._build_board_output(board_state))
 
     def get_int(self):
         try:
-            return int(self.get_console().get_input())
+            return int(self.get_console_io().get_input())
         except ValueError:
             raise Exception("Input was not a number!")
 

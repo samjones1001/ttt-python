@@ -16,7 +16,7 @@ class MockConsoleIO:
 
 
 def test_can_play_a_full_game():
-    mock_console = MockConsoleIO()
-    interface = Console(console=mock_console)
-    runner = GameRunner(interface=interface)
+    mock_console_io = MockConsoleIO()
+    console = Console(console_io=mock_console_io)
+    runner = GameRunner(console=console)
     app.main(runner)

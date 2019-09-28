@@ -5,8 +5,8 @@ class Board:
     def get_spaces(self):
         return self._spaces
 
-    def place_marker(self, space_index, marker):
-        self._spaces[space_index] = marker
+    def place_marker(self, space, marker):
+        self._spaces[space] = marker
 
     def is_full(self):
         return '-' not in self._spaces

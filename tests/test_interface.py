@@ -8,62 +8,58 @@ class MockConsoleIOErrorInput:
 
 
 class MockConsoleIOValidInput:
+    def __init__(self):
+        self.last_output = None
+
     def get_input(self, message=""):
         return "1"
 
     def print_output(self, output):
-        print(output)
+        self.last_output = output
 
 
-class Runner:
-    def __init__(self, capfd):
-        self._capfd = capfd
-
+class TestRunner:
     def render_board(self, board_state):
-        interface = Console(console=MockConsoleIOValidInput())
-        interface.render_board(board_state)
-        out, err = self._capfd.readouterr()
-
-        if err:
-            print(err)
-        else:
-            return out
+        console_io = MockConsoleIOValidInput()
+        console = Console(console_io)
+        console.render_board(board_state)
+        return console_io.last_output
 
 
 @pytest.fixture
-def valid_interface():
-    return Console(console=MockConsoleIOValidInput())
+def console_with_valid_io_input():
+    return Console(MockConsoleIOValidInput())
 
 
 @pytest.fixture
-def error_interface():
-    return Console(console=MockConsoleIOErrorInput())
+def console_with_invalid_io_input():
+    return Console(MockConsoleIOErrorInput())
 
 
 @pytest.fixture
 def empty_board_output():
-    return '   |   |   \n-----------\n   |   |   \n-----------\n   |   |   \n'
+    return '   |   |   \n-----------\n   |   |   \n-----------\n   |   |   '
 
 
 @pytest.fixture
 def part_filled_board_output():
-    return ' x | o |   \n-----------\n   |   |   \n-----------\n   |   |   \n'
+    return ' x | o |   \n-----------\n   |   |   \n-----------\n   |   |   '
 
 
 @pytest.fixture
 def filled_board_output():
-    return ' x | o | x \n-----------\n o | x | o \n-----------\n x | o | x \n'
+    return ' x | o | x \n-----------\n o | x | o \n-----------\n x | o | x '
 
 
 @pytest.fixture
-def runner(capfd):
-    return Runner(capfd)
+def runner():
+    return TestRunner()
 
 
 def test_returns_a_console():
     console_io = MockConsoleIOValidInput()
-    interface = Console(console=console_io)
-    assert interface.get_console() == console_io
+    interface = Console(console_io)
+    assert interface.get_console_io() == console_io
 
 
 def test_prints_an_empty_grid_correctly(empty_board_output, runner):
@@ -81,13 +77,13 @@ def test_prints_a_fully_filled_grid(filled_board_output, runner):
     assert runner.render_board(filled_board_state) == filled_board_output
 
 
-def test_accepts_an_integer_from_the_user(valid_interface):
-    assert valid_interface.get_int() == 1
+def test_accepts_an_integer_from_the_user(console_with_valid_io_input):
+    assert console_with_valid_io_input.get_int() == 1
 
 
-def test_errors_if_provided_non_numeric_input(error_interface):
+def test_errors_if_provided_non_numeric_input(console_with_invalid_io_input):
     with pytest.raises(Exception) as err:
-        error_interface.get_int()
+        console_with_invalid_io_input.get_int()
     assert "Input was not a number!" in str(err.value)
 
 
