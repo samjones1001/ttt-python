@@ -24,13 +24,13 @@ class Game:
         return self._board.is_full()
 
     def play_turn(self, space_index):
-        self._place_symbol(space_index)
+        self._place_marker(space_index)
         self._switch_current_player()
 
-    def _place_symbol(self, space_index):
+    def _place_marker(self, space_index):
         self._board.place_marker(
             space_index=space_index,
-            symbol=self.get_current_player()
+            marker=self.get_current_player()
         )
 
     def _switch_current_player(self):

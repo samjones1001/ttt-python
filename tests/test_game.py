@@ -10,7 +10,7 @@ class MockBoard:
     def is_full(self):
         return False
 
-    def place_marker(self, space_index, symbol):
+    def place_marker(self, space_index, marker):
         self.occupy_space_call_count += 1
 
     def get_spaces(self):
