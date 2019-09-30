@@ -16,14 +16,8 @@ class MockBoard:
     def get_spaces(self):
         self.get_spaces_call_count += 1
 
-    def is_occupied_space(self, space):
-        if space is 8:
-            return True
-        else:
-            return False
-
-    def is_existing_space(self, space):
-        if space < 0 or space > 8:
+    def is_available_space(self, space):
+        if space < 0 or space > 7:
             return False
         else:
             return True
@@ -43,9 +37,11 @@ def game():
 def custom_names_game():
     return Game(game_board=MockBoard(), player_one='!', player_two='@')
 
+
 @pytest.fixture(params=[-1, 9])
 def invalid_space(request):
     yield request.param
+
 
 def test_returns_player_one(game):
     assert game.get_player_one() == 'O'
@@ -105,8 +101,9 @@ def test_play_turn_instructs_board_to_occupy_space():
 
 
 def test_play_turn_raises_an_error_for_if_passed_an_occupied_space(game):
+    occupied_space = '8'
     with pytest.raises(Exception) as err:
-        game.play_turn('8')
+        game.play_turn(occupied_space)
     assert "Invalid Move!" in str(err.value)
 
 

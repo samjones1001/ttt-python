@@ -2,17 +2,17 @@ from ttt.consoleio import ConsoleIO
 
 
 class Console:
-    def __init__(self, console_io=ConsoleIO()):
-        self._console_io = console_io
+    def __init__(self, io=ConsoleIO()):
+        self._io = io
 
     def get_console_io(self):
-        return self._console_io
+        return self._io
 
     def render_board(self, board_state):
-        self.get_console_io().print_output(self._build_board_output(board_state))
+        self._io.print_output(self._build_board_output(board_state))
 
     def output_message(self, message):
-        self._console_io.print_output(message)
+        self._io.print_output(message)
 
     def get_int(self):
         try:

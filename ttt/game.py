@@ -42,5 +42,4 @@ class Game:
             self._current_player = self._player_one
 
     def _is_valid_move(self, space):
-        return self._board.is_existing_space(space) and not \
-            self._board.is_occupied_space(space)
+        return self._board.is_available_space(space)
