@@ -37,5 +37,11 @@ def test_knows_when_all_spaces_are_occupied(board):
         board.place_marker(_, 'x')
     assert board.is_full() is True
 
-def knows_when_a_space_is_not_occupied(board):
+
+def test_knows_when_a_space_is_not_occupied(board):
     assert board.is_occupied_space(0) is False
+
+
+def test_knows_when_a_space_is_occupied(board):
+    board.place_marker(0, 'x')
+    assert board.is_occupied_space(0) is True

@@ -11,3 +11,6 @@ class Board:
     def is_full(self):
         return '-' not in self._spaces
 
+    def is_occupied_space(self, space):
+        return self._spaces[space] is not '-'
+
