@@ -14,3 +14,9 @@ class Board:
     def is_occupied_space(self, space):
         return self._spaces[space] is not '-'
 
+    def is_existing_space(self, space):
+        return False if self._is_out_of_bounds_space(space) else True
+
+    def _is_out_of_bounds_space(self, space):
+        return space > len(self.get_spaces()) - 1 or space < 0
+

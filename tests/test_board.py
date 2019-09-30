@@ -45,3 +45,17 @@ def test_knows_when_a_space_is_not_occupied(board):
 def test_knows_when_a_space_is_occupied(board):
     board.place_marker(0, 'x')
     assert board.is_occupied_space(0) is True
+
+
+def test_knows_when_space_exists(board):
+    assert board.is_existing_space(0) is True
+
+
+def test_returns_false_when_passed_a_negative_index(board):
+    assert board.is_existing_space(-1) is False
+
+
+def test_returns_false_when_passed_an_out_of_bounds_index(board):
+    highest_space_index = len(board.get_spaces()) - 1
+    assert board.is_existing_space(highest_space_index + 1) is False
+
