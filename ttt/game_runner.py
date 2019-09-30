@@ -24,16 +24,16 @@ class GameRunner:
                 game_in_progress = False
 
     def _is_game_over(self):
-        return self.get_game().game_over()
+        return self._game.game_over()
 
     def _render_board(self):
-        current_state = self.get_game().get_board_state()
+        current_state = self._game.get_board_state()
         self._console.render_board(current_state)
 
     def _place_marker(self):
         try:
             space_index = self._console.get_int()
-            self.get_game().play_turn(space_index)
+            self._game.play_turn(space_index)
         except Exception as ex:
             self._print_message(ex)
 

@@ -56,12 +56,6 @@ def runner():
     return TestRunner()
 
 
-def test_returns_a_console():
-    console_io = MockConsoleIOValidInput()
-    interface = Console(console_io)
-    assert interface.get_console_io() == console_io
-
-
 def test_prints_an_empty_grid_correctly(empty_board_output, runner):
     empty_board_state = ['-', '-', '-', '-', '-', '-', '-', '-', '-']
     assert runner.render_board(empty_board_state) == empty_board_output

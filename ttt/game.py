@@ -33,7 +33,7 @@ class Game:
             raise Exception('Invalid Move!')
         self._board.place_marker(
             space=space,
-            marker=self.get_current_player()
+            marker=self._current_player
         )
 
     def _switch_current_player(self):

@@ -38,18 +38,6 @@ def game_runner():
     return GameRunner(game=MockGame(), console=MockConsole())
 
 
-def test_returns_a_game():
-    game = MockGame()
-    runner = GameRunner(game=game, console=MockConsole())
-    assert runner.get_game() == game
-
-
-def test_returns_the_interface():
-    console = MockConsole()
-    runner = GameRunner(game=MockGame(), console=console)
-    assert runner.get_console() == console
-
-
 def test_run_requests_current_board_state_each_turn_and_on_game_over(game_runner):
     number_of_turns_plus_game_over = 10
     game_runner.run()

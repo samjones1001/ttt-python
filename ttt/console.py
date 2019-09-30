@@ -16,7 +16,7 @@ class Console:
 
     def get_int(self):
         try:
-            return int(self.get_console_io().get_input())
+            return int(self._io.get_input())
         except ValueError:
             raise Exception("Input was not a number!")
 

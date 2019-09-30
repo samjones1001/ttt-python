@@ -57,16 +57,8 @@ def invalid_space(request):
     yield request.param
 
 
-def test_returns_player_one(game):
-    assert game.get_player_one() == 'O'
-
-
 def test_player_one_can_have_custom_symbol(custom_names_game):
     assert custom_names_game.get_player_one() == '!'
-
-
-def test_returns_player_two(game):
-    assert game.get_player_two() == 'X'
 
 
 def test_player_two_can_have_custom_symbol(custom_names_game):
@@ -78,11 +70,6 @@ def test_get_board_state_sends_a_message_to_board():
     game = Game(board)
     game.get_board_state()
     assert board.get_spaces_call_count == 1
-
-
-def test_returns_current_player(game):
-    current_player_at_start = game.get_player_one()
-    assert game.get_current_player() == current_player_at_start
 
 
 def test_current_player_switches_to_player_two_after_player_one_turn(game):
