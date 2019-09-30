@@ -22,9 +22,23 @@ class MockBoard:
         else:
             return True
 
+    def is_winning_line(self, line):
+        return False
 
-class MockEndStateBoard:
+
+class MockFullBoard:
     def is_full(self):
+        return True
+
+    def is_winning_line(self, line):
+        return False
+
+
+class MockBoardWithWinConditionMet:
+    def is_full(self):
+        return False
+
+    def is_winning_line(self, line):
         return True
 
 
@@ -84,13 +98,18 @@ def test_current_player_reverts_to_player_one_after_player_two_turn(game):
     assert game.get_current_player() == current_player_on_turn_three
 
 
-def test_the_game_is_not_over_when_board_is_not_full(game):
+def test_game_is_not_over_when_board_is_not_full(game):
     assert game.game_over() is False
 
 
 def test_the_game_is_over_when_board_is_full():
-    end_state_game = Game(game_board=MockEndStateBoard())
+    end_state_game = Game(game_board=MockFullBoard())
     assert end_state_game.game_over() is True
+
+
+def test_the_game_is_over_if_a_player_has_won():
+    won_game = Game(game_board=MockBoardWithWinConditionMet())
+    assert won_game.game_over() is True
 
 
 def test_play_turn_instructs_board_to_occupy_space():

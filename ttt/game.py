@@ -21,15 +21,12 @@ class Game:
     def get_board_state(self):
         return self._board.get_spaces()
 
-    def get_win_conditions(self):
-        return self._win_conditions
-
-    def game_over(self):
-        return self._board.is_full()
-
     def play_turn(self, space):
         self._place_marker(space)
         self._switch_current_player()
+
+    def game_over(self):
+        return self._board.is_full() or self._is_won()
 
     def _place_marker(self, space):
         if not self._is_valid_move(int(space)):
@@ -47,4 +44,11 @@ class Game:
 
     def _is_valid_move(self, space):
         return self._board.is_available_space(space)
+
+    def _is_won(self):
+        for condition in self._win_conditions:
+            if self._board.is_winning_line(condition):
+                return True
+        else:
+            return False
 
