@@ -21,54 +21,54 @@ def test_can_occupy_a_space(board, space):
     assert board.get_spaces()[space] == 'x'
 
 
-def test_returns_false_when_no_spaces_are_occupied(board):
+def test_board_is_not_full_when_no_spaces_are_occupied(board):
     assert board.is_full() is False
 
 
-def test_returns_false_when_board_is_not_full(board):
+def test_board_is_not_full_when_only_some_spaces_are_occupied(board):
     num_of_spaces_minus_one = len(board.get_spaces()) - 1
     for _ in range(num_of_spaces_minus_one):
         board.place_marker(_, 'x')
     assert board.is_full() is False
 
 
-def test_returns_true_when_all_spaces_are_occupied(board):
+def test_board_is_full_when_all_spaces_are_occupied(board):
     for _ in range(len(board.get_spaces())):
         board.place_marker(_, 'x')
     assert board.is_full() is True
 
 
-def test_returns_true_when_a_space_exists_and_is_unoccupied(board):
+def test_a_space_is_available_when_it_exists_and_is_unoccupied(board):
     assert board.is_available_space(0) is True
 
 
-def test_returns_false_when_a_space_exists_but_is_occupied(board):
+def test_a_space_is_unavailable_when_it_exists_but_is_occupied(board):
     board.place_marker(0, 'x')
     assert board.is_available_space(0) is False
 
 
-def test_returns_false_when_passed_a_negative_index(board):
+def test_negative_indexed_spaces_are_not_available(board):
     assert board.is_available_space(-1) is False
 
 
-def test_returns_false_when_passed_an_out_of_bounds_index(board):
+def test_out_of_bounds_indexed_spaces_are_not_available(board):
     highest_space_index = len(board.get_spaces()) - 1
     assert board.is_available_space(highest_space_index + 1) is False
 
 
-def test_returns_false_if_not_all_spaces_contain_the_same_marker(board):
+def test_a_line_does_not_win_if_not_all_spaces_contain_the_same_marker(board):
     board.place_marker(0, 'X')
     board.place_marker(1, 'X')
     board.place_marker(2, 'O')
     assert board.is_winning_line((0, 1, 2)) is False
 
 
-def test_returns_true_if_all_spaces_contain_the_sam_marker(board):
+def test_a_line_wins_if_all_spaces_contain_the_same_marker(board):
     board.place_marker(0, 'X')
     board.place_marker(1, 'X')
     board.place_marker(2, 'X')
     assert board.is_winning_line((0, 1, 2)) is True
 
 
-def test_returns_false_if_all_spaces_are_empty(board):
+def test_a_line_does_not_win_if_all_spaces_are_empty(board):
     assert board.is_winning_line((0, 1, 2)) is False
