@@ -31,6 +31,9 @@ class GameRunner:
         self._console.render_board(current_state)
 
     def _place_marker(self):
-        space_index = self._console.get_int()
-        self.get_game().play_turn(space_index)
+        try:
+            space_index = self._console.get_int()
+            self.get_game().play_turn(space_index)
+        except Exception as ex:
+            print(ex)
 
