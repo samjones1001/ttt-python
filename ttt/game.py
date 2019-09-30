@@ -7,6 +7,7 @@ class Game:
         self._player_one = player_one
         self._player_two = player_two
         self._current_player = player_one
+        self._win_conditions = ((0,1,2), (3,4,5), (6,7,8), (0,3,6), (1,4,7), (2,5,8), (0,4,8), (2,4,6))
 
     def get_player_one(self):
         return self._player_one
@@ -19,6 +20,9 @@ class Game:
 
     def get_board_state(self):
         return self._board.get_spaces()
+
+    def get_win_conditions(self):
+        return self._win_conditions
 
     def game_over(self):
         return self._board.is_full()
@@ -43,3 +47,4 @@ class Game:
 
     def _is_valid_move(self, space):
         return self._board.is_available_space(space)
+

@@ -55,3 +55,20 @@ def test_returns_false_when_passed_an_out_of_bounds_index(board):
     highest_space_index = len(board.get_spaces()) - 1
     assert board.is_available_space(highest_space_index + 1) is False
 
+
+def test_returns_false_if_not_all_spaces_contain_the_same_marker(board):
+    board.place_marker(0, 'X')
+    board.place_marker(1, 'X')
+    board.place_marker(2, 'O')
+    assert board.is_winning_line((0, 1, 2)) is False
+
+
+def test_returns_true_if_all_spaces_contain_the_sam_marker(board):
+    board.place_marker(0, 'X')
+    board.place_marker(1, 'X')
+    board.place_marker(2, 'X')
+    assert board.is_winning_line((0, 1, 2)) is True
+
+
+def test_returns_false_if_all_spaces_are_empty(board):
+    assert board.is_winning_line((0, 1, 2)) is False

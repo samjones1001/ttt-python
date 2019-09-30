@@ -36,4 +36,3 @@ def test_gracefully_handles_invalid_user_input(filled_board_output):
     runner = GameRunner(console=console)
     app.main(runner)
     assert mock_console_io.last_output == filled_board_output
-

@@ -74,7 +74,7 @@ def test_run_requests_move_to_be_made_each_turn(game_runner):
     assert game_runner.get_game().play_turn_call_count == number_of_turns
 
 
-def test__run_checks_game_for_game_over_state_each_turn(game_runner):
+def test_run_checks_game_for_game_over_state_each_turn(game_runner):
     number_of_turns = 9
     game_runner.run()
     assert game_runner.get_game().game_over_call_count == number_of_turns
