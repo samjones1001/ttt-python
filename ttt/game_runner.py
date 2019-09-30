@@ -35,5 +35,8 @@ class GameRunner:
             space_index = self._console.get_int()
             self.get_game().play_turn(space_index)
         except Exception as ex:
-            print(ex)
+            self._print_message(ex)
+
+    def _print_message(self, string):
+        self._console.output_message(string)
 

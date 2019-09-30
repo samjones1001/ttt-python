@@ -87,6 +87,10 @@ def test_errors_if_provided_non_numeric_input(console_with_invalid_io_input):
     assert "Input was not a number!" in str(err.value)
 
 
+def test_sends_message_to_console_io(console_with_valid_io_input):
+    console_io = console_with_valid_io_input.get_console_io()
+    console_with_valid_io_input.output_message("a message")
+    assert console_io.last_output == "a message"
 
 
 

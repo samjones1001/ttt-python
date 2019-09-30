@@ -11,6 +11,9 @@ class Console:
     def render_board(self, board_state):
         self.get_console_io().print_output(self._build_board_output(board_state))
 
+    def output_message(self, message):
+        self._console_io.print_output(message)
+
     def get_int(self):
         try:
             return int(self.get_console_io().get_input())
