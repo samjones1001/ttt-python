@@ -28,6 +28,8 @@ class Game:
         self._switch_current_player()
 
     def _place_marker(self, space):
+        if not self._is_valid_move(int(space)):
+            raise Exception('Invalid Move!')
         self._board.place_marker(
             space=space,
             marker=self.get_current_player()
@@ -38,3 +40,6 @@ class Game:
             self._current_player = self._player_two
         else:
             self._current_player = self._player_one
+
+    def _is_valid_move(self, space):
+        return self._board.is_available_space(space)
