@@ -31,7 +31,9 @@ def test_can_play_a_full_game(filled_board_output):
     mock_console_io = MockConsoleIO(values)
     console = Console(io=mock_console_io)
     runner = GameRunner(console=console)
+
     app.main(runner)
+
     assert mock_console_io.last_output == filled_board_output
 
 
@@ -40,7 +42,9 @@ def test_gracefully_handles_invalid_user_input(filled_board_output):
     mock_console_io = MockConsoleIO(values)
     console = Console(io=mock_console_io)
     runner = GameRunner(console=console)
+
     app.main(runner)
+
     assert mock_console_io.last_output == filled_board_output
 
 
@@ -49,5 +53,7 @@ def game_ends_if_a_player_wins(win_state_board_output):
     mock_console_io = MockConsoleIO(values)
     console = Console(io=mock_console_io)
     runner = GameRunner(console=console)
+
     app.main(runner)
+
     assert mock_console_io.last_output == win_state_board_output

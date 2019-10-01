@@ -11,7 +11,7 @@ class Board:
     def is_full(self):
         return '-' not in self._spaces
 
-    def is_available_space(self, space):
+    def is_valid_space(self, space):
         return False if self._is_out_of_bounds_space(space) or \
                         self._is_occupied_space(space) else True
 

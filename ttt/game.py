@@ -29,6 +29,7 @@ class Game:
         return self._board.is_full() or self._is_won()
 
     def _place_marker(self, space):
+        print(space)
         if not self._is_valid_move(int(space)):
             raise Exception('Invalid Move!')
         self._board.place_marker(
@@ -43,7 +44,7 @@ class Game:
             self._current_player = self._player_one
 
     def _is_valid_move(self, space):
-        return self._board.is_available_space(space)
+        return self._board.is_valid_space(space)
 
     def _is_won(self):
         for condition in self._win_conditions:
