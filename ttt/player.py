@@ -9,5 +9,5 @@ class Player:
     def get_marker(self):
         return self._marker
 
-    def get_move(self, console):
+    def get_move(self, console, spaces=None):
         return console.get_int()

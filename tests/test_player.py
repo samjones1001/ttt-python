@@ -1,5 +1,6 @@
 from ttt.player import Player
 
+
 class MockConsole:
     def __init__(self):
         self.get_int_call_counter = 0
