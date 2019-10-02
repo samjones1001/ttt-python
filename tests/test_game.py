@@ -1,22 +1,24 @@
 import pytest
 from ttt.game import Game
+from ttt.player import Player
+from ttt.console import Console
 
 
 class MockBoard:
     def __init__(self):
-        self.occupy_space_call_count = 0
+        self.place_marker_call_count = 0
         self.get_spaces_call_count = 0
 
     def is_full(self):
         return False
 
     def place_marker(self, space, marker):
-        self.occupy_space_call_count += 1
+        self.place_marker_call_count += 1
 
     def get_spaces(self):
         self.get_spaces_call_count += 1
 
-    def is_valid_space(self, space):
+    def is_available_space(self, space):
         lowest_indexed_space = 0
         highest_indexed_space = 8
         occupied_space = 3
@@ -45,43 +47,50 @@ class MockBoardWithWinConditionMet:
         return True
 
 
-@pytest.fixture
-def game():
-    return Game(game_board=MockBoard())
+class MockConsoleIOInvalidInput:
+    def get_input(self):
+        return '-1'
+
+
+class MockConsoleIOOccupiedInput:
+    def get_input(self):
+        return '3'
+
+
+class MockConsoleIOValidInput:
+    def get_input(self):
+        return '1'
 
 
 @pytest.fixture
-def custom_names_game():
-    return Game(game_board=MockBoard(), player_one='!', player_two='@')
+def players():
+    return [Player('player 1', 'O'), Player('player 2', 'X')]
 
 
-def test_player_one_can_have_custom_symbol(custom_names_game):
-    assert custom_names_game.get_player_one() == '!'
-
-
-def test_player_two_can_have_custom_symbol(custom_names_game):
-    assert custom_names_game.get_player_two() == '@'
+@pytest.fixture
+def game(players):
+    return Game(game_board=MockBoard(), player_one=players[0], player_two=players[1])
 
 
 def test_get_board_state_sends_a_message_to_board():
     board = MockBoard()
-    game = Game(board)
+    game = Game(game_board=board)
     game.get_board_state()
 
     assert board.get_spaces_call_count == 1
 
 
-def test_current_player_switches_to_player_two_after_player_one_turn(game):
-    current_player_after_switch = game.get_player_two()
-    game.play_turn(0)
+def test_current_player_switches_to_player_two_after_player_one_turn(game, players):
+    current_player_after_switch = players[1]
+    game.play_turn(Console(MockConsoleIOValidInput()))
 
     assert game.get_current_player() == current_player_after_switch
 
 
-def test_current_player_reverts_to_player_one_after_player_two_turn(game):
-    current_player_on_turn_three = game.get_player_one()
-    game.play_turn(0)
-    game.play_turn(1)
+def test_current_player_reverts_to_player_one_after_player_two_turn(game, players):
+    current_player_on_turn_three = players[0]
+    game.play_turn(Console(MockConsoleIOValidInput()))
+    game.play_turn(Console(MockConsoleIOValidInput()))
 
     assert game.get_current_player() == current_player_on_turn_three
 
@@ -104,23 +113,21 @@ def test_the_game_is_over_if_a_player_has_won():
 
 def test_play_turn_instructs_board_to_occupy_space():
     board = MockBoard()
-    game = Game(board)
-    game.play_turn('1')
+    game = Game(game_board=board)
+    game.play_turn(Console(MockConsoleIOValidInput()))
 
-    assert board.occupy_space_call_count == 1
+    assert board.place_marker_call_count == 1
 
 
 def test_play_turn_raises_an_error_for_if_passed_an_occupied_space(game):
-    occupied_space = '3'
     with pytest.raises(Exception) as err:
-        game.play_turn(occupied_space)
+        game.play_turn(Console(MockConsoleIOOccupiedInput()))
 
     assert "Invalid Move!" in str(err.value)
 
 
 def test_play_turn_raises_an_error_for_if_passed_an_invalid_space(game):
-    invalid_space = '-1'
     with pytest.raises(Exception) as err:
-        game.play_turn(invalid_space)
+        game.play_turn(Console(MockConsoleIOInvalidInput()))
 
     assert "Invalid Move!" in str(err.value)

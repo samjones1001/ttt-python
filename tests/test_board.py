@@ -42,23 +42,23 @@ def test_board_is_full_when_all_spaces_are_occupied(board):
 
 
 def test_a_space_is_available_when_it_exists_and_is_unoccupied(board):
-    assert board.is_valid_space(0) is True
+    assert board.is_available_space(0) is True
 
 
 def test_a_space_is_unavailable_when_it_exists_but_is_occupied(board):
     board.place_marker(0, 'x')
 
-    assert board.is_valid_space(0) is False
+    assert board.is_available_space(0) is False
 
 
 def test_negative_indexed_spaces_are_not_available(board):
-    assert board.is_valid_space(-1) is False
+    assert board.is_available_space(-1) is False
 
 
 def test_out_of_bounds_indexed_spaces_are_not_available(board):
     highest_space_index = len(board.get_spaces()) - 1
 
-    assert board.is_valid_space(highest_space_index + 1) is False
+    assert board.is_available_space(highest_space_index + 1) is False
 
 
 def test_a_line_does_not_win_if_not_all_spaces_contain_the_same_marker(board):

@@ -1,6 +1,7 @@
 import pytest
 from ttt.game_runner import GameRunner
 from ttt.game import Game
+from ttt.player import Player
 
 
 class MockGame:
@@ -55,7 +56,7 @@ class MockBoardGameOverState:
     def place_marker(self, space, marker):
         self.place_marker_call_count += 1
 
-    def is_valid_space(self, space):
+    def is_available_space(self, space):
         return True
 
     def is_winning_line(self, line):
@@ -65,47 +66,63 @@ class MockBoardGameOverState:
 
 @pytest.fixture
 def game_runner():
-    return GameRunner(game=Game(game_board=MockBoardGameOverState()), console=MockConsole())
+    return GameRunner(console=MockConsole())
 
 
-def test_run_requests_current_board_state_each_turn_and_on_game_over():
-    board = MockBoardGameOverState()
-    times_requested_on_final_turn_and_game_over = 2
-    game_runner = GameRunner(game=Game(game_board=board), console=MockConsole())
+@pytest.fixture
+def player_1():
+    return Player('player 1', 'O')
 
-    game_runner.run()
+@pytest.fixture
+def player_2():
+    return Player('player 2', 'X')
 
-    assert board.get_spaces_call_count == times_requested_on_final_turn_and_game_over
+
+def test_run_instantiates_a_new_game(player_1, player_2, game_runner):
+    game_runner.run(player_1, player_2, Game, MockBoardGameOverState)
+
+    assert game_runner.get_game() is not None
+
+
+def test_run_requests_board_state_at_start_of_game_each_turn_and_game_over(player_1, player_2):
+    times_requested_at_start_on_final_turn_and_game_over = 3
+    game_runner = GameRunner(console=MockConsole())
+
+    game_runner.run(player_1, player_2, Game, MockBoardGameOverState)
+
+    assert game_runner.get_game().get_board().get_spaces_call_count == times_requested_at_start_on_final_turn_and_game_over
 
 
 def test_run_requests_board_to_be_printed_each_turn_and_on_game_over(game_runner):
     times_printed_on_final_turn_and_game_over = 2
-    game_runner.run()
+    console = MockConsole()
+    game_runner = GameRunner(console=console)
+    game_runner.run(player_1, player_2, Game, MockBoardGameOverState)
 
-    assert game_runner.get_console().render_board_call_count == times_printed_on_final_turn_and_game_over
-
-
-def test_run_requests_input_each_turn(game_runner):
-    game_runner.run()
-
-    assert game_runner.get_console().get_int_call_count == 1
+    assert console.render_board_call_count == times_printed_on_final_turn_and_game_over
 
 
-def test_run_requests_move_to_be_made_each_turn():
-    board = MockBoardGameOverState()
-    game_runner = GameRunner(game=Game(game_board=board), console=MockConsole())
+def test_run_requests_input_each_turn(player_1, player_2):
+    console = MockConsole()
+    game_runner = GameRunner(console=console)
+    game_runner.run(player_1, player_2, Game, MockBoardGameOverState)
 
-    game_runner.run()
-
-    assert board.place_marker_call_count == 1
+    assert console.get_int_call_count == 1
 
 
-def test_run_checks_game_for_game_over_state_each_turn():
-    board = MockBoardGameOverState()
-    game_runner = GameRunner(game=Game(game_board=board), console=MockConsole())
+def test_run_requests_move_to_be_made_each_turn(player_1, player_2):
+    game_runner = GameRunner(console=MockConsole())
 
-    game_runner.run()
+    game_runner.run(player_1, player_2, Game, MockBoardGameOverState)
 
-    assert board.is_full_call_count == 1
-    assert board.is_winning_line_call_count == 1
+    assert game_runner.get_game().get_board().place_marker_call_count == 1
+
+
+def test_run_checks_game_for_game_over_state_each_turn(player_1, player_2):
+    game_runner = GameRunner(console=MockConsole())
+
+    game_runner.run(player_1, player_2, Game, MockBoardGameOverState)
+
+    assert game_runner.get_game().get_board().is_full_call_count == 1
+    assert game_runner.get_game().get_board().is_winning_line_call_count == 1
 

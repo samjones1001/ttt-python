@@ -5,20 +5,17 @@ class Console:
     def __init__(self, io=ConsoleIO()):
         self._io = io
 
-    def get_console_io(self):
-        return self._io
-
     def render_board(self, board_state):
         self._io.print_output(self._build_board_output(board_state))
-
-    def output_message(self, message):
-        self._io.print_output(message)
 
     def get_int(self):
         try:
             return int(self._io.get_input())
         except ValueError:
             raise Exception("Input was not a number!")
+
+    def output_message(self, message):
+        self._io.print_output(message)
 
     def _build_board_output(self, board_state):
         lines = self._build_lines(board_state)

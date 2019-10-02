@@ -13,6 +13,6 @@ def test_human_player_moves_get_an_integer_from_the_console():
     console = MockConsole()
     player = Player('player 1', 'X')
 
-    player.get_move(console)
+    player.get_move([], console)
 
     assert console.get_int_call_counter == 1

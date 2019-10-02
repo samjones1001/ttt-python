@@ -1,6 +1,6 @@
 import pytest
 import tic_tac_toe as app
-from ttt.game_runner import GameRunner
+from ttt.interface import Interface
 from ttt.console import Console
 
 
@@ -15,6 +15,9 @@ class MockConsoleIO:
     def print_output(self, output):
         self.last_output = output
 
+    def get_values(self, values):
+        return self._values
+
 
 @pytest.fixture
 def filled_board_output():
@@ -27,33 +30,30 @@ def win_state_board_output():
 
 
 def test_can_play_a_full_game(filled_board_output):
-    values = ['0', '4', '1', '2', '6', '3', '5', '7', '8']
-    mock_console_io = MockConsoleIO(values)
-    console = Console(io=mock_console_io)
-    runner = GameRunner(console=console)
+    io = MockConsoleIO(['1', '0', '4', '1', '2', '6', '3', '5', '7', '8'])
+    console = Console(io)
+    app.interface = Interface(console)
 
-    app.main(runner)
+    app.main()
 
-    assert mock_console_io.last_output == filled_board_output
+    assert io.last_output == filled_board_output
 
 
 def test_gracefully_handles_invalid_user_input(filled_board_output):
-    values = ['-1' '0', '4', '1', '2', 'not a number' '6', '3', '3000' '5', '7', '8']
-    mock_console_io = MockConsoleIO(values)
-    console = Console(io=mock_console_io)
-    runner = GameRunner(console=console)
+    io = MockConsoleIO(['1', '-1', '0', '4', '1', '2', 'not a number', '6', '3', '3000', '5', '7', '8'])
+    console = Console(io)
+    app.interface = Interface(console)
 
-    app.main(runner)
+    app.main()
 
-    assert mock_console_io.last_output == filled_board_output
+    assert io.last_output == filled_board_output
 
 
-def game_ends_if_a_player_wins(win_state_board_output):
-    values = ['0', '1', '2', '3', '4', '5', '6', '7', '8']
-    mock_console_io = MockConsoleIO(values)
-    console = Console(io=mock_console_io)
-    runner = GameRunner(console=console)
+def test_game_ends_if_a_player_wins(win_state_board_output):
+    io = MockConsoleIO(['1', '0', '1', '2', '3', '4', '5', '6', '7', '8'])
+    console = Console(io)
+    app.interface = Interface(console)
 
-    app.main(runner)
+    app.main()
 
-    assert mock_console_io.last_output == win_state_board_output
+    assert io.last_output == win_state_board_output

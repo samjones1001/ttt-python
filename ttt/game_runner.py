@@ -1,26 +1,26 @@
 from ttt.game import Game
+from ttt.board import Board
 from ttt.console import Console
 
 
 class GameRunner:
-    def __init__(self, game=Game(), console=Console()):
-        self._game = game
+    def __init__(self, console=Console()):
         self._console = console
+        self._game = None
 
     def get_game(self):
         return self._game
 
-    def get_console(self):
-        return self._console
-
-    def run(self):
+    def run(self, player_1, player_2, game=Game, board=Board):
+        board = board()
+        self._game = game(player_1, player_2, board)
         game_in_progress = True
+        self._render_board()
 
         while game_in_progress:
-            self._render_board()
             self._place_marker()
+            self._render_board()
             if self._is_game_over():
-                self._render_board()
                 game_in_progress = False
 
     def _is_game_over(self):
@@ -32,8 +32,7 @@ class GameRunner:
 
     def _place_marker(self):
         try:
-            space_index = self._console.get_int()
-            self._game.play_turn(space_index)
+            self._game.play_turn(self._console)
         except Exception as ex:
             self._print_message(ex)
 
