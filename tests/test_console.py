@@ -1,5 +1,7 @@
 import pytest
 from ttt.console import Console
+from ttt.player import Player
+from ttt.game import Game
 
 
 class MockConsoleIOErrorInput:
@@ -16,6 +18,18 @@ class MockConsoleIOValidInput:
 
     def print_output(self, output):
         self.last_output = output
+
+class MockBoard:
+    def __init__(self, is_won=False, is_full=False):
+        self.arg = 1
+        self._is_won = is_won
+        self._is_full = is_full
+
+    def is_winning_line(self, line):
+        return self._is_won
+
+    def is_tie(self):
+        return self._is_full
 
 
 class TestRunner:
@@ -96,5 +110,28 @@ def test_sends_message_to_console_io(console_with_valid_io_input):
     assert console_io.last_output == "a message"
 
 
+def test_if_a_game_has_been_won_sends_a_message_to_console_io(console_with_valid_io_input):
+    console_io = MockConsoleIOValidInput()
+    console = Console(console_io)
+    player_1 = Player('Player 1', 'O')
+    player_2 = Player('Player 2', 'O')
 
+    game = Game(player_1, player_2, MockBoard(is_won=True))
+
+    console.show_game_over_message(game)
+
+    assert console_io.last_output == "Player 2 won!"
+
+
+def test_if_a_game_is_a_tie_sends_a_message_to_console_io(console_with_valid_io_input):
+    console_io = MockConsoleIOValidInput()
+    console = Console(console_io)
+    player_1 = Player('Player 1', 'O')
+    player_2 = Player('Player 2', 'O')
+
+    game = Game(player_1, player_2, MockBoard(is_full=True))
+
+    console.show_game_over_message(game)
+
+    assert console_io.last_output == "It's a tie!"
 

@@ -11,6 +11,7 @@ class Game:
         self._player_one = player_one
         self._player_two = player_two
         self._current_player = player_one
+        self._opponent = player_two
         self._win_conditions = ((0,1,2), (3,4,5), (6,7,8), (0,3,6), (1,4,7), (2,5,8), (0,4,8), (2,4,6))
 
     def get_current_player(self):
@@ -18,6 +19,12 @@ class Game:
 
     def get_current_player_name(self):
         return self._current_player.get_name()
+
+    def get_opponent(self):
+        return self._opponent
+
+    def get_opponent_name(self):
+        return self._opponent.get_name()
 
     def get_board(self):
         return self._board
@@ -34,7 +41,16 @@ class Game:
         self._switch_current_player()
 
     def game_over(self):
-        return self._board.is_full() or self._is_won()
+        return self.is_tie() or self.is_won()
+
+    def is_won(self):
+        for condition in self._win_conditions:
+            if self._board.is_winning_line(condition):
+                return True
+        return False
+
+    def is_tie(self):
+        return self._board.is_full()
 
     def _place_marker(self, space):
         if not self._is_valid_move(int(space)):
@@ -45,17 +61,8 @@ class Game:
         )
 
     def _switch_current_player(self):
-        if self._current_player == self._player_one:
-            self._current_player = self._player_two
-        else:
-            self._current_player = self._player_one
+        self._current_player, self._opponent = self._opponent, self._current_player
 
     def _is_valid_move(self, space):
         return self._board.is_available_space(space)
-
-    def _is_won(self):
-        for condition in self._win_conditions:
-            if self._board.is_winning_line(condition):
-                return True
-        return False
 

@@ -2,7 +2,7 @@ import pytest
 import tic_tac_toe as app
 from ttt.interface import Interface
 from ttt.console import Console
-
+from ttt.messages import GAME_TIED_MESSAGE
 
 class MockConsoleIO:
     def __init__(self, values):
@@ -36,7 +36,7 @@ def test_can_play_a_full_game(filled_board_output):
 
     app.main()
 
-    assert io.last_output == filled_board_output
+    assert io.last_output == GAME_TIED_MESSAGE
 
 
 def test_gracefully_handles_invalid_user_input(filled_board_output):
@@ -46,7 +46,7 @@ def test_gracefully_handles_invalid_user_input(filled_board_output):
 
     app.main()
 
-    assert io.last_output == filled_board_output
+    assert io.last_output == GAME_TIED_MESSAGE
 
 
 def test_game_ends_if_a_player_wins(win_state_board_output):
@@ -56,4 +56,4 @@ def test_game_ends_if_a_player_wins(win_state_board_output):
 
     app.main()
 
-    assert io.last_output == win_state_board_output
+    assert io.last_output == "Player 1 won!"

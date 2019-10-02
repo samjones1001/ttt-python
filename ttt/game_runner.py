@@ -24,6 +24,7 @@ class GameRunner:
             self._render_board()
             if self._game.game_over():
                 game_in_progress = False
+                self._console.show_game_over_message(self._game)
 
     def _render_board(self):
         current_state = self._game.get_board_state()
