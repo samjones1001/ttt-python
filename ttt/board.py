@@ -15,6 +15,9 @@ class Board:
         return False if self._is_out_of_bounds_space(space) or \
                         self._is_occupied_space(space) else True
 
+    def available_spaces(self):
+        return [index for index, space in enumerate(self._spaces) if space == "-"]
+
     def is_winning_line(self, line):
         markers = [space for space in self._get_markers_for_line(line)]
         return len(set(markers)) == 1 and markers[0] != '-'

@@ -1,6 +1,7 @@
 from ttt.game import Game
 from ttt.board import Board
 from ttt.console import Console
+from ttt.messages import TURN_START_MESSAGE
 
 
 class GameRunner:
@@ -18,13 +19,11 @@ class GameRunner:
         self._render_board()
 
         while game_in_progress:
+            self._console.output_message(self._turn_start_message())
             self._place_marker()
             self._render_board()
-            if self._is_game_over():
+            if self._game.game_over():
                 game_in_progress = False
-
-    def _is_game_over(self):
-        return self._game.game_over()
 
     def _render_board(self):
         current_state = self._game.get_board_state()
@@ -38,4 +37,7 @@ class GameRunner:
 
     def _print_message(self, string):
         self._console.output_message(string)
+
+    def _turn_start_message(self):
+        return f'{self._game.get_current_player_name()}{TURN_START_MESSAGE}{self._game.available_spaces()}'
 

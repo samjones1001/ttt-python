@@ -27,7 +27,7 @@ class MockConsole:
     def __init__(self):
         self.render_board_call_count = 0
         self.get_int_call_count = 0
-        self.last_output = None
+        self.output_message_count = 0
 
     def render_board(self, _):
         self.render_board_call_count += 1
@@ -37,7 +37,7 @@ class MockConsole:
         return '1'
 
     def output_message(self, message):
-        self.last_output = message
+        self.output_message_count += 1
 
 
 class MockBoardGameOverState:
@@ -62,6 +62,9 @@ class MockBoardGameOverState:
     def is_winning_line(self, line):
         self.is_winning_line_call_count += 1
         return True
+
+    def available_spaces(self):
+       return None
 
 
 @pytest.fixture
@@ -93,7 +96,7 @@ def test_run_requests_board_state_at_start_of_game_each_turn_and_game_over(playe
     assert game_runner.get_game().get_board().get_spaces_call_count == times_requested_at_start_on_final_turn_and_game_over
 
 
-def test_run_requests_board_to_be_printed_each_turn_and_on_game_over(game_runner):
+def test_run_requests_board_to_be_printed_each_turn_and_on_game_over(player_1, player_2):
     times_printed_on_final_turn_and_game_over = 2
     console = MockConsole()
     game_runner = GameRunner(console=console)
@@ -101,6 +104,13 @@ def test_run_requests_board_to_be_printed_each_turn_and_on_game_over(game_runner
 
     assert console.render_board_call_count == times_printed_on_final_turn_and_game_over
 
+
+def test_run_requests_a_message_be_dsiplayed_on_each_turn(player_1, player_2):
+    console = MockConsole()
+    game_runner = GameRunner(console=console)
+    game_runner.run(player_1, player_2, Game, MockBoardGameOverState)
+
+    assert console.output_message_count == 1
 
 def test_run_requests_input_each_turn(player_1, player_2):
     console = MockConsole()

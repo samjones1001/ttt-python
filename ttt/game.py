@@ -16,11 +16,17 @@ class Game:
     def get_current_player(self):
         return self._current_player
 
+    def get_current_player_name(self):
+        return self._current_player.get_name()
+
     def get_board(self):
         return self._board
 
     def get_board_state(self):
         return self._board.get_spaces()
+
+    def available_spaces(self):
+        return self._board.available_spaces()
 
     def play_turn(self, console):
         space = self._current_player.get_move(self.get_board_state(), console)

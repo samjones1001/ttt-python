@@ -8,6 +8,7 @@ class MockBoard:
     def __init__(self):
         self.place_marker_call_count = 0
         self.get_spaces_call_count = 0
+        self.available_spaces_call_count = 0
 
     def is_full(self):
         return False
@@ -29,6 +30,9 @@ class MockBoard:
 
     def is_winning_line(self, line):
         return False
+
+    def available_spaces(self):
+        self.available_spaces_call_count += 1
 
 
 class MockFullBoard:
@@ -78,6 +82,14 @@ def test_get_board_state_sends_a_message_to_board():
     game.get_board_state()
 
     assert board.get_spaces_call_count == 1
+
+
+def test_available_spaces_sends_a_message_to_board():
+    board = MockBoard()
+    game = Game(game_board=board)
+    game.available_spaces()
+
+    assert board.available_spaces_call_count == 1
 
 
 def test_current_player_switches_to_player_two_after_player_one_turn(game, players):

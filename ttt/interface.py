@@ -1,6 +1,7 @@
 from ttt.player import Player
 from ttt.computer_player import ComputerPlayer
 from ttt.game_runner import GameRunner
+from ttt.messages import WELCOME_MESSAGE
 
 
 class Interface:
@@ -9,6 +10,7 @@ class Interface:
         self._runner = None
 
     def start(self, game_runner=GameRunner):
+        self._console.output_message(WELCOME_MESSAGE)
         player_1 = Player('Player 1', 'O')
         player_2 = self._select_player_type('Player 2', 'X')
         self._runner = game_runner(self._console)
