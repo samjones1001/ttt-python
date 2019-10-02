@@ -18,7 +18,7 @@ class MockConsole():
         self.input_return = input_return
         self.output_message_call_count = 0
 
-    def get_int(self):
+    def get_valid_input(self, valid_inputs, error_message):
         return self.input_return
 
     def output_message(self, message):

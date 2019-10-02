@@ -17,7 +17,6 @@ class GameRunner:
         self._game = game(player_1, player_2, board)
         game_in_progress = True
         self._render_board()
-
         while game_in_progress:
             self._console.output_message(self._turn_start_message())
             self._place_marker()

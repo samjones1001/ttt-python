@@ -26,15 +26,15 @@ class MockGame:
 class MockConsole:
     def __init__(self):
         self.render_board_call_count = 0
-        self.get_int_call_count = 0
+        self.get_valid_input_call_count = 0
         self.output_message_count = 0
         self.show_game_over_message_call_count = 0
 
     def render_board(self, _):
         self.render_board_call_count += 1
 
-    def get_int(self):
-        self.get_int_call_count += 1
+    def get_valid_input(self, valid_inputs, error_message):
+        self.get_valid_input_call_count += 1
         return '1'
 
     def output_message(self, message):
@@ -53,6 +53,7 @@ class MockBoardGameOverState:
 
     def get_spaces(self):
         self.get_spaces_call_count += 1
+        return []
 
     def is_full(self):
         self.is_full_call_count += 1
@@ -121,7 +122,7 @@ def test_run_requests_input_each_turn(player_1, player_2):
     game_runner = GameRunner(console=console)
     game_runner.run(player_1, player_2, Game, MockBoardGameOverState)
 
-    assert console.get_int_call_count == 1
+    assert console.get_valid_input_call_count == 1
 
 
 def test_run_requests_move_to_be_made_each_turn(player_1, player_2):

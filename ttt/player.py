@@ -10,4 +10,6 @@ class Player:
         return self._marker
 
     def get_move(self, spaces, console):
-        return console.get_int()
+        available_spaces = [index for index, space in enumerate(spaces) if space == "-"]
+        space_strings = list(map(str, available_spaces))
+        return int(console.get_valid_input(space_strings, "Please select from available spaces"))

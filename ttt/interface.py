@@ -17,8 +17,8 @@ class Interface:
         self._runner.run(player_1, player_2)
 
     def _select_player_type(self, name, marker):
-        input = self._console.get_int()
-        if input == 1:
+        input = self._console.get_valid_input(['1', '2'], "Please select an option from the menu")
+        if input == '1':
             return Player(name, marker)
         else:
             return ComputerPlayer(name, marker)

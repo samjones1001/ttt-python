@@ -4,17 +4,15 @@ from ttt.player import Player
 from ttt.game import Game
 
 
-class MockConsoleIOErrorInput:
-    def get_input(self, message=""):
-        return "Not a number!"
-
-
-class MockConsoleIOValidInput:
-    def __init__(self):
+class MockConsoleIO:
+    def __init__(self, inputs=None):
+        self.get_input_call_count = 0
         self.last_output = None
+        self.inputs = inputs
 
     def get_input(self, message=""):
-        return "1"
+        self.get_input_call_count += 1
+        return self.inputs.pop(0)
 
     def print_output(self, output):
         self.last_output = output
@@ -34,7 +32,7 @@ class MockBoard:
 
 class TestRunner:
     def render_board(self, board_state):
-        console_io = MockConsoleIOValidInput()
+        console_io = MockConsoleIO()
         console = Console(console_io)
         console.render_board(board_state)
         return console_io.last_output
@@ -42,12 +40,12 @@ class TestRunner:
 
 @pytest.fixture
 def console_with_valid_io_input():
-    return Console(MockConsoleIOValidInput())
+    return Console(MockConsoleIO('invalid'))
 
 
 @pytest.fixture
 def console_with_invalid_io_input():
-    return Console(MockConsoleIOErrorInput())
+    return Console(MockConsoleIO('valid'))
 
 
 @pytest.fixture
@@ -88,21 +86,35 @@ def test_prints_a_fully_filled_grid(filled_board_output, runner):
     assert runner.render_board(filled_board_state) == filled_board_output
 
 
-def test_accepts_an_integer_from_the_user():
-    console = Console(MockConsoleIOValidInput())
+def test_returns_valid_user_input():
+    mock_io = MockConsoleIO(inputs=['valid'])
+    console = Console(mock_io)
 
-    assert console.get_int() == 1
+    output = console.get_valid_input(['valid'], 'error message')
+    assert output == 'valid'
 
 
-def test_errors_if_provided_non_numeric_input(console_with_invalid_io_input):
-    with pytest.raises(Exception) as err:
-        console_with_invalid_io_input.get_int()
+def test_continues_to_prompt_for_input_until_valid_input_provided():
+    mock_io = MockConsoleIO(inputs=['invalid', 'valid'])
+    console = Console(mock_io)
 
-    assert "Input was not a number!" in str(err.value)
+    output = console.get_valid_input(['valid'], 'error message')
+
+    assert mock_io.get_input_call_count == 2
+    assert output == 'valid'
+
+
+def prints_an_error_message_if_provided_invalid_input():
+    mock_io = MockConsoleIO(inputs=['invalid', 'valid'])
+    console = Console(mock_io)
+
+    console.get_valid_input(['valid'], 'error message')
+
+    assert mock_io.last_output == 'error message'
 
 
 def test_sends_message_to_console_io(console_with_valid_io_input):
-    console_io = MockConsoleIOValidInput()
+    console_io = MockConsoleIO()
     console = Console(console_io)
 
     console.output_message("a message")
@@ -111,7 +123,7 @@ def test_sends_message_to_console_io(console_with_valid_io_input):
 
 
 def test_if_a_game_has_been_won_sends_a_message_to_console_io(console_with_valid_io_input):
-    console_io = MockConsoleIOValidInput()
+    console_io = MockConsoleIO()
     console = Console(console_io)
     player_1 = Player('Player 1', 'O')
     player_2 = Player('Player 2', 'O')
@@ -124,7 +136,7 @@ def test_if_a_game_has_been_won_sends_a_message_to_console_io(console_with_valid
 
 
 def test_if_a_game_is_a_tie_sends_a_message_to_console_io(console_with_valid_io_input):
-    console_io = MockConsoleIOValidInput()
+    console_io = MockConsoleIO()
     console = Console(console_io)
     player_1 = Player('Player 1', 'O')
     player_2 = Player('Player 2', 'O')

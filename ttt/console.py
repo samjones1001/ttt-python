@@ -10,11 +10,12 @@ class Console:
     def render_board(self, board_state):
         self._io.print_output(self._build_board_output(board_state))
 
-    def get_int(self):
-        try:
-            return int(self._io.get_input())
-        except ValueError:
-            raise Exception("Input was not a number!")
+    def get_valid_input(self, valid_inputs, error):
+        user_input = self._io.get_input()
+        while user_input not in valid_inputs:
+            self._io.print_output(error)
+            user_input = self._io.get_input()
+        return user_input
 
     def output_message(self, message):
         self._io.print_output(message)
