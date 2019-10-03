@@ -16,16 +16,6 @@ class TestRunner:
 
 
 @pytest.fixture
-def console_with_valid_io_input():
-    return Console(MockConsoleIO('invalid'))
-
-
-@pytest.fixture
-def console_with_invalid_io_input():
-    return Console(MockConsoleIO('valid'))
-
-
-@pytest.fixture
 def empty_board_output():
     return '   |   |   \n-----------\n   |   |   \n-----------\n   |   |   '
 
@@ -61,8 +51,8 @@ def test_prints_a_part_filled_grid_correctly(part_filled_board_output, runner):
 
 def test_prints_a_fully_filled_grid(filled_board_output, runner):
     filled_board_state = ['x', 'o', 'x', 'o', 'x', 'o', 'x', 'o', 'x']
-    game = MockGame(filled_board_state
-                    )
+    game = MockGame(filled_board_state)
+
     assert runner.render_board(game) == filled_board_output
 
 
@@ -93,7 +83,7 @@ def prints_an_error_message_if_provided_invalid_input():
     assert mock_io.last_output == 'error message'
 
 
-def test_sends_message_to_console_io(console_with_valid_io_input):
+def test_sends_message_to_console_io():
     console_io = MockConsoleIO()
     console = Console(console_io)
 
@@ -102,11 +92,11 @@ def test_sends_message_to_console_io(console_with_valid_io_input):
     assert console_io.last_output == "a message"
 
 
-def test_if_a_game_has_been_won_sends_a_message_to_console_io(console_with_valid_io_input):
+def test_if_a_game_has_been_won_sends_a_message_to_console_io():
     console_io = MockConsoleIO()
     console = Console(console_io)
     player_1 = Player('Player 1', 'O')
-    player_2 = Player('Player 2', 'O')
+    player_2 = Player('Player 2', 'X')
 
     game = Game(player_1, player_2, MockBoard(line_to_check=['X', 'X', 'X']))
 
@@ -115,11 +105,11 @@ def test_if_a_game_has_been_won_sends_a_message_to_console_io(console_with_valid
     assert console_io.last_output == "Player 2 won!"
 
 
-def test_if_a_game_is_a_tie_sends_a_message_to_console_io(console_with_valid_io_input):
+def test_if_a_game_is_a_tie_sends_a_message_to_console_io():
     console_io = MockConsoleIO()
     console = Console(console_io)
     player_1 = Player('Player 1', 'O')
-    player_2 = Player('Player 2', 'O')
+    player_2 = Player('Player 2', 'X')
 
     game = Game(player_1, player_2, MockBoard(spaces_remaining=0))
 

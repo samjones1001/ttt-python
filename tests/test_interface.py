@@ -7,7 +7,7 @@ from tests.mocks import MockGameRunner
 
 def test_starting_a_game_requests_a_welcome_message_be_displayed():
     runner = MockGameRunner
-    console = MockConsole(input_return=1)
+    console = MockConsole(input_return='1')
     interface = Interface(console)
     interface.start(runner)
 
