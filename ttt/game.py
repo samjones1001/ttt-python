@@ -7,9 +7,9 @@ class Game:
                  player_one=Player(name="Player 1", marker="O"),
                  player_two=Player(name="Player 2", marker="X"),
                  game_board=Board()):
-        self._board = game_board
         self._player_one = player_one
         self._player_two = player_two
+        self._board = game_board
         self._current_player = player_one
         self._opponent = player_two
         self._win_conditions = ((0,1,2), (3,4,5), (6,7,8), (0,3,6), (1,4,7), (2,5,8), (0,4,8), (2,4,6))
@@ -19,9 +19,6 @@ class Game:
 
     def get_current_player_name(self):
         return self._current_player.get_name()
-
-    def get_opponent(self):
-        return self._opponent
 
     def get_opponent_name(self):
         return self._opponent.get_name()
@@ -37,14 +34,15 @@ class Game:
 
     def play_turn(self, console):
         space = self._current_player.get_move(self._board.available_spaces(), console)
-        self._board.place_marker(
-            space=space,
-            marker=self._current_player.get_marker()
-        )
+
+        self._board.place_marker(space=space, marker=self._current_player.get_marker())
         self._switch_current_player()
 
     def game_over(self):
         return self.is_tie() or self.is_won()
+
+    def is_tie(self):
+        return self._board.is_full()
 
     def is_won(self):
         for condition in self._win_conditions:
@@ -53,12 +51,6 @@ class Game:
                 return True
         return False
 
-    def is_tie(self):
-        return self._board.is_full()
-
     def _switch_current_player(self):
         self._current_player, self._opponent = self._opponent, self._current_player
-
-    def _is_valid_move(self, space):
-        return space in self._board.available_space
 
