@@ -36,7 +36,7 @@ class Game:
         return self._board.available_spaces()
 
     def play_turn(self, console):
-        space = self._current_player.get_move(self.get_board_state(), console)
+        space = self._current_player.get_move(self._board.available_spaces(), console)
         self._board.place_marker(
             space=space,
             marker=self._current_player.get_marker()
@@ -60,5 +60,5 @@ class Game:
         self._current_player, self._opponent = self._opponent, self._current_player
 
     def _is_valid_move(self, space):
-        return self._board.is_available_space(space)
+        return space in self._board.available_space
 

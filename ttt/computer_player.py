@@ -7,5 +7,4 @@ class ComputerPlayer(Player):
         super().__init__(name, marker)
 
     def get_move(self, spaces, console=None):
-        available_spaces = [index for index, space in enumerate(spaces) if space == "-"]
-        return available_spaces[random.randint(0, len(available_spaces) - 1)]
+        return spaces[random.randint(0, len(spaces) - 1)]

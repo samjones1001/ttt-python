@@ -42,13 +42,13 @@ def test_board_is_full_when_all_spaces_are_occupied(board):
 
 
 def test_a_space_is_available_when_it_exists_and_is_unoccupied(board):
-    assert board.is_available_space(0) is True
+    assert 0 in board.available_spaces()
 
 
 def test_a_space_is_unavailable_when_it_exists_but_is_occupied(board):
     board.place_marker(0, 'x')
 
-    assert board.is_available_space(0) is False
+    assert 0 not in board.available_spaces()
 
 
 def test_returns_all_spaces_when_none_have_been_occupied(board):
@@ -71,13 +71,13 @@ def test_returns_no_spaces_when_all_have_been_occupied(board):
 
 
 def test_negative_indexed_spaces_are_not_available(board):
-    assert board.is_available_space(-1) is False
+    assert -1 not in board.available_spaces()
 
 
 def test_out_of_bounds_indexed_spaces_are_not_available(board):
-    highest_space_index = len(board.get_spaces()) - 1
+    highest_space_index = len(board.get_spaces())
 
-    assert board.is_available_space(highest_space_index + 1) is False
+    assert highest_space_index not in board.available_spaces()
 
 
 def test_returns_the_contents_of_the_spaces_requested(board):

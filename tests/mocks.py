@@ -46,12 +46,18 @@ class MockGameRunner():
 
 class MockPlayer:
     def __init__(self, name, marker):
+        self._name = name
         self._marker = marker
+        self.get_move_call_count = 0
+
+    def get_name(self):
+        return self._name
 
     def get_marker(self):
         return self._marker
 
     def get_move(self, spaces, console):
+        self.get_move_call_count += 1
         return 1
 
 

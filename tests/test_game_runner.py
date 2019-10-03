@@ -2,6 +2,7 @@ import pytest
 from ttt.game_runner import GameRunner
 from ttt.game import Game
 from ttt.player import Player
+from tests.mocks import MockPlayer
 from tests.mocks import MockConsole
 from tests.mocks import MockBoard
 
@@ -13,7 +14,7 @@ def game_runner():
 
 @pytest.fixture
 def players():
-    return [Player('player 1', 'O'), Player('player 2', 'X')]
+    return [MockPlayer('player 1', 'O'), MockPlayer('player 2', 'X')]
 
 
 def test_run_instantiates_a_new_game(players, game_runner):
@@ -44,7 +45,7 @@ def test_run_requests_input_each_turn(players):
     game_runner = GameRunner(console)
     game_runner.run(players[0], players[1], Game, MockBoard)
 
-    assert console.get_valid_input_call_count == 1
+    assert players[0].get_move_call_count == 1
 
 
 def test_run_requests_move_to_be_made_each_turn(players):
