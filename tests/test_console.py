@@ -2,40 +2,9 @@ import pytest
 from ttt.console import Console
 from ttt.player import Player
 from ttt.game import Game
-
-
-class MockConsoleIO:
-    def __init__(self, inputs=None):
-        self.get_input_call_count = 0
-        self.last_output = None
-        self.inputs = inputs
-
-    def get_input(self, message=""):
-        self.get_input_call_count += 1
-        return self.inputs.pop(0)
-
-    def print_output(self, output):
-        self.last_output = output
-
-class MockBoard:
-    def __init__(self, line_to_check=[], is_full=False):
-        self.arg = 1
-        self._line_to_check = line_to_check
-        self._is_full = is_full
-
-    def retrieve_line(self, line):
-        return self._line_to_check
-
-    def is_tie(self):
-        return self._is_full
-
-
-class MockGame:
-    def __init__(self, board_state):
-        self._board_state = board_state
-
-    def get_board_state(self):
-        return self._board_state
+from tests.mocks import MockConsoleIO
+from tests.mocks import MockGame
+from tests.mocks import MockBoard
 
 
 class TestRunner:
@@ -152,7 +121,7 @@ def test_if_a_game_is_a_tie_sends_a_message_to_console_io(console_with_valid_io_
     player_1 = Player('Player 1', 'O')
     player_2 = Player('Player 2', 'O')
 
-    game = Game(player_1, player_2, MockBoard(is_full=True))
+    game = Game(player_1, player_2, MockBoard(spaces_remaining=0))
 
     console.show_game_over_message(game)
 

@@ -3,21 +3,7 @@ import tic_tac_toe as app
 from ttt.interface import Interface
 from ttt.console import Console
 from ttt.messages import GAME_TIED_MESSAGE
-
-class MockConsoleIO:
-    def __init__(self, values):
-        self._values = values
-        self.last_output = None
-
-    def get_input(self, message=""):
-        return self._values.pop(0)
-
-    def print_output(self, output):
-        self.last_output = output
-
-    def get_values(self, values):
-        return self._values
-
+from tests.mocks import MockConsoleIO
 
 @pytest.fixture
 def filled_board_output():

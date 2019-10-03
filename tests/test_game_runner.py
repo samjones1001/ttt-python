@@ -2,78 +2,8 @@ import pytest
 from ttt.game_runner import GameRunner
 from ttt.game import Game
 from ttt.player import Player
-
-
-class MockGame:
-    def __init__(self):
-        self.get_board_state_call_count = 0
-        self.play_turn_call_count = 0
-        self.switch_player_call_count = 0
-        self.game_over_call_count = 0
-
-    def get_board_state(self):
-        self.get_board_state_call_count += 1
-
-    def play_turn(self, _):
-        self.play_turn_call_count += 1
-
-    def game_over(self):
-        self.game_over_call_count += 1
-        if self.game_over_call_count >= 9:
-            return True
-
-
-class MockConsole:
-    def __init__(self):
-        self.render_board_call_count = 0
-        self.get_valid_input_call_count = 0
-        self.output_message_count = 0
-        self.show_game_over_message_call_count = 0
-
-    def render_board(self, _):
-        self.render_board_call_count += 1
-
-    def get_valid_input(self, valid_inputs, error_message):
-        self.get_valid_input_call_count += 1
-        return '1'
-
-    def output_message(self, message):
-        self.output_message_count += 1
-
-    def show_game_over_message(self,game):
-        self.show_game_over_message_call_count += 1
-
-
-class MockBoard:
-    def __init__(self, turns_remaining=1):
-        self.get_spaces_call_count = 0
-        self.is_full_call_count = 0
-        self.place_marker_call_count = 0
-        self.is_winning_line_call_count = 0
-        self._turns_remaining = turns_remaining
-
-    def get_spaces(self):
-        self.get_spaces_call_count += 1
-        return []
-
-    def is_full(self):
-        self.is_full_call_count += 1
-        return True if self._turns_remaining == 0 else False
-
-    def place_marker(self, space, marker):
-        self.place_marker_call_count += 1
-        self._turns_remaining -= 1
-
-    def is_available_space(self, space):
-        return True
-
-    def retrieve_line(self, line):
-        self.is_winning_line_call_count += 1
-        return []
-
-
-    def available_spaces(self):
-       return None
+from tests.mocks import MockConsole
+from tests.mocks import MockBoard
 
 
 @pytest.fixture
@@ -84,6 +14,7 @@ def game_runner():
 @pytest.fixture
 def player_1():
     return Player('player 1', 'O')
+
 
 @pytest.fixture
 def player_2():
@@ -110,7 +41,7 @@ def test_run_requests_a_message_be_displayed_on_each_turn(player_1, player_2):
     game_runner = GameRunner(console=console)
     game_runner.run(player_1, player_2, Game, MockBoard)
 
-    assert console.output_message_count == 1
+    assert console.output_message_call_count == 1
 
 
 def test_run_requests_input_each_turn(player_1, player_2):

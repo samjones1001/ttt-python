@@ -1,28 +1,8 @@
 from ttt.interface import Interface
 from ttt.player import Player
 from ttt.computer_player import ComputerPlayer
-
-
-class MockGameRunner():
-    def __init__(self, console):
-        self.run_call_count = 0
-        self.player_2 = None
-
-    def run(self, player_1, player_2):
-        self.run_call_count += 1
-        self.player_2 = player_2
-
-
-class MockConsole():
-    def __init__(self, input_return):
-        self.input_return = input_return
-        self.output_message_call_count = 0
-
-    def get_valid_input(self, valid_inputs, error_message):
-        return self.input_return
-
-    def output_message(self, message):
-        self.output_message_call_count += 1
+from tests.mocks import MockConsole
+from tests.mocks import MockGameRunner
 
 
 def test_starting_a_game_requests_a_welcome_message_be_displayed():
