@@ -26,9 +26,6 @@ class GameRunner:
         self._game.play_turn(self._console)
         self._console.render_board(self._game)
 
-    def _print_message(self, string):
-        self._console.output_message(string)
-
     def _turn_start_message(self):
         return f'{self._game.get_current_player_name()}{TURN_START_MESSAGE}{self._game.available_spaces()}'
 
