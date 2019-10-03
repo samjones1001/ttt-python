@@ -14,12 +14,13 @@ class Interface:
         player_1 = Player('Player 1', 'O')
         player_2 = self._select_player_type('Player 2', 'X')
         self._runner = game_runner(self._console)
+
         self._runner.run(player_1, player_2)
 
     def _select_player_type(self, name, marker):
-        input = self._console.get_valid_input(['1', '2'], "Please select an option from the menu")
-        if input == '1':
+        user_input = self._console.get_valid_input(['1', '2'], "Please select an option from the menu")
+        if user_input == '1':
             return Player(name, marker)
-        elif input == '2':
+        elif user_input == '2':
             return ComputerPlayer(name, marker)
 

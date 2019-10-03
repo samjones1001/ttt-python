@@ -15,12 +15,16 @@ class GameRunner:
     def run(self, player_1, player_2, game=Game, board=Board):
         board = board()
         self._game = game(player_1, player_2, board)
+
         self._console.render_board(self._game)
         while not self._game.game_over():
-            self._console.output_message(self._turn_start_message())
-            self._game.play_turn(self._console)
-            self._console.render_board(self._game)
+            self._run_turn()
         self._console.show_game_over_message(self._game)
+
+    def _run_turn(self):
+        self._console.output_message(self._turn_start_message())
+        self._game.play_turn(self._console)
+        self._console.render_board(self._game)
 
     def _print_message(self, string):
         self._console.output_message(string)
