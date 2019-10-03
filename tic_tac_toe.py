@@ -1,8 +1,14 @@
-from ttt.game_runner import GameRunner
+from ttt.consoleio import ConsoleIO
+from ttt.console import Console
+from ttt.interface import Interface
+
+consoleio = ConsoleIO()
+console = Console(consoleio)
+interface = Interface(console)
 
 
-def main(runner=GameRunner()):
-    runner.run()
+def main():
+    interface.start()
 
 
 if __name__ == '__main__':

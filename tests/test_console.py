@@ -1,39 +1,18 @@
 import pytest
 from ttt.console import Console
-
-
-class MockConsoleIOErrorInput:
-    def get_input(self, message=""):
-        return "Not a number!"
-
-
-class MockConsoleIOValidInput:
-    def __init__(self):
-        self.last_output = None
-
-    def get_input(self, message=""):
-        return "1"
-
-    def print_output(self, output):
-        self.last_output = output
+from ttt.player import Player
+from ttt.game import Game
+from tests.mocks import MockConsoleIO
+from tests.mocks import MockGame
+from tests.mocks import MockBoard
 
 
 class TestRunner:
-    def render_board(self, board_state):
-        console_io = MockConsoleIOValidInput()
+    def render_board(self, game):
+        console_io = MockConsoleIO()
         console = Console(console_io)
-        console.render_board(board_state)
+        console.render_board(game)
         return console_io.last_output
-
-
-@pytest.fixture
-def console_with_valid_io_input():
-    return Console(MockConsoleIOValidInput())
-
-
-@pytest.fixture
-def console_with_invalid_io_input():
-    return Console(MockConsoleIOErrorInput())
 
 
 @pytest.fixture
@@ -58,37 +37,54 @@ def runner():
 
 def test_prints_an_empty_grid_correctly(empty_board_output, runner):
     empty_board_state = ['-', '-', '-', '-', '-', '-', '-', '-', '-']
+    game = MockGame(empty_board_state)
 
-    assert runner.render_board(empty_board_state) == empty_board_output
+    assert runner.render_board(game) == empty_board_output
 
 
 def test_prints_a_part_filled_grid_correctly(part_filled_board_output, runner):
     part_filled_board_state = ['x', 'o', '-', '-', '-', '-', '-', '-', '-']
+    game = MockGame(part_filled_board_state)
 
-    assert runner.render_board(part_filled_board_state) == part_filled_board_output
+    assert runner.render_board(game) == part_filled_board_output
 
 
 def test_prints_a_fully_filled_grid(filled_board_output, runner):
     filled_board_state = ['x', 'o', 'x', 'o', 'x', 'o', 'x', 'o', 'x']
+    game = MockGame(filled_board_state)
 
-    assert runner.render_board(filled_board_state) == filled_board_output
-
-
-def test_accepts_an_integer_from_the_user():
-    console = Console(MockConsoleIOValidInput())
-
-    assert console.get_int() == 1
+    assert runner.render_board(game) == filled_board_output
 
 
-def test_errors_if_provided_non_numeric_input(console_with_invalid_io_input):
-    with pytest.raises(Exception) as err:
-        console_with_invalid_io_input.get_int()
+def test_returns_valid_user_input():
+    mock_io = MockConsoleIO(inputs=['valid'])
+    console = Console(mock_io)
 
-    assert "Input was not a number!" in str(err.value)
+    output = console.get_valid_input(['valid'], 'error message')
+    assert output == 'valid'
 
 
-def test_sends_message_to_console_io(console_with_valid_io_input):
-    console_io = MockConsoleIOValidInput()
+def test_continues_to_prompt_for_input_until_valid_input_provided():
+    mock_io = MockConsoleIO(inputs=['invalid', 'valid'])
+    console = Console(mock_io)
+
+    output = console.get_valid_input(['valid'], 'error message')
+
+    assert mock_io.get_input_call_count == 2
+    assert output == 'valid'
+
+
+def prints_an_error_message_if_provided_invalid_input():
+    mock_io = MockConsoleIO(inputs=['invalid', 'valid'])
+    console = Console(mock_io)
+
+    console.get_valid_input(['valid'], 'error message')
+
+    assert mock_io.last_output == 'error message'
+
+
+def test_sends_message_to_console_io():
+    console_io = MockConsoleIO()
     console = Console(console_io)
 
     console.output_message("a message")
@@ -96,5 +92,28 @@ def test_sends_message_to_console_io(console_with_valid_io_input):
     assert console_io.last_output == "a message"
 
 
+def test_if_a_game_has_been_won_sends_a_message_to_console_io():
+    console_io = MockConsoleIO()
+    console = Console(console_io)
+    player_1 = Player('Player 1', 'O')
+    player_2 = Player('Player 2', 'X')
 
+    game = Game(player_1, player_2, MockBoard(line_to_check=['X', 'X', 'X']))
+
+    console.show_game_over_message(game)
+
+    assert console_io.last_output == "Player 2 won!"
+
+
+def test_if_a_game_is_a_tie_sends_a_message_to_console_io():
+    console_io = MockConsoleIO()
+    console = Console(console_io)
+    player_1 = Player('Player 1', 'O')
+    player_2 = Player('Player 2', 'X')
+
+    game = Game(player_1, player_2, MockBoard(spaces_remaining=0))
+
+    console.show_game_over_message(game)
+
+    assert console_io.last_output == "It's a tie!"
 

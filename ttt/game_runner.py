@@ -1,42 +1,34 @@
 from ttt.game import Game
+from ttt.board import Board
 from ttt.console import Console
+from ttt.messages import TURN_START_MESSAGE
 
 
 class GameRunner:
-    def __init__(self, game=Game(), console=Console()):
-        self._game = game
+    def __init__(self, console=Console()):
         self._console = console
+        self._game = None
 
     def get_game(self):
         return self._game
 
-    def get_console(self):
-        return self._console
+    def run(self, player_1, player_2, game=Game, board=Board):
+        board = board()
+        self._game = game(player_1, player_2, board)
 
-    def run(self):
-        game_in_progress = True
+        self._console.render_board(self._game)
+        while not self._game.game_over():
+            self._run_turn()
+        self._console.show_game_over_message(self._game)
 
-        while game_in_progress:
-            self._render_board()
-            self._place_marker()
-            if self._is_game_over():
-                self._render_board()
-                game_in_progress = False
-
-    def _is_game_over(self):
-        return self._game.game_over()
-
-    def _render_board(self):
-        current_state = self._game.get_board_state()
-        self._console.render_board(current_state)
-
-    def _place_marker(self):
-        try:
-            space_index = self._console.get_int()
-            self._game.play_turn(space_index)
-        except Exception as ex:
-            self._print_message(ex)
+    def _run_turn(self):
+        self._console.output_message(self._turn_start_message())
+        self._game.play_turn(self._console)
+        self._console.render_board(self._game)
 
     def _print_message(self, string):
         self._console.output_message(string)
+
+    def _turn_start_message(self):
+        return f'{self._game.get_current_player_name()}{TURN_START_MESSAGE}{self._game.available_spaces()}'
 

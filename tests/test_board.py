@@ -42,40 +42,47 @@ def test_board_is_full_when_all_spaces_are_occupied(board):
 
 
 def test_a_space_is_available_when_it_exists_and_is_unoccupied(board):
-    assert board.is_valid_space(0) is True
+    assert 0 in board.available_spaces()
 
 
 def test_a_space_is_unavailable_when_it_exists_but_is_occupied(board):
     board.place_marker(0, 'x')
 
-    assert board.is_valid_space(0) is False
+    assert 0 not in board.available_spaces()
+
+
+def test_returns_all_spaces_when_none_have_been_occupied(board):
+    number_of_spaces = len(board.get_spaces())
+
+    assert len(board.available_spaces()) == number_of_spaces
+
+
+def test_only_returns_unoccupied_spaces_when_some_have_been_occupied(board):
+    board.place_marker(0, 'X')
+
+    assert 0 not in board.available_spaces()
+
+
+def test_returns_no_spaces_when_all_have_been_occupied(board):
+    for space in range(0, len(board.get_spaces())):
+        board.place_marker(space, 'X')
+
+    assert len(board.available_spaces()) == 0
 
 
 def test_negative_indexed_spaces_are_not_available(board):
-    assert board.is_valid_space(-1) is False
+    assert -1 not in board.available_spaces()
 
 
 def test_out_of_bounds_indexed_spaces_are_not_available(board):
-    highest_space_index = len(board.get_spaces()) - 1
+    highest_space_index = len(board.get_spaces())
 
-    assert board.is_valid_space(highest_space_index + 1) is False
-
-
-def test_a_line_does_not_win_if_not_all_spaces_contain_the_same_marker(board):
-    board.place_marker(0, 'X')
-    board.place_marker(1, 'X')
-    board.place_marker(2, 'O')
-
-    assert board.is_winning_line((0, 1, 2)) is False
+    assert highest_space_index not in board.available_spaces()
 
 
-def test_a_line_wins_if_all_spaces_contain_the_same_marker(board):
-    board.place_marker(0, 'X')
-    board.place_marker(1, 'X')
-    board.place_marker(2, 'X')
+def test_returns_the_contents_of_the_spaces_requested(board):
+    board.place_marker(0, 'A')
+    board.place_marker(1, 'B')
+    board.place_marker(2, 'C')
 
-    assert board.is_winning_line((0, 1, 2)) is True
-
-
-def test_a_line_does_not_win_if_all_spaces_are_empty(board):
-    assert board.is_winning_line((0, 1, 2)) is False
+    assert board.retrieve_line((0,1,2)) == ['A', 'B', 'C']
