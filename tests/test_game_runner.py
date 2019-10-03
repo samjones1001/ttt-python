@@ -58,6 +58,7 @@ class MockBoard:
 
     def is_full(self):
         self.is_full_call_count += 1
+        return True if self._turns_remaining == 0 else False
 
     def place_marker(self, space, marker):
         self.place_marker_call_count += 1
@@ -66,9 +67,9 @@ class MockBoard:
     def is_available_space(self, space):
         return True
 
-    def is_winning_line(self, line):
+    def retrieve_line(self, line):
         self.is_winning_line_call_count += 1
-        return True if self._turns_remaining == 0 else False
+        return []
 
 
     def available_spaces(self):

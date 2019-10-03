@@ -80,21 +80,9 @@ def test_out_of_bounds_indexed_spaces_are_not_available(board):
     assert board.is_available_space(highest_space_index + 1) is False
 
 
-def test_a_line_does_not_win_if_not_all_spaces_contain_the_same_marker(board):
-    board.place_marker(0, 'X')
-    board.place_marker(1, 'X')
-    board.place_marker(2, 'O')
+def test_returns_the_contents_of_the_spaces_requested(board):
+    board.place_marker(0, 'A')
+    board.place_marker(1, 'B')
+    board.place_marker(2, 'C')
 
-    assert board.is_winning_line((0, 1, 2)) is False
-
-
-def test_a_line_wins_if_all_spaces_contain_the_same_marker(board):
-    board.place_marker(0, 'X')
-    board.place_marker(1, 'X')
-    board.place_marker(2, 'X')
-
-    assert board.is_winning_line((0, 1, 2)) is True
-
-
-def test_a_line_does_not_win_if_all_spaces_are_empty(board):
-    assert board.is_winning_line((0, 1, 2)) is False
+    assert board.retrieve_line((0,1,2)) == ['A', 'B', 'C']

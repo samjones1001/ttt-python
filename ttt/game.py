@@ -37,7 +37,10 @@ class Game:
 
     def play_turn(self, console):
         space = self._current_player.get_move(self.get_board_state(), console)
-        self._place_marker(space)
+        self._board.place_marker(
+            space=space,
+            marker=self._current_player.get_marker()
+        )
         self._switch_current_player()
 
     def game_over(self):
@@ -45,20 +48,13 @@ class Game:
 
     def is_won(self):
         for condition in self._win_conditions:
-            if self._board.is_winning_line(condition):
+            line = self._board.retrieve_line(condition)
+            if len(set(line)) == 1 and line[0] != '-':
                 return True
         return False
 
     def is_tie(self):
         return self._board.is_full()
-
-    def _place_marker(self, space):
-        if not self._is_valid_move(int(space)):
-            raise Exception('Invalid Move!')
-        self._board.place_marker(
-            space=space,
-            marker=self._current_player.get_marker()
-        )
 
     def _switch_current_player(self):
         self._current_player, self._opponent = self._opponent, self._current_player

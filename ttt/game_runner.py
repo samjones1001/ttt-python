@@ -18,15 +18,9 @@ class GameRunner:
         self._console.render_board(self._game)
         while not self._game.game_over():
             self._console.output_message(self._turn_start_message())
-            self._place_marker()
+            self._game.play_turn(self._console)
             self._console.render_board(self._game)
         self._console.show_game_over_message(self._game)
-
-    def _place_marker(self):
-        try:
-            self._game.play_turn(self._console)
-        except Exception as ex:
-            self._print_message(ex)
 
     def _print_message(self, string):
         self._console.output_message(string)

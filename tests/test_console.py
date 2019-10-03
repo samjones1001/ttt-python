@@ -18,13 +18,13 @@ class MockConsoleIO:
         self.last_output = output
 
 class MockBoard:
-    def __init__(self, is_won=False, is_full=False):
+    def __init__(self, line_to_check=[], is_full=False):
         self.arg = 1
-        self._is_won = is_won
+        self._line_to_check = line_to_check
         self._is_full = is_full
 
-    def is_winning_line(self, line):
-        return self._is_won
+    def retrieve_line(self, line):
+        return self._line_to_check
 
     def is_tie(self):
         return self._is_full
@@ -139,7 +139,7 @@ def test_if_a_game_has_been_won_sends_a_message_to_console_io(console_with_valid
     player_1 = Player('Player 1', 'O')
     player_2 = Player('Player 2', 'O')
 
-    game = Game(player_1, player_2, MockBoard(is_won=True))
+    game = Game(player_1, player_2, MockBoard(line_to_check=['X', 'X', 'X']))
 
     console.show_game_over_message(game)
 

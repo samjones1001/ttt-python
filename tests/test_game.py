@@ -4,10 +4,11 @@ from ttt.console import Console
 
 
 class MockBoard:
-    def __init__(self):
+    def __init__(self, line_to_check=[]):
         self.place_marker_call_count = 0
         self.get_spaces_call_count = 0
         self.available_spaces_call_count = 0
+        self._line_to_check = line_to_check
 
     def is_full(self):
         return False
@@ -28,8 +29,8 @@ class MockBoard:
         else:
             return True
 
-    def is_winning_line(self, line):
-        return False
+    def retrieve_line(self, line):
+        return self._line_to_check
 
     def available_spaces(self):
         self.available_spaces_call_count += 1
@@ -47,8 +48,8 @@ class MockBoardWithWinConditionMet:
     def is_full(self):
         return False
 
-    def is_winning_line(self, line):
-        return True
+    def retrieve_line(self, line):
+        return ['X', 'X', 'X']
 
 
 class MockConsoleIOInvalidInput:
@@ -133,6 +134,27 @@ def test_the_game_is_over_if_a_player_has_won():
     won_game = Game(game_board=MockBoardWithWinConditionMet())
 
     assert won_game.game_over() is True
+
+
+def test_a_line_does_not_win_if_not_all_spaces_contain_the_same_marker():
+    board = MockBoard(['X', 'X', 'O'])
+    game = Game(game_board=board)
+
+    assert game.is_won() is False
+
+
+def test_a_line_wins_if_all_spaces_contain_the_same_marker():
+    board = MockBoard(['X', 'X', 'X'])
+    game = Game(game_board=board)
+
+    assert game.is_won() is True
+
+
+def test_a_line_does_not_win_if_all_spaces_are_empty():
+    board = MockBoard(['-', '-', '-'])
+    game = Game(game_board=board)
+
+    assert game.is_won() is False
 
 
 def test_play_turn_instructs_board_to_occupy_space(players):

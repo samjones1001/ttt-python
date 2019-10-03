@@ -18,9 +18,8 @@ class Board:
     def available_spaces(self):
         return [index for index, space in enumerate(self._spaces) if space == "-"]
 
-    def is_winning_line(self, line):
-        markers = [space for space in self._get_markers_for_line(line)]
-        return len(set(markers)) == 1 and markers[0] != '-'
+    def retrieve_line(self, line):
+        return [space for space in self._get_markers_for_line(line)]
 
     def _is_occupied_space(self, space):
         return self._spaces[space] is not '-'
