@@ -7,8 +7,9 @@ class Console:
     def __init__(self, io=ConsoleIO()):
         self._io = io
 
-    def render_board(self, board_state):
-        self._io.print_output(self._build_board_output(board_state))
+    def render_board(self, game):
+        board_string = self._build_board_output(game.get_board_state())
+        self._io.print_output(board_string)
 
     def get_valid_input(self, valid_inputs, error):
         user_input = self._io.get_input()

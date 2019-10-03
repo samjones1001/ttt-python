@@ -20,6 +20,6 @@ class Interface:
         input = self._console.get_valid_input(['1', '2'], "Please select an option from the menu")
         if input == '1':
             return Player(name, marker)
-        else:
+        elif input == '2':
             return ComputerPlayer(name, marker)
 

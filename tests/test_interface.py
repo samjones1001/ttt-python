@@ -36,7 +36,7 @@ def test_starting_a_game_requests_a_welcome_message_be_displayed():
 
 def test_starting_a_game_requests_the_game_runner_to_run():
     runner = MockGameRunner
-    interface = Interface(MockConsole(input_return=1))
+    interface = Interface(MockConsole(input_return='1'))
     interface.start(runner)
 
     assert interface._runner.run_call_count == 1
@@ -44,7 +44,7 @@ def test_starting_a_game_requests_the_game_runner_to_run():
 
 def test_user_can_select_a_human_opponent():
     runner = MockGameRunner
-    interface = Interface(MockConsole(input_return=1))
+    interface = Interface(MockConsole(input_return='1'))
     interface.start(runner)
 
     assert isinstance(interface._runner.player_2, Player)
@@ -52,7 +52,7 @@ def test_user_can_select_a_human_opponent():
 
 def test_user_can_select_a_computer_opponent():
     runner = MockGameRunner
-    interface = Interface(MockConsole(input_return=2))
+    interface = Interface(MockConsole(input_return='2'))
     interface.start(runner)
 
     assert isinstance(interface._runner.player_2, ComputerPlayer)

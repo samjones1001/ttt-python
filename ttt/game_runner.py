@@ -16,18 +16,15 @@ class GameRunner:
         board = board()
         self._game = game(player_1, player_2, board)
         game_in_progress = True
-        self._render_board()
+        self._console.render_board(self._game)
         while game_in_progress:
             self._console.output_message(self._turn_start_message())
             self._place_marker()
-            self._render_board()
+            self._console.render_board(self._game)
+
             if self._game.game_over():
                 game_in_progress = False
                 self._console.show_game_over_message(self._game)
-
-    def _render_board(self):
-        current_state = self._game.get_board_state()
-        self._console.render_board(current_state)
 
     def _place_marker(self):
         try:

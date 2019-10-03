@@ -30,11 +30,19 @@ class MockBoard:
         return self._is_full
 
 
+class MockGame:
+    def __init__(self, board_state):
+        self._board_state = board_state
+
+    def get_board_state(self):
+        return self._board_state
+
+
 class TestRunner:
-    def render_board(self, board_state):
+    def render_board(self, game):
         console_io = MockConsoleIO()
         console = Console(console_io)
-        console.render_board(board_state)
+        console.render_board(game)
         return console_io.last_output
 
 
@@ -70,20 +78,23 @@ def runner():
 
 def test_prints_an_empty_grid_correctly(empty_board_output, runner):
     empty_board_state = ['-', '-', '-', '-', '-', '-', '-', '-', '-']
+    game = MockGame(empty_board_state)
 
-    assert runner.render_board(empty_board_state) == empty_board_output
+    assert runner.render_board(game) == empty_board_output
 
 
 def test_prints_a_part_filled_grid_correctly(part_filled_board_output, runner):
     part_filled_board_state = ['x', 'o', '-', '-', '-', '-', '-', '-', '-']
+    game = MockGame(part_filled_board_state)
 
-    assert runner.render_board(part_filled_board_state) == part_filled_board_output
+    assert runner.render_board(game) == part_filled_board_output
 
 
 def test_prints_a_fully_filled_grid(filled_board_output, runner):
     filled_board_state = ['x', 'o', 'x', 'o', 'x', 'o', 'x', 'o', 'x']
-
-    assert runner.render_board(filled_board_state) == filled_board_output
+    game = MockGame(filled_board_state
+                    )
+    assert runner.render_board(game) == filled_board_output
 
 
 def test_returns_valid_user_input():

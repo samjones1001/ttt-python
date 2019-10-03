@@ -92,15 +92,6 @@ def test_run_instantiates_a_new_game(player_1, player_2, game_runner):
     assert game_runner.get_game() is not None
 
 
-def test_run_requests_board_state_at_start_of_game_each_turn_and_game_over(player_1, player_2):
-    times_requested_at_start_on_final_turn_and_game_over = 3
-    game_runner = GameRunner(console=MockConsole())
-
-    game_runner.run(player_1, player_2, Game, MockBoardGameOverState)
-
-    assert game_runner.get_game().get_board().get_spaces_call_count == times_requested_at_start_on_final_turn_and_game_over
-
-
 def test_run_requests_board_to_be_printed_each_turn_and_on_game_over(player_1, player_2):
     times_printed_on_final_turn_and_game_over = 2
     console = MockConsole()
