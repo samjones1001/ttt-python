@@ -1,5 +1,5 @@
 from ttt.player import Player
-from ttt.computer_player import ComputerPlayer
+from ttt.simple_computer_player import SimpleComputerPlayer
 from ttt.game_runner import GameRunner
 from ttt.messages import WELCOME_MESSAGE
 
@@ -22,5 +22,5 @@ class Interface:
         if user_input == '1':
             return Player(name, marker)
         elif user_input == '2':
-            return ComputerPlayer(name, marker)
+            return SimpleComputerPlayer(name, marker)
 

@@ -2,7 +2,7 @@ import random
 from ttt.player import Player
 
 
-class ComputerPlayer(Player):
+class SimpleComputerPlayer(Player):
     def __init__(self, name, marker):
         super().__init__(name, marker)
 
