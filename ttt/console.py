@@ -23,10 +23,9 @@ class Console:
 
     def show_game_over_message(self,game):
         if game.is_won():
-            message = f"{game.get_opponent_name()}{GAME_WON_MESSAGE}"
+            self.output_message(f"{game.get_opponent_name()}{GAME_WON_MESSAGE}")
         else:
-            message = f"{GAME_TIED_MESSAGE}"
-        self.output_message(message)
+            self.output_message(f"{GAME_TIED_MESSAGE}")
 
     def _build_board_output(self, board_state):
         lines = self._build_lines(board_state)
