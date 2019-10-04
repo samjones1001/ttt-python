@@ -62,11 +62,15 @@ class MockPlayer:
 
 
 class MockGame:
-    def __init__(self, board_state):
+    def __init__(self, board_state=[], available_spaces=None):
         self._board_state = board_state
+        self._available_spaces = available_spaces
 
     def get_board_state(self):
         return self._board_state
+
+    def available_spaces(self):
+        return self._available_spaces
 
 
 class MockBoard:

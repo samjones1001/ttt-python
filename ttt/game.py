@@ -33,7 +33,7 @@ class Game:
         return self._board.available_spaces()
 
     def play_turn(self, console):
-        space = self._current_player.get_move(self._board.available_spaces(), console)
+        space = self._current_player.get_move(self, console)
 
         self._board.place_marker(space=space, marker=self._current_player.get_marker())
         self._switch_current_player()
