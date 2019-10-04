@@ -1,4 +1,4 @@
-from ttt.simple_computer_player import SimpleComputerPlayer
+from ttt.players.simple_computer_player import SimpleComputerPlayer
 from tests.mocks import MockGame
 
 def test_computer_player_move_returns_the_index_of_an_available_space():

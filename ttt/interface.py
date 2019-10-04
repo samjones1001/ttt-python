@@ -1,5 +1,5 @@
-from ttt.player import Player
-from ttt.simple_computer_player import SimpleComputerPlayer
+from ttt.players.player import Player
+from ttt.players.simple_computer_player import SimpleComputerPlayer
 from ttt.game_runner import GameRunner
 from ttt.messages import WELCOME_MESSAGE
 

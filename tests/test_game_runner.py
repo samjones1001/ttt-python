@@ -1,10 +1,7 @@
 import pytest
 from ttt.game_runner import GameRunner
 from ttt.game import Game
-from ttt.player import Player
-from tests.mocks import MockPlayer
-from tests.mocks import MockConsole
-from tests.mocks import MockBoard
+from tests.mocks import MockPlayer, MockConsole, MockBoard
 
 
 @pytest.fixture

@@ -1,8 +1,7 @@
 from ttt.interface import Interface
-from ttt.player import Player
-from ttt.simple_computer_player import SimpleComputerPlayer
-from tests.mocks import MockConsole
-from tests.mocks import MockGameRunner
+from ttt.players.player import Player
+from ttt.players.simple_computer_player import SimpleComputerPlayer
+from tests.mocks import MockConsole, MockGameRunner
 
 
 def test_starting_a_game_requests_a_welcome_message_be_displayed():

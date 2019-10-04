@@ -1,6 +1,5 @@
-from ttt.player import Player
-from tests.mocks import MockConsole
-from tests.mocks import MockGame
+from ttt.players.player import Player
+from tests.mocks import MockConsole, MockGame
 
 def test_human_player_moves_get_an_integer_from_the_console():
     console = MockConsole()

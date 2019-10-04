@@ -1,5 +1,5 @@
 import random
-from ttt.player import Player
+from ttt.players.player import Player
 
 
 class SimpleComputerPlayer(Player):

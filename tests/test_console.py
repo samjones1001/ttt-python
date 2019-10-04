@@ -1,10 +1,8 @@
 import pytest
 from ttt.console import Console
-from ttt.player import Player
+from ttt.players.player import Player
 from ttt.game import Game
-from tests.mocks import MockConsoleIO
-from tests.mocks import MockGame
-from tests.mocks import MockBoard
+from tests.mocks import MockConsoleIO, MockGame, MockBoard
 
 
 class TestRunner:

@@ -1,4 +1,4 @@
-from ttt.player import Player
+from ttt.players.player import Player
 
 
 class SmartComputerPlayer(Player):
@@ -9,4 +9,5 @@ class SmartComputerPlayer(Player):
         return self._find_best_move(game)
 
     def _find_best_move(self, game):
-        return 1
+        best_move = -1
+
