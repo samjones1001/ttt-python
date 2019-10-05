@@ -12,3 +12,4 @@ class SmartComputerPlayer(HumanPlayer):
         best_move = -1
         best_score = -100
 
+

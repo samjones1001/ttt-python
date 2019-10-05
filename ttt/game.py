@@ -14,6 +14,7 @@ class Game:
         self._current_player = player_one
         self._opponent = player_two
         self._win_conditions = ((0,1,2), (3,4,5), (6,7,8), (0,3,6), (1,4,7), (2,5,8), (0,4,8), (2,4,6))
+        self._winning_marker = None
 
     def get_current_player(self):
         return self._current_player
@@ -29,6 +30,9 @@ class Game:
 
     def get_board_state(self):
         return self._board.get_spaces()
+
+    def winner(self):
+        return self._winning_marker
 
     def available_spaces(self):
         return self._board.available_spaces()
@@ -51,6 +55,7 @@ class Game:
         for condition in self._win_conditions:
             line = self._board.retrieve_line(condition)
             if len(set(line)) == 1 and line[0] != '-':
+                self._winning_marker = line[0]
                 return True
         return False
 

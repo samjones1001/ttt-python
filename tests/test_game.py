@@ -84,6 +84,14 @@ def test_a_line_does_not_win_if_all_spaces_are_empty():
     assert game.is_won() is False
 
 
+def test_stores_the_winning_marker():
+    board = MockBoard(line_to_check=['X', 'X', 'X'])
+    game = Game(game_board=board)
+
+    game.is_won()
+    assert game.winner() == 'X'
+
+
 def test_play_turn_instructs_board_to_occupy_space(players):
     board = MockBoard()
     game = Game(game_board=board, player_one=players[0], player_two=players[1])
