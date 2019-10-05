@@ -1,11 +1,11 @@
 import random
-from ttt.players.player import Player
+from ttt.players.human_player import HumanPlayer
 
 
-class SimpleComputerPlayer(Player):
+class SimpleComputerPlayer(HumanPlayer):
     def __init__(self, name, marker):
         super().__init__(name, marker)
 
-    def get_move(self, game, console=None):
-        spaces = game.available_spaces()
+    def get_move(self, board, console=None):
+        spaces = board.available_spaces()
         return spaces[random.randint(0, len(spaces) - 1)]

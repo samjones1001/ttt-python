@@ -1,5 +1,5 @@
 from ttt.interface import Interface
-from ttt.players.player import Player
+from ttt.players.human_player import HumanPlayer
 from ttt.players.simple_computer_player import SimpleComputerPlayer
 from tests.mocks import MockConsole, MockGameRunner
 
@@ -26,7 +26,7 @@ def test_user_can_select_a_human_opponent():
     interface = Interface(MockConsole(input_return='1'))
     interface.start(runner)
 
-    assert isinstance(interface._runner.player_2, Player)
+    assert isinstance(interface._runner.player_2, HumanPlayer)
 
 
 def test_user_can_select_a_computer_opponent():
