@@ -1,5 +1,6 @@
 from ttt.board import Board
 from ttt.players.player import Player
+from ttt.messages import TURN_START_MESSAGE
 
 
 class Game:
@@ -33,9 +34,11 @@ class Game:
         return self._board.available_spaces()
 
     def play_turn(self, console):
-        space = self._current_player.get_move(self, console)
+        console.render_board(self)
+        console.output_message(self._turn_start_message())
 
-        self._board.place_marker(space=space, marker=self._current_player.get_marker())
+        space = self._current_player.get_move(self, console)
+        self._board = self._board.place_marker(space=space, marker=self._current_player.get_marker())
         self._switch_current_player()
 
     def game_over(self):
@@ -51,6 +54,12 @@ class Game:
                 return True
         return False
 
+    def show_game_over_screen(self, console):
+        console.render_board(self)
+        console.show_game_over_message(self)
+
     def _switch_current_player(self):
         self._current_player, self._opponent = self._opponent, self._current_player
 
+    def _turn_start_message(self):
+        return f'{self.get_current_player_name()}{TURN_START_MESSAGE}{self.available_spaces()}'

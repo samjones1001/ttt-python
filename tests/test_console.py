@@ -35,21 +35,21 @@ def runner():
 
 def test_prints_an_empty_grid_correctly(empty_board_output, runner):
     empty_board_state = ['-', '-', '-', '-', '-', '-', '-', '-', '-']
-    game = MockGame(empty_board_state)
+    game = MockGame(board_state=empty_board_state)
 
     assert runner.render_board(game) == empty_board_output
 
 
 def test_prints_a_part_filled_grid_correctly(part_filled_board_output, runner):
     part_filled_board_state = ['x', 'o', '-', '-', '-', '-', '-', '-', '-']
-    game = MockGame(part_filled_board_state)
+    game = MockGame(board_state=part_filled_board_state)
 
     assert runner.render_board(game) == part_filled_board_output
 
 
 def test_prints_a_fully_filled_grid(filled_board_output, runner):
     filled_board_state = ['x', 'o', 'x', 'o', 'x', 'o', 'x', 'o', 'x']
-    game = MockGame(filled_board_state)
+    game = MockGame(board_state=filled_board_state)
 
     assert runner.render_board(game) == filled_board_output
 

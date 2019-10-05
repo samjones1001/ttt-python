@@ -1,7 +1,7 @@
 import pytest
 from ttt.game import Game
 from ttt.console import Console
-from tests.mocks import MockConsoleIO, MockPlayer, MockBoard
+from tests.mocks import MockConsoleIO, MockConsole, MockPlayer, MockBoard
 
 
 @pytest.fixture
@@ -11,7 +11,7 @@ def players():
 
 @pytest.fixture
 def game(players):
-    return Game(game_board=MockBoard(), player_one=players[0], player_two=players[1])
+    return Game(player_one=players[0], player_two=players[1])
 
 
 def test_get_board_state_sends_a_message_to_board():
@@ -90,3 +90,40 @@ def test_play_turn_instructs_board_to_occupy_space(players):
     game.play_turn(Console(MockConsoleIO(['1'])))
 
     assert board.place_marker_call_count == 1
+
+
+def test_playing_a_turn_outputs_the_current_state_of_the_board(game):
+    console = MockConsole()
+    game.play_turn(console)
+
+    assert console.render_board_call_count == 1
+
+
+def test_playing_a_turn_outputs_a_message(game):
+    console = MockConsole()
+    game.play_turn(console)
+
+    assert console.output_message_call_count == 1
+
+
+def test_playing_a_turn_prompts_player_for_a_move(game, players):
+    console = MockConsole()
+    game.play_turn(console)
+
+    assert players[0].get_move_call_count == 1
+
+
+def test_playing_a_turn_places_a_marker_on_the_board(game):
+    space_to_fill = 1
+    console = MockConsole()
+    game.play_turn(console)
+
+    assert space_to_fill not in game.get_board().available_spaces()
+
+
+def test_displays_the_board_and_a_message_on_game_over(game):
+    console = MockConsole()
+    game.show_game_over_screen(console)
+
+    assert console.render_board_call_count == 1
+    assert console.show_game_over_message_call_count == 1
