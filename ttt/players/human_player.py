@@ -1,14 +1,9 @@
-class HumanPlayer:
-    def __init__(self, name, marker):
-        self._name = name
-        self._marker = marker
+from ttt.players.player import Player
 
-    def get_name(self):
-        return self._name
+class HumanPlayer(Player):
+    def __init__(self, name, marker, console):
+        super().__init__(name, marker, console)
 
-    def get_marker(self):
-        return self._marker
-
-    def get_move(self, board, console):
-        space_strings = list(map(str, board.available_spaces()))
-        return int(console.get_valid_input(space_strings, "Please select from available spaces"))
+    def get_move(self, game):
+        space_strings = list(map(str, game.available_spaces()))
+        return int(self._console.get_valid_input(space_strings, "Please select from available spaces"))

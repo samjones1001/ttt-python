@@ -93,8 +93,8 @@ def test_sends_message_to_console_io():
 def test_if_a_game_has_been_won_sends_a_message_to_console_io():
     console_io = MockConsoleIO()
     console = Console(console_io)
-    player_1 = HumanPlayer('Player 1', 'O')
-    player_2 = HumanPlayer('Player 2', 'X')
+    player_1 = HumanPlayer('Player 1', 'O', console)
+    player_2 = HumanPlayer('Player 2', 'X', console)
 
     game = Game(player_1, player_2, MockBoard(line_to_check=['X', 'X', 'X']))
 
@@ -106,8 +106,8 @@ def test_if_a_game_has_been_won_sends_a_message_to_console_io():
 def test_if_a_game_is_a_tie_sends_a_message_to_console_io():
     console_io = MockConsoleIO()
     console = Console(console_io)
-    player_1 = HumanPlayer('Player 1', 'O')
-    player_2 = HumanPlayer('Player 2', 'X')
+    player_1 = HumanPlayer('Player 1', 'O', console)
+    player_2 = HumanPlayer('Player 2', 'X', console)
 
     game = Game(player_1, player_2, MockBoard(spaces_remaining=0))
 

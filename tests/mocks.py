@@ -56,7 +56,7 @@ class MockPlayer:
     def get_marker(self):
         return self._marker
 
-    def get_move(self, spaces, console):
+    def get_move(self, game):
         self.get_move_call_count += 1
         return 1
 

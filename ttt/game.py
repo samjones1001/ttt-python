@@ -4,10 +4,7 @@ from ttt.messages import TURN_START_MESSAGE
 
 
 class Game:
-    def __init__(self,
-                 player_one=HumanPlayer(name="Player 1", marker="O"),
-                 player_two=HumanPlayer(name="Player 2", marker="X"),
-                 game_board=Board()):
+    def __init__(self, player_one, player_two, game_board=Board()):
         self._player_one = player_one
         self._player_two = player_two
         self._board = game_board
@@ -41,7 +38,7 @@ class Game:
         console.render_board(self)
         console.output_message(self._turn_start_message())
 
-        space = self._current_player.get_move(self._board, console)
+        space = self._current_player.get_move(self)
         self._board = self._board.place_marker(space=space, marker=self._current_player.get_marker())
         self._switch_current_player()
 
