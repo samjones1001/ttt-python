@@ -1,3 +1,5 @@
+import copy
+
 class Board:
     def __init__(self, state=None):
         self._spaces = self._set_spaces(state)
@@ -12,7 +14,7 @@ class Board:
         return [index for index, space in enumerate(self._spaces) if space == "-"]
 
     def place_marker(self, space, marker):
-        state = self._spaces
+        state = copy.deepcopy(self._spaces)
         state[space] = marker
         return Board(state)
 

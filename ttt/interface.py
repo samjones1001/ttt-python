@@ -1,5 +1,6 @@
 from ttt.players.human_player import HumanPlayer
 from ttt.players.simple_computer_player import SimpleComputerPlayer
+from ttt.players.smart_computer_player import SmartComputerPlayer
 from ttt.game_runner import GameRunner
 from ttt.messages import WELCOME_MESSAGE
 
@@ -18,9 +19,11 @@ class Interface:
         self._runner.run(player_1, player_2)
 
     def _select_player_type(self, name, marker):
-        user_input = self._console.get_valid_input(['1', '2'], "Please select an option from the menu")
+        user_input = self._console.get_valid_input(['1', '2', '3'], "Please select an option from the menu")
         if user_input == '1':
             return HumanPlayer(name, marker, self._console)
         elif user_input == '2':
             return SimpleComputerPlayer(name, marker)
+        elif user_input == '3':
+            return SmartComputerPlayer(name, marker)
 

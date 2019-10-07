@@ -22,7 +22,7 @@ class Console:
         self._io.print_output(message)
 
     def show_game_over_message(self,game):
-        if game.is_won():
+        if game.is_won(game.get_board(), game.get_opponent_marker()):
             self.output_message(f"{game.get_opponent_name()}{GAME_WON_MESSAGE}")
         else:
             self.output_message(f"{GAME_TIED_MESSAGE}")
