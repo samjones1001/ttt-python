@@ -6,7 +6,7 @@ from tests.mocks import MockConsole, MockGameRunner
 
 
 def test_starting_a_game_requests_a_welcome_message_be_displayed():
-    runner = MockGameRunner
+    runner = MockGameRunner('console')
     console = MockConsole(input_return='1')
     interface = Interface(console)
     interface.start(runner)
@@ -15,32 +15,32 @@ def test_starting_a_game_requests_a_welcome_message_be_displayed():
 
 
 def test_starting_a_game_requests_the_game_runner_to_run():
-    runner = MockGameRunner
+    runner = MockGameRunner('console')
     interface = Interface(MockConsole(input_return='1'))
     interface.start(runner)
 
-    assert interface._runner.run_call_count == 1
+    assert runner.run_call_count == 1
 
 
 def test_user_can_select_a_human_opponent():
-    runner = MockGameRunner
+    runner = MockGameRunner('console')
     interface = Interface(MockConsole(input_return='1'))
     interface.start(runner)
 
-    assert isinstance(interface._runner.player_2, HumanPlayer)
+    assert isinstance(runner.player_2, HumanPlayer)
 
 
 def test_user_can_select_a_simple_computer_opponent():
-    runner = MockGameRunner
+    runner = MockGameRunner('console')
     interface = Interface(MockConsole(input_return='2'))
     interface.start(runner)
 
-    assert isinstance(interface._runner.player_2, SimpleComputerPlayer)
+    assert isinstance(runner.player_2, SimpleComputerPlayer)
 
 
 def test_user_can_select_a_smart_computer_opponent():
-    runner = MockGameRunner
+    runner = MockGameRunner('console')
     interface = Interface(MockConsole(input_return='3'))
     interface.start(runner)
 
-    assert isinstance(interface._runner.player_2, SmartComputerPlayer)
+    assert isinstance(runner.player_2, SmartComputerPlayer)

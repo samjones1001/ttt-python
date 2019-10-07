@@ -23,14 +23,6 @@ def test_get_board_state_sends_a_message_to_board(players):
     assert board.get_spaces_call_count == 1
 
 
-def test_available_spaces_sends_a_message_to_board(players):
-    board = MockBoard()
-    game = Game(players[0], players[1], game_board=board)
-    game.available_spaces()
-
-    assert board.available_spaces_call_count == 1
-
-
 def test_current_player_switches_to_player_two_after_player_one_turn(game, players):
     current_player_after_switch = players[1].get_name()
     game.play_turn(Console(MockConsoleIO(['1'])))
