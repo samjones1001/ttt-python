@@ -1,6 +1,6 @@
-from ttt.game import Game
-from ttt.board import Board
-from ttt.console import Console
+from ttt.game.game import Game
+from ttt.game.board import Board
+from ttt.console_ui.console import Console
 
 
 class GameRunner:

@@ -1,4 +1,4 @@
-from ttt.board import Board
+from ttt.game.board import Board
 from ttt.messages import TURN_START_MESSAGE
 
 

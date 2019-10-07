@@ -1,4 +1,4 @@
-from ttt.consoleio import ConsoleIO
+from ttt.console_ui.consoleio import ConsoleIO
 from ttt.messages import GAME_WON_MESSAGE
 from ttt.messages import GAME_TIED_MESSAGE
 

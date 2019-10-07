@@ -1,6 +1,6 @@
-from ttt.consoleio import ConsoleIO
-from ttt.console import Console
-from ttt.interface import Interface
+from ttt.console_ui.consoleio import ConsoleIO
+from ttt.console_ui.console import Console
+from ttt.console_ui.interface import Interface
 
 consoleio = ConsoleIO()
 console = Console(consoleio)

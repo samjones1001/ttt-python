@@ -1,7 +1,7 @@
 import pytest
-from ttt.console import Console
+from ttt.console_ui.console import Console
 from ttt.players.human_player import HumanPlayer
-from ttt.game import Game
+from ttt.game.game import Game
 from tests.mocks import MockConsoleIO, MockGame, MockBoard
 
 

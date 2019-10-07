@@ -1,7 +1,7 @@
 from ttt.players.human_player import HumanPlayer
 from ttt.players.simple_computer_player import SimpleComputerPlayer
 from ttt.players.smart_computer_player import SmartComputerPlayer
-from ttt.game_runner import GameRunner
+from ttt.game.game_runner import GameRunner
 from ttt.messages import WELCOME_MESSAGE
 
 

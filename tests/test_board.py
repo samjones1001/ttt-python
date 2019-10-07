@@ -1,5 +1,5 @@
 import pytest
-from ttt.board import Board
+from ttt.game.board import Board
 
 
 @pytest.fixture

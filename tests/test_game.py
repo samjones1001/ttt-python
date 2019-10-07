@@ -1,6 +1,6 @@
 import pytest
-from ttt.game import Game
-from ttt.console import Console
+from ttt.game.game import Game
+from ttt.console_ui.console import Console
 from tests.mocks import MockConsoleIO, MockConsole, MockPlayer, MockBoard
 
 

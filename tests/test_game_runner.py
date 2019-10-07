@@ -1,5 +1,5 @@
 import pytest
-from ttt.game_runner import GameRunner
+from ttt.game.game_runner import GameRunner
 from tests.mocks import MockPlayer, MockConsole, MockGame
 
 
