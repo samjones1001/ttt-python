@@ -89,35 +89,35 @@ def test_game_is_not_over_when_board_is_not_full(game):
 
 
 def test_the_game_is_over_when_board_is_full(players):
-    end_state_game = Game(players[0], players[1], game_board=Board(['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i']))
+    end_state_game = Game(players[0], players[1], Board(['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i']))
 
     assert end_state_game.game_over() is True
 
 
 def test_the_game_is_over_if_a_player_has_won(players):
     board = Board(['X', 'X', 'X', '-', '-', '-', '-', '-', '-'])
-    won_game = Game(players[0], players[1], game_board=board)
+    won_game = Game(players[0], players[1], board)
 
     assert won_game.game_over() is True
 
 
 def test_a_line_does_not_win_if_not_all_spaces_contain_the_same_marker(players):
     board = Board(['X', 'X', 'O', '-', '-', '-', '-', '-', '-'])
-    game = Game(players[0], players[1], game_board=board)
+    game = Game(players[0], players[1], board)
 
     assert game.is_won(board, 'X') is False
 
 
 def test_a_line_wins_if_all_spaces_contain_the_same_marker(players):
     board = Board(['X', 'X', 'X', '-', '-', '-', '-', '-', '-'])
-    game = Game(players[0], players[1], game_board=board)
+    game = Game(players[0], players[1], board)
 
     assert game.is_won(board, 'X') is True
 
 
 def test_a_line_does_not_win_if_all_spaces_are_empty(players):
     board = Board(['-', '-', '-', '-', '-', '-', '-', '-', '-'])
-    game = Game(players[0], players[1], game_board=board)
+    game = Game(players[0], players[1], board)
 
     assert game.is_won(board, 'X') is False
 

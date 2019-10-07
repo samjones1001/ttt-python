@@ -47,9 +47,9 @@ def test_negative_indexed_spaces_are_not_available(board):
 
 
 def test_out_of_bounds_indexed_spaces_are_not_available(board):
-    highest_space_index = len(board.get_spaces())
+    out_of_bounds_space = len(board.get_spaces())
 
-    assert highest_space_index not in board.available_spaces()
+    assert out_of_bounds_space not in board.available_spaces()
 
 
 def test_returns_all_spaces_when_none_have_been_occupied(board):
