@@ -1,6 +1,6 @@
 import pytest
 import tic_tac_toe as app
-from ttt.console_ui.interface import Interface
+from ttt.console_ui.menu import Interface
 from ttt.console_ui.console import Console
 from ttt.messages import GAME_TIED_MESSAGE
 from tests.mocks import MockConsoleIO

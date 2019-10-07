@@ -1,4 +1,4 @@
-from ttt.console_ui.interface import Interface
+from ttt.console_ui.menu import Interface
 from ttt.players.human_player import HumanPlayer
 from ttt.players.simple_computer_player import SimpleComputerPlayer
 from ttt.players.smart_computer_player import SmartComputerPlayer
