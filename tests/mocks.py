@@ -89,40 +89,17 @@ class MockGame:
 
 
 class MockBoard:
-    def __init__(self, spaces_remaining=1, line_to_check=None):
-        self._spaces_remaining = spaces_remaining
-        self._line_to_check = line_to_check
+    def __init__(self):
         self.place_marker_call_count = 0
         self.get_spaces_call_count = 0
         self.available_spaces_call_count = 0
-        self.is_full_call_count = 0
-        self.is_winning_line_call_count = 0
 
     def get_spaces(self):
         self.get_spaces_call_count += 1
         return []
 
-    def is_full(self):
-        self.is_full_call_count += 1
-        return True if self._spaces_remaining == 0 else False
-
     def place_marker(self, space, marker):
         self.place_marker_call_count += 1
-        self._spaces_remaining -= 1
-
-    def is_available_space(self, space):
-        lowest_indexed_space = 0
-        highest_indexed_space = 8
-        occupied_space = 3
-        if space < lowest_indexed_space or space > highest_indexed_space or space == occupied_space:
-            return False
-        else:
-            return True
-
-    def retrieve_line(self, line):
-        self.is_winning_line_call_count += 1
-        return self._line_to_check
 
     def available_spaces(self):
         self.available_spaces_call_count += 1
-        return None

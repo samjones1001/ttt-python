@@ -3,7 +3,7 @@ from ttt.console_ui.console import Console
 from ttt.players.human_player import HumanPlayer
 from ttt.game.game import Game
 from ttt.game.board import Board
-from tests.mocks import MockConsoleIO, MockGame, MockBoard
+from tests.mocks import MockConsoleIO
 
 
 class TestRunner:
@@ -97,7 +97,7 @@ def test_if_a_game_has_been_won_sends_a_message_to_console_io():
     player_1 = HumanPlayer('Player 1', 'O', console)
     player_2 = HumanPlayer('Player 2', 'X', console)
 
-    game = Game(player_1, player_2, MockBoard(line_to_check=['X', 'X', 'X']))
+    game = Game(player_1, player_2, Board(['X', 'X', 'X', '-', '-', '-', '-', '-', '-']))
 
     console.show_game_over_message(game)
 
@@ -110,7 +110,7 @@ def test_if_a_game_is_a_tie_sends_a_message_to_console_io():
     player_1 = HumanPlayer('Player 1', 'O', console)
     player_2 = HumanPlayer('Player 2', 'X', console)
 
-    game = Game(player_1, player_2, MockBoard(spaces_remaining=0, line_to_check=[]))
+    game = Game(player_1, player_2, Board(['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i']))
 
     console.show_game_over_message(game)
 

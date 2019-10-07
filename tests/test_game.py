@@ -1,5 +1,6 @@
 import pytest
 from ttt.game.game import Game
+from ttt.game.board import Board
 from ttt.console_ui.console import Console
 from tests.mocks import MockConsoleIO, MockConsole, MockPlayer, MockBoard
 
@@ -88,34 +89,34 @@ def test_game_is_not_over_when_board_is_not_full(game):
 
 
 def test_the_game_is_over_when_board_is_full(players):
-    end_state_game = Game(players[0], players[1], game_board=MockBoard(spaces_remaining=0))
+    end_state_game = Game(players[0], players[1], game_board=Board(['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i']))
 
     assert end_state_game.game_over() is True
 
 
 def test_the_game_is_over_if_a_player_has_won(players):
-    board = MockBoard(line_to_check=['X', 'X', 'X'])
+    board = Board(['X', 'X', 'X', '-', '-', '-', '-', '-', '-'])
     won_game = Game(players[0], players[1], game_board=board)
 
     assert won_game.game_over() is True
 
 
 def test_a_line_does_not_win_if_not_all_spaces_contain_the_same_marker(players):
-    board = MockBoard(line_to_check=['X', 'X', 'O'])
+    board = Board(['X', 'X', 'O', '-', '-', '-', '-', '-', '-'])
     game = Game(players[0], players[1], game_board=board)
 
     assert game.is_won(board, 'X') is False
 
 
 def test_a_line_wins_if_all_spaces_contain_the_same_marker(players):
-    board = MockBoard(line_to_check=['X', 'X', 'X'])
+    board = Board(['X', 'X', 'X', '-', '-', '-', '-', '-', '-'])
     game = Game(players[0], players[1], game_board=board)
 
     assert game.is_won(board, 'X') is True
 
 
 def test_a_line_does_not_win_if_all_spaces_are_empty(players):
-    board = MockBoard(line_to_check=['-', '-', '-'])
+    board = Board(['-', '-', '-', '-', '-', '-', '-', '-', '-'])
     game = Game(players[0], players[1], game_board=board)
 
     assert game.is_won(board, 'X') is False
