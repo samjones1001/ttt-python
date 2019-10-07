@@ -30,7 +30,7 @@ class MockConsole:
     def render_board(self, _):
         self.render_board_call_count += 1
 
-    def show_game_over_message(self, game):
+    def show_game_over_message(self, is_won, name):
         self.show_game_over_message_call_count += 1
 
 
@@ -62,8 +62,14 @@ class MockPlayer:
 
 
 class MockGame:
-    def __init__(self, player_1='player 1', player_2='player_2', board='board', board_state=[], available_spaces=None, turns_remaining=1):
-        self._board_state = board_state
+    def __init__(self,
+                 player_1='player 1',
+                 player_2='player_2',
+                 board='board',
+                 board_state=None,
+                 available_spaces=None,
+                 turns_remaining=1):
+        self._board_state = self._set_board_state(board_state)
         self._available_spaces = available_spaces
         self._turns_remaining = turns_remaining
         self.game_over_call_count = 0
@@ -86,6 +92,11 @@ class MockGame:
 
     def show_game_over_screen(self, console):
         self.show_game_over_screen_call_count += 1
+
+    def _set_board_state(self, board_state):
+        if board_state is None:
+            return []
+        return board_state
 
 
 class MockBoard:

@@ -1,5 +1,6 @@
 from ttt.players.player import Player
 
+
 class HumanPlayer(Player):
     def __init__(self, name, marker, console):
         super().__init__(name, marker, console)

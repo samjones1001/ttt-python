@@ -20,7 +20,6 @@ def test_can_play_a_full_game():
     io = MockConsoleIO(['1', '0', '4', '1', '2', '6', '3', '5', '7', '8'])
     console = Console(io)
     app.interface = Interface(console)
-
     app.main()
 
     assert io.last_output == GAME_TIED_MESSAGE

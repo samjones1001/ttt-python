@@ -2,6 +2,7 @@ from ttt.players.smart_computer_player import SmartComputerPlayer
 from ttt.game.game import Game
 from ttt.game.board import Board
 
+
 def test_will_always_pick_the_center_space_if_available():
     board = Board(['O','-','-','-','-','-','-','-','-'])
     player_1 = SmartComputerPlayer('Player 1', 'X')

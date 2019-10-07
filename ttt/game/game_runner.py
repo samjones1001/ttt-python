@@ -1,5 +1,4 @@
 from ttt.game.game import Game
-from ttt.game.board import Board
 from ttt.console_ui.console import Console
 
 
@@ -11,9 +10,8 @@ class GameRunner:
     def get_game(self):
         return self._game
 
-    def run(self, player_1, player_2, game=Game, board=Board):
-        board = board()
-        self._game = game(player_1, player_2, board)
+    def run(self, player_1, player_2, game=Game):
+        self._game = game(player_1, player_2)
 
         while not self._game.game_over():
             self._game.play_turn(self._console)

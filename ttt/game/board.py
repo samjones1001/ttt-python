@@ -1,5 +1,6 @@
 import copy
 
+
 class Board:
     def __init__(self, state=None):
         self._spaces = self._set_spaces(state)

@@ -55,7 +55,10 @@ class Game:
 
     def show_game_over_screen(self, console):
         console.render_board(self._board)
-        console.show_game_over_message(self)
+        is_won = self.is_won(self._board, self.get_opponent_marker())
+        name = self.get_opponent_name()
+
+        console.show_game_over_message(is_won, name)
 
     def _switch_current_player(self):
         self._current_player, self._opponent = self._opponent, self._current_player
