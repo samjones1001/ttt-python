@@ -19,7 +19,7 @@ class Board:
         return Board(state)
 
     def retrieve_line(self, line):
-        return [space for space in self._get_markers_for_line(line)]
+        return [self._spaces[index] for index in line]
 
     def _set_spaces(self, state):
         spaces = ['-']*9 if state is None else state

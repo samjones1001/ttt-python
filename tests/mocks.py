@@ -89,7 +89,7 @@ class MockGame:
 
 
 class MockBoard:
-    def __init__(self, spaces_remaining=1, line_to_check=[]):
+    def __init__(self, spaces_remaining=1, line_to_check=None):
         self._spaces_remaining = spaces_remaining
         self._line_to_check = line_to_check
         self.place_marker_call_count = 0

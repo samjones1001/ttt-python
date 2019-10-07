@@ -2,6 +2,7 @@ import pytest
 from ttt.console_ui.console import Console
 from ttt.players.human_player import HumanPlayer
 from ttt.game.game import Game
+from ttt.game.board import Board
 from tests.mocks import MockConsoleIO, MockGame, MockBoard
 
 
@@ -35,23 +36,23 @@ def runner():
 
 def test_prints_an_empty_grid_correctly(empty_board_output, runner):
     empty_board_state = ['-', '-', '-', '-', '-', '-', '-', '-', '-']
-    game = MockGame(board_state=empty_board_state)
+    board = Board(empty_board_state)
 
-    assert runner.render_board(game) == empty_board_output
+    assert runner.render_board(board) == empty_board_output
 
 
 def test_prints_a_part_filled_grid_correctly(part_filled_board_output, runner):
     part_filled_board_state = ['x', 'o', '-', '-', '-', '-', '-', '-', '-']
-    game = MockGame(board_state=part_filled_board_state)
+    board = Board(part_filled_board_state)
 
-    assert runner.render_board(game) == part_filled_board_output
+    assert runner.render_board(board) == part_filled_board_output
 
 
 def test_prints_a_fully_filled_grid(filled_board_output, runner):
     filled_board_state = ['x', 'o', 'x', 'o', 'x', 'o', 'x', 'o', 'x']
-    game = MockGame(board_state=filled_board_state)
+    board = Board(filled_board_state)
 
-    assert runner.render_board(game) == filled_board_output
+    assert runner.render_board(board) == filled_board_output
 
 
 def test_returns_valid_user_input():
@@ -109,7 +110,7 @@ def test_if_a_game_is_a_tie_sends_a_message_to_console_io():
     player_1 = HumanPlayer('Player 1', 'O', console)
     player_2 = HumanPlayer('Player 2', 'X', console)
 
-    game = Game(player_1, player_2, MockBoard(spaces_remaining=0))
+    game = Game(player_1, player_2, MockBoard(spaces_remaining=0, line_to_check=[]))
 
     console.show_game_over_message(game)
 

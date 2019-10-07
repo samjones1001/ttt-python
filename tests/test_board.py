@@ -58,7 +58,7 @@ def test_returns_all_spaces_when_none_have_been_occupied(board):
     assert len(board.available_spaces()) == number_of_spaces
 
 
-def test_only_returns_unoccupied_spaces_when_some_have_been_occupied(board):
+def test_does_not_return_occupied_spaces(board):
     new_board = board.place_marker(0, 'X')
 
     assert 0 not in new_board.available_spaces()

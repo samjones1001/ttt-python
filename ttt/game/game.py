@@ -33,7 +33,7 @@ class Game:
         return self._board.available_spaces()
 
     def play_turn(self, console):
-        console.render_board(self)
+        console.render_board(self._board)
         console.output_message(self._turn_start_message())
 
         space = self._current_player.get_move(self)
@@ -54,7 +54,7 @@ class Game:
         return False
 
     def show_game_over_screen(self, console):
-        console.render_board(self)
+        console.render_board(self._board)
         console.show_game_over_message(self)
 
     def _switch_current_player(self):
