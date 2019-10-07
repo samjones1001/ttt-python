@@ -1,5 +1,5 @@
 from ttt.game.board import Board
-from ttt.messages import TURN_START_MESSAGE
+from ttt.messages import TURN_START_MESSAGE, GAME_WON_MESSAGE, GAME_TIED_MESSAGE
 
 
 class Game:
@@ -55,10 +55,10 @@ class Game:
 
     def show_game_over_screen(self, console):
         console.render_board(self._board)
-        is_won = self.is_won(self._board, self.get_opponent_marker())
-        name = self.get_opponent_name()
-
-        console.show_game_over_message(is_won, name)
+        message = f"{self.get_opponent_name()}{GAME_WON_MESSAGE}" if \
+            self.is_won(self._board, self.get_opponent_marker()) else \
+            f"{GAME_TIED_MESSAGE}"
+        console.output_message(message)
 
     def _switch_current_player(self):
         self._current_player, self._opponent = self._opponent, self._current_player

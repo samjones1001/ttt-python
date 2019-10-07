@@ -127,4 +127,4 @@ def test_displays_the_board_and_a_message_on_game_over(game):
     game.show_game_over_screen(console)
 
     assert console.render_board_call_count == 1
-    assert console.show_game_over_message_call_count == 1
+    assert console.output_message_call_count == 1

@@ -21,12 +21,6 @@ class Console:
     def output_message(self, message):
         self._io.print_output(message)
 
-    def show_game_over_message(self, is_won, name):
-        if is_won:
-            self.output_message(f"{name}{GAME_WON_MESSAGE}")
-        else:
-            self.output_message(f"{GAME_TIED_MESSAGE}")
-
     def _build_board_output(self, board_state):
         lines = self._build_lines(board_state)
         dividers = self._build_dividers()

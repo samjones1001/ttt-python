@@ -89,22 +89,3 @@ def test_sends_message_to_console_io():
     console.output_message("a message")
 
     assert console_io.last_output == "a message"
-
-
-def test_if_a_game_has_been_won_sends_a_message_to_console_io():
-    console_io = MockConsoleIO()
-    console = Console(console_io)
-
-    console.show_game_over_message(True, "Player 2")
-
-    assert console_io.last_output == "Player 2 won!"
-
-
-def test_if_a_game_is_a_tie_sends_a_message_to_console_io():
-    console_io = MockConsoleIO()
-    console = Console(console_io)
-
-    console.show_game_over_message(False, 'Player 1')
-
-    assert console_io.last_output == "It's a tie!"
-
