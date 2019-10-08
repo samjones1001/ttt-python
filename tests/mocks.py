@@ -83,9 +83,6 @@ class MockGame:
     def play_turn(self, console):
         self.play_turn_call_count += 1
 
-    # def game_over_screen(self, console):
-    #     self.show_game_over_screen_call_count += 1
-
     def _set_board_state(self, board_state):
         if board_state is None:
             return []

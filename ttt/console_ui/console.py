@@ -1,3 +1,4 @@
+import re
 from ttt.console_ui.consoleio import ConsoleIO
 
 
@@ -11,7 +12,7 @@ class Console:
 
     def get_valid_input(self, valid_inputs, error):
         user_input = self._io.get_input()
-        while user_input not in valid_inputs:
+        while not re.search(valid_inputs, user_input):
             self._io.print_output(error)
             user_input = self._io.get_input()
         return user_input

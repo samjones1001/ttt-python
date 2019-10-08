@@ -1,6 +1,5 @@
 import pytest
 from ttt.console_ui.console import Console
-from ttt.game.board import Board
 from tests.mocks import MockConsoleIO
 
 
@@ -51,21 +50,21 @@ def test_prints_a_fully_filled_grid(filled_board_output, runner):
 
 
 def test_returns_valid_user_input():
-    mock_io = MockConsoleIO(inputs=['valid'])
+    mock_io = MockConsoleIO(inputs=['1'])
     console = Console(mock_io)
 
-    output = console.get_valid_input(['valid'], 'error message')
-    assert output == 'valid'
+    output = console.get_valid_input('^[/1]$', 'error message')
+    assert output == '1'
 
 
 def test_continues_to_prompt_for_input_until_valid_input_provided():
-    mock_io = MockConsoleIO(inputs=['invalid', 'valid'])
+    mock_io = MockConsoleIO(inputs=['invalid', '1'])
     console = Console(mock_io)
 
-    output = console.get_valid_input(['valid'], 'error message')
+    output = console.get_valid_input('^[/1]$', 'error message')
 
     assert mock_io.get_input_call_count == 2
-    assert output == 'valid'
+    assert output == '1'
 
 
 def prints_an_error_message_if_provided_invalid_input():
