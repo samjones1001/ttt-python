@@ -26,9 +26,6 @@ class Game:
     def get_board(self):
         return self._board
 
-    def get_board_state(self):
-        return self._board.get_spaces()
-
     def available_spaces(self):
         return self._board.available_spaces()
 
@@ -53,7 +50,7 @@ class Game:
                 return True
         return False
 
-    def show_game_over_screen(self, console):
+    def game_over_screen(self, console):
         console.render_board(self._board)
         message = f"{self.get_opponent_name()}{GAME_WON_MESSAGE}" if \
             self.is_won(self._board, self.get_opponent_marker()) else \

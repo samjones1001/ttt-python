@@ -15,14 +15,6 @@ def game(players):
     return Game(player_one=players[0], player_two=players[1])
 
 
-def test_get_board_state_sends_a_message_to_board(players):
-    board = MockBoard()
-    game = Game(players[0], players[1], game_board=board)
-    game.get_board_state()
-
-    assert board.get_spaces_call_count == 1
-
-
 def test_current_player_switches_to_player_two_after_player_one_turn(game, players):
     current_player_after_switch = players[1].get_name()
     game.play_turn(Console(MockConsoleIO(['1'])))
@@ -116,7 +108,7 @@ def test_a_line_does_not_win_if_all_spaces_are_empty(players):
 
 def test_displays_the_board_and_a_message_on_game_over(game):
     console = MockConsole()
-    game.show_game_over_screen(console)
+    game.game_over_screen(console)
 
     assert console.render_board_call_count == 1
     assert console.output_message_call_count == 1

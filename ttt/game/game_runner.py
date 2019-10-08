@@ -15,6 +15,6 @@ class GameRunner:
 
         while not self._game.game_over():
             self._game.play_turn(self._console)
-        self._game.show_game_over_screen(self._console)
+        self._game.game_over_screen(self._console)
 
 

@@ -5,7 +5,7 @@ from ttt.game.game_runner import GameRunner
 from ttt.messages import WELCOME_MESSAGE
 
 
-class Interface:
+class Menu:
     def __init__(self, console):
         self._console = console
         self._runner = None

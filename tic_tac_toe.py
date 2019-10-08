@@ -1,10 +1,10 @@
 from ttt.console_ui.consoleio import ConsoleIO
 from ttt.console_ui.console import Console
-from ttt.console_ui.menu import Interface
+from ttt.console_ui.menu import Menu
 
 consoleio = ConsoleIO()
 console = Console(consoleio)
-interface = Interface(console)
+interface = Menu(console)
 
 
 def main():
