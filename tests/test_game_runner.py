@@ -23,9 +23,3 @@ def test_plays_a_turn_when_game_is_not_over(players, game_runner):
     game_runner.run(players[0], players[1], MockGame)
 
     assert game_runner.get_game().play_turn_call_count == 1
-
-
-def test_instructs_game_to_show_game_over_screen_on_game_over(players, game_runner):
-    game_runner.run(players[0], players[1], MockGame)
-
-    assert game_runner.get_game().show_game_over_screen_call_count == 1

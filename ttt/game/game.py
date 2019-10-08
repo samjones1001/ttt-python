@@ -37,8 +37,11 @@ class Game:
         self._board = self._board.place_marker(space=space, marker=self._current_player.get_marker())
         self._switch_current_player()
 
-    def game_over(self):
-        return self.is_tie(self._board) or self.is_won(self._board, self.get_opponent_marker())
+    def game_over(self, console):
+        if self.is_tie(self._board) or self.is_won(self._board, self.get_opponent_marker()):
+            self._game_over_screen(console)
+            return True
+        return False
 
     def is_tie(self, board):
         return board.is_full()
@@ -50,7 +53,7 @@ class Game:
                 return True
         return False
 
-    def game_over_screen(self, console):
+    def _game_over_screen(self, console):
         console.render_board(self._board)
         message = f"{self.get_opponent_name()}{GAME_WON_MESSAGE}" if \
             self.is_won(self._board, self.get_opponent_marker()) else \

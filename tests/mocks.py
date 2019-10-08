@@ -59,9 +59,6 @@ class MockPlayer:
 
 class MockGame:
     def __init__(self,
-                 player_1='player 1',
-                 player_2='player_2',
-                 board='board',
                  board_state=None,
                  available_spaces=None,
                  turns_remaining=1):
@@ -78,7 +75,7 @@ class MockGame:
     def available_spaces(self):
         return self._available_spaces
 
-    def game_over(self):
+    def game_over(self, console):
         result = self.game_over_call_count >= self._turns_remaining
         self.game_over_call_count += 1
         return result
@@ -86,8 +83,8 @@ class MockGame:
     def play_turn(self, console):
         self.play_turn_call_count += 1
 
-    def game_over_screen(self, console):
-        self.show_game_over_screen_call_count += 1
+    # def game_over_screen(self, console):
+    #     self.show_game_over_screen_call_count += 1
 
     def _set_board_state(self, board_state):
         if board_state is None:

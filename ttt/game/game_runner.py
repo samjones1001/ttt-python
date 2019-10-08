@@ -13,8 +13,7 @@ class GameRunner:
     def run(self, player_1, player_2, game=Game):
         self._game = game(player_1, player_2)
 
-        while not self._game.game_over():
+        while not self._game.game_over(self._console):
             self._game.play_turn(self._console)
-        self._game.game_over_screen(self._console)
 
 

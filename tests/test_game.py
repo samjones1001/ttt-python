@@ -69,20 +69,24 @@ def test_playing_a_turn_places_a_marker_on_the_board(game):
 
 
 def test_game_is_not_over_when_board_is_not_full(game):
-    assert game.game_over() is False
+    console = MockConsole()
+
+    assert game.game_over(console) is False
 
 
 def test_the_game_is_over_when_board_is_full(players):
     end_state_game = Game(players[0], players[1], Board(['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i']))
+    console = MockConsole()
 
-    assert end_state_game.game_over() is True
+    assert end_state_game.game_over(console) is True
 
 
 def test_the_game_is_over_if_a_player_has_won(players):
     board = Board(['X', 'X', 'X', '-', '-', '-', '-', '-', '-'])
     won_game = Game(players[0], players[1], board)
+    console = MockConsole()
 
-    assert won_game.game_over() is True
+    assert won_game.game_over(console) is True
 
 
 def test_a_line_does_not_win_if_not_all_spaces_contain_the_same_marker(players):
@@ -106,9 +110,11 @@ def test_a_line_does_not_win_if_all_spaces_are_empty(players):
     assert game.is_won(board, 'X') is False
 
 
-def test_displays_the_board_and_a_message_on_game_over(game):
+def test_displays_the_board_and_a_message_on_game_over(players):
+    game_over_board = Board(['X', 'X', 'X', '-', '-', '-', '-', '-', '-'])
+    game = Game(players[0], players[1], game_over_board)
     console = MockConsole()
-    game.game_over_screen(console)
+    game.game_over(console)
 
     assert console.render_board_call_count == 1
     assert console.output_message_call_count == 1
