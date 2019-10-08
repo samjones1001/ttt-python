@@ -33,13 +33,13 @@ def runner():
 
 
 def test_prints_an_empty_grid_correctly(empty_board_output, runner):
-    empty_board_state = ['-', '-', '-', '-', '-', '-', '-', '-', '-']
+    empty_board_state = [' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ']
 
     assert runner.render_board(empty_board_state) == empty_board_output
 
 
 def test_prints_a_part_filled_grid_correctly(part_filled_board_output, runner):
-    part_filled_board_state = ['x', 'o', '-', '-', '-', '-', '-', '-', '-']
+    part_filled_board_state = ['x', 'o', ' ', ' ', ' ', ' ', ' ', ' ', ' ']
 
     assert runner.render_board(part_filled_board_state) == part_filled_board_output
 

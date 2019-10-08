@@ -82,7 +82,7 @@ def test_the_game_is_over_when_board_is_full(players):
 
 
 def test_the_game_is_over_if_a_player_has_won(players):
-    board = Board(['X', 'X', 'X', '-', '-', '-', '-', '-', '-'])
+    board = Board(['X', 'X', 'X', ' ', ' ', ' ', ' ', ' ', ' '])
     won_game = Game(players[0], players[1], board)
     console = MockConsole()
 
@@ -90,28 +90,28 @@ def test_the_game_is_over_if_a_player_has_won(players):
 
 
 def test_a_line_does_not_win_if_not_all_spaces_contain_the_same_marker(players):
-    board = Board(['X', 'X', 'O', '-', '-', '-', '-', '-', '-'])
+    board = Board(['X', 'X', 'O', ' ', ' ', ' ', ' ', ' ', ' '])
     game = Game(players[0], players[1], board)
 
     assert game.is_won(board, 'X') is False
 
 
 def test_a_line_wins_if_all_spaces_contain_the_same_marker(players):
-    board = Board(['X', 'X', 'X', '-', '-', '-', '-', '-', '-'])
+    board = Board(['X', 'X', 'X', ' ', ' ', ' ', ' ', ' ', ' '])
     game = Game(players[0], players[1], board)
 
     assert game.is_won(board, 'X') is True
 
 
 def test_a_line_does_not_win_if_all_spaces_are_empty(players):
-    board = Board(['-', '-', '-', '-', '-', '-', '-', '-', '-'])
+    board = Board([' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' '])
     game = Game(players[0], players[1], board)
 
     assert game.is_won(board, 'X') is False
 
 
 def test_displays_the_board_and_a_message_on_game_over(players):
-    game_over_board = Board(['X', 'X', 'X', '-', '-', '-', '-', '-', '-'])
+    game_over_board = Board(['X', 'X', 'X', ' ', ' ', ' ', ' ', ' ', ' '])
     game = Game(players[0], players[1], game_over_board)
     console = MockConsole()
     game.game_over(console)

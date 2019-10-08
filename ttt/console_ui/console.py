@@ -34,7 +34,7 @@ class Console:
             yield board_state[i:i + spaces_per_line]
 
     def _build_line_string(self, line_array):
-        line = ' | '.join(line_array).replace('-', ' ')
+        line = ' | '.join(line_array)
         return self._pad_string(line)
 
     def _pad_string(self, string):
