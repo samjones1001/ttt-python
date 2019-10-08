@@ -5,8 +5,8 @@ class Console:
     def __init__(self, io=ConsoleIO()):
         self._io = io
 
-    def render_board(self, board):
-        board_string = self._build_board_output(board.get_spaces())
+    def render_board(self, board_state):
+        board_string = self._build_board_output(board_state)
         self._io.print_output(board_string)
 
     def get_valid_input(self, valid_inputs, error):
