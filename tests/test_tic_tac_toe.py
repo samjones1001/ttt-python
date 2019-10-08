@@ -2,7 +2,7 @@ import pytest
 import tic_tac_toe as app
 from ttt.console_ui.menu import Menu
 from ttt.console_ui.console import Console
-from ttt.messages import GAME_TIED_MESSAGE
+from ttt.messages import game_tied_message
 from tests.mocks import MockConsoleIO
 
 
@@ -17,12 +17,12 @@ def win_state_board_output():
 
 
 def test_can_play_a_full_game():
-    io = MockConsoleIO(['1', '0', '4', '1', '2', '6', '3', '5', '7', '8'])
+    io = MockConsoleIO(['1', 'X', '0', '4', '1', '2', '6', '3', '5', '7', '8'])
     console = Console(io)
     app.interface = Menu(console)
     app.main()
 
-    assert io.last_output == GAME_TIED_MESSAGE
+    assert io.last_output == game_tied_message()
 
 
 def test_gracefully_handles_invalid_user_input():
@@ -32,11 +32,11 @@ def test_gracefully_handles_invalid_user_input():
 
     app.main()
 
-    assert io.last_output == GAME_TIED_MESSAGE
+    assert io.last_output == game_tied_message()
 
 
 def test_game_ends_if_a_player_wins():
-    io = MockConsoleIO(['1', '0', '1', '2', '3', '4', '5', '6', '7', '8'])
+    io = MockConsoleIO(['1', 'X', '0', '1', '2', '3', '4', '5', '6', '7', '8'])
     console = Console(io)
     app.interface = Menu(console)
 

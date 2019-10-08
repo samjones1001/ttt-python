@@ -2,8 +2,8 @@ from ttt.players.player import Player
 
 
 class SmartComputerPlayer(Player):
-    def __init__(self, name, marker):
-        super().__init__(name, marker)
+    def __init__(self, name, marker, console):
+        super().__init__(name, marker, console)
         self._game = None
         self._this_player_marker = None
         self._opponent_marker = None

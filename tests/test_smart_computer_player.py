@@ -5,8 +5,8 @@ from ttt.game.board import Board
 
 def test_will_always_pick_the_center_space_if_available():
     board = Board(['O',' ',' ',' ',' ',' ',' ',' ',' '])
-    player_1 = SmartComputerPlayer('Player 1', 'X')
-    player_2 = SmartComputerPlayer('Player 2', 'O')
+    player_1 = SmartComputerPlayer('Player 1', 'X', 'console')
+    player_2 = SmartComputerPlayer('Player 2', 'O', 'console')
     game = Game(player_1, player_2, board)
     center_space_index = 4
 
@@ -15,8 +15,8 @@ def test_will_always_pick_the_center_space_if_available():
 
 def test_will_always_pick_a_winning_space_if_available():
     board = Board(['X','X',' ',' ',' ',' ',' ',' ',' '])
-    player_1 = SmartComputerPlayer('Player 1', 'X')
-    player_2 = SmartComputerPlayer('Player 2', 'O')
+    player_1 = SmartComputerPlayer('Player 1', 'X', 'console')
+    player_2 = SmartComputerPlayer('Player 2', 'O', 'console')
     game = Game(player_1, player_2, board)
     game_winning_space_index = 2
 
@@ -25,8 +25,8 @@ def test_will_always_pick_a_winning_space_if_available():
 
 def test_will_always_prevent_opponent_from_winning_where_possible():
     board = Board(['O','O',' ',' ',' ',' ',' ',' ',' '])
-    player_1 = SmartComputerPlayer('Player 1', 'X')
-    player_2 = SmartComputerPlayer('Player 2', 'O')
+    player_1 = SmartComputerPlayer('Player 1', 'X', 'console')
+    player_2 = SmartComputerPlayer('Player 2', 'O', 'console')
     game = Game(player_1, player_2, board)
     game_losing_space_index = 2
 
@@ -35,8 +35,8 @@ def test_will_always_prevent_opponent_from_winning_where_possible():
 
 def test_will_choose_to_win_a_game_over_preventing_an_opponent_from_winning():
     board = Board(['X','X',' ','O','O',' ',' ',' ',' '])
-    player_1 = SmartComputerPlayer('Player 1', 'X')
-    player_2 = SmartComputerPlayer('Player 2', 'O')
+    player_1 = SmartComputerPlayer('Player 1', 'X', 'console')
+    player_2 = SmartComputerPlayer('Player 2', 'O', 'console')
     game = Game(player_1, player_2, board)
     game_winning_space_index = 2
 

@@ -1,5 +1,6 @@
 from ttt.players.human_player import HumanPlayer
-from tests.mocks import MockConsole, MockGame
+from ttt.console_ui.console import Console
+from tests.mocks import MockConsole, MockGame, MockConsoleIO
 
 
 def test_human_player_moves_get_an_integer_from_the_console():
@@ -9,3 +10,40 @@ def test_human_player_moves_get_an_integer_from_the_console():
     player.get_move(MockGame(available_spaces=[]))
 
     assert console.get_valid_input_call_count == 1
+
+
+def test_a_player_can_select_a_custom_marker():
+    io = MockConsoleIO(['!'])
+    console = Console(io)
+    player = HumanPlayer('Player 1', 'X', console);
+    player.set_marker()
+
+    assert player.get_marker() == '!'
+
+
+def test_a_player_will_continue_to_be_prompted_if_they_provide_an_integer_as_a_marker():
+    io = MockConsoleIO(['1', '3', '5', '!'])
+    console = Console(io)
+    player = HumanPlayer('Player 1', 'X', console);
+    player.set_marker()
+
+    assert player.get_marker() == '!'
+
+
+def test_a_player_will_continue_to_be_prompted_if_they_provide_whitespace_as_a_marker():
+    io = MockConsoleIO([' ', ' ', '   ', '!'])
+    console = Console(io)
+    player = HumanPlayer('Player 1', 'X', console);
+    player.set_marker()
+
+    assert player.get_marker() == '!'
+
+
+def test_a_player_will_retain_their_default_marker_if_they_provide_an_empty_string():
+    io = MockConsoleIO([''])
+    console = Console(io)
+    player = HumanPlayer('Player 1', 'X', console);
+    player.set_marker()
+
+    assert player.get_marker() == 'X'
+
