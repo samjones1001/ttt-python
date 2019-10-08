@@ -18,7 +18,6 @@ class MockConsole:
         self.get_valid_input_call_count = 0
         self.output_message_call_count = 0
         self.render_board_call_count = 0
-        self.show_game_over_message_call_count = 0
 
     def get_valid_input(self, valid_inputs, error_message):
         self.get_valid_input_call_count += 1
@@ -29,9 +28,6 @@ class MockConsole:
 
     def render_board(self, _):
         self.render_board_call_count += 1
-
-    def show_game_over_message(self, game):
-        self.show_game_over_message_call_count += 1
 
 
 class MockGameRunner():
@@ -56,54 +52,58 @@ class MockPlayer:
     def get_marker(self):
         return self._marker
 
-    def get_move(self, spaces, console):
+    def get_move(self, game):
         self.get_move_call_count += 1
         return 1
 
 
 class MockGame:
-    def __init__(self, board_state):
-        self._board_state = board_state
+    def __init__(self,
+                 board_state=None,
+                 available_spaces=None,
+                 turns_remaining=1):
+        self._board_state = self._set_board_state(board_state)
+        self._available_spaces = available_spaces
+        self._turns_remaining = turns_remaining
+        self.game_over_call_count = 0
+        self.play_turn_call_count = 0
+        self.show_game_over_screen_call_count = 0
 
     def get_board_state(self):
         return self._board_state
 
+    def available_spaces(self):
+        return self._available_spaces
+
+    def game_over(self, console):
+        result = self.game_over_call_count >= self._turns_remaining
+        self.game_over_call_count += 1
+        return result
+
+    def play_turn(self, console):
+        self.play_turn_call_count += 1
+
+    # def game_over_screen(self, console):
+    #     self.show_game_over_screen_call_count += 1
+
+    def _set_board_state(self, board_state):
+        if board_state is None:
+            return []
+        return board_state
+
 
 class MockBoard:
-    def __init__(self, spaces_remaining=1, line_to_check=[]):
-        self._spaces_remaining = spaces_remaining
-        self._line_to_check = line_to_check
+    def __init__(self):
         self.place_marker_call_count = 0
         self.get_spaces_call_count = 0
         self.available_spaces_call_count = 0
-        self.is_full_call_count = 0
-        self.is_winning_line_call_count = 0
 
     def get_spaces(self):
         self.get_spaces_call_count += 1
         return []
 
-    def is_full(self):
-        self.is_full_call_count += 1
-        return True if self._spaces_remaining == 0 else False
-
     def place_marker(self, space, marker):
         self.place_marker_call_count += 1
-        self._spaces_remaining -= 1
-
-    def is_available_space(self, space):
-        lowest_indexed_space = 0
-        highest_indexed_space = 8
-        occupied_space = 3
-        if space < lowest_indexed_space or space > highest_indexed_space or space == occupied_space:
-            return False
-        else:
-            return True
-
-    def retrieve_line(self, line):
-        self.is_winning_line_call_count += 1
-        return self._line_to_check
 
     def available_spaces(self):
         self.available_spaces_call_count += 1
-        return None

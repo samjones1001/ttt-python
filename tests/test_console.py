@@ -1,10 +1,7 @@
 import pytest
-from ttt.console import Console
-from ttt.player import Player
-from ttt.game import Game
+from ttt.console_ui.console import Console
+from ttt.game.board import Board
 from tests.mocks import MockConsoleIO
-from tests.mocks import MockGame
-from tests.mocks import MockBoard
 
 
 class TestRunner:
@@ -37,23 +34,20 @@ def runner():
 
 def test_prints_an_empty_grid_correctly(empty_board_output, runner):
     empty_board_state = ['-', '-', '-', '-', '-', '-', '-', '-', '-']
-    game = MockGame(empty_board_state)
 
-    assert runner.render_board(game) == empty_board_output
+    assert runner.render_board(empty_board_state) == empty_board_output
 
 
 def test_prints_a_part_filled_grid_correctly(part_filled_board_output, runner):
     part_filled_board_state = ['x', 'o', '-', '-', '-', '-', '-', '-', '-']
-    game = MockGame(part_filled_board_state)
 
-    assert runner.render_board(game) == part_filled_board_output
+    assert runner.render_board(part_filled_board_state) == part_filled_board_output
 
 
 def test_prints_a_fully_filled_grid(filled_board_output, runner):
     filled_board_state = ['x', 'o', 'x', 'o', 'x', 'o', 'x', 'o', 'x']
-    game = MockGame(filled_board_state)
 
-    assert runner.render_board(game) == filled_board_output
+    assert runner.render_board(filled_board_state) == filled_board_output
 
 
 def test_returns_valid_user_input():
@@ -90,30 +84,3 @@ def test_sends_message_to_console_io():
     console.output_message("a message")
 
     assert console_io.last_output == "a message"
-
-
-def test_if_a_game_has_been_won_sends_a_message_to_console_io():
-    console_io = MockConsoleIO()
-    console = Console(console_io)
-    player_1 = Player('Player 1', 'O')
-    player_2 = Player('Player 2', 'X')
-
-    game = Game(player_1, player_2, MockBoard(line_to_check=['X', 'X', 'X']))
-
-    console.show_game_over_message(game)
-
-    assert console_io.last_output == "Player 2 won!"
-
-
-def test_if_a_game_is_a_tie_sends_a_message_to_console_io():
-    console_io = MockConsoleIO()
-    console = Console(console_io)
-    player_1 = Player('Player 1', 'O')
-    player_2 = Player('Player 2', 'X')
-
-    game = Game(player_1, player_2, MockBoard(spaces_remaining=0))
-
-    console.show_game_over_message(game)
-
-    assert console_io.last_output == "It's a tie!"
-

@@ -1,14 +1,12 @@
-from ttt.consoleio import ConsoleIO
-from ttt.messages import GAME_WON_MESSAGE
-from ttt.messages import GAME_TIED_MESSAGE
+from ttt.console_ui.consoleio import ConsoleIO
 
 
 class Console:
     def __init__(self, io=ConsoleIO()):
         self._io = io
 
-    def render_board(self, game):
-        board_string = self._build_board_output(game.get_board_state())
+    def render_board(self, board_state):
+        board_string = self._build_board_output(board_state)
         self._io.print_output(board_string)
 
     def get_valid_input(self, valid_inputs, error):
@@ -20,12 +18,6 @@ class Console:
 
     def output_message(self, message):
         self._io.print_output(message)
-
-    def show_game_over_message(self,game):
-        if game.is_won():
-            self.output_message(f"{game.get_opponent_name()}{GAME_WON_MESSAGE}")
-        else:
-            self.output_message(f"{GAME_TIED_MESSAGE}")
 
     def _build_board_output(self, board_state):
         lines = self._build_lines(board_state)

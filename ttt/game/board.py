@@ -1,6 +1,9 @@
+import copy
+
+
 class Board:
-    def __init__(self):
-        self._spaces = ['-'] * 9
+    def __init__(self, state=None):
+        self._spaces = self._set_spaces(state)
 
     def get_spaces(self):
         return self._spaces
@@ -12,17 +15,19 @@ class Board:
         return [index for index, space in enumerate(self._spaces) if space == "-"]
 
     def place_marker(self, space, marker):
-        self._spaces[space] = marker
+        state = copy.deepcopy(self._spaces)
+        state[space] = marker
+        return Board(state)
 
     def retrieve_line(self, line):
-        return [space for space in self._get_markers_for_line(line)]
+        return [self._spaces[index] for index in line]
 
-    def _is_out_of_bounds_space(self, space):
-        return space > len(self.get_spaces()) - 1 or space < 0
-
-    def _is_occupied_space(self, space):
-        return self._spaces[space] is not '-'
+    def _set_spaces(self, state):
+        spaces = ['-']*9 if state is None else state
+        return spaces
 
     def _get_markers_for_line(self, spaces):
         for index in spaces:
             yield self._spaces[index]
+
+
