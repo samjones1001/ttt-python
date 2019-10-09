@@ -35,7 +35,7 @@ class Game:
 
     def play_turn(self, console):
         console.render_board(self._board.get_spaces())
-        console.output_message(turn_start_message(self.get_current_player_name(), self.available_spaces()))
+        console.output_message(turn_start_message(self.get_current_player_name()))
 
         space = self._current_player.get_move(self)
         self._board = self._board.place_marker(space=space, marker=self._current_player.get_marker())

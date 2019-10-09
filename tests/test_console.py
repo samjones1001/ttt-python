@@ -13,12 +13,12 @@ class TestRunner:
 
 @pytest.fixture
 def empty_board_output():
-    return '   |   |   \n-----------\n   |   |   \n-----------\n   |   |   '
+    return ' 1 | 2 | 3 \n-----------\n 4 | 5 | 6 \n-----------\n 7 | 8 | 9 '
 
 
 @pytest.fixture
 def part_filled_board_output():
-    return ' x | o |   \n-----------\n   |   |   \n-----------\n   |   |   '
+    return ' x | o | 3 \n-----------\n 4 | 5 | 6 \n-----------\n 7 | 8 | 9 '
 
 
 @pytest.fixture
@@ -32,13 +32,13 @@ def runner():
 
 
 def test_prints_an_empty_grid_correctly(empty_board_output, runner):
-    empty_board_state = [' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ']
+    empty_board_state = ['1', '2', '3', '4', '5', '6', '7', '8', '9']
 
     assert runner.render_board(empty_board_state) == empty_board_output
 
 
 def test_prints_a_part_filled_grid_correctly(part_filled_board_output, runner):
-    part_filled_board_state = ['x', 'o', ' ', ' ', ' ', ' ', ' ', ' ', ' ']
+    part_filled_board_state = ['x', 'o', '3', '4', '5', '6', '7', '8', '9']
 
     assert runner.render_board(part_filled_board_state) == part_filled_board_output
 
