@@ -21,7 +21,7 @@ def test_board_is_not_full_when_no_spaces_are_occupied(board):
 
 
 def test_board_is_not_full_when_only_some_spaces_are_occupied():
-    board = Board(['x', 'x', 'x', 'x', 'x', 'x', 'x', 'x', ' '])
+    board = Board(['x', 'x', 'x', 'x', 'x', 'x', 'x', 'x', '9'])
 
     assert board.is_full() is False
 
@@ -77,6 +77,6 @@ def test_can_occupy_a_space(board, space):
 
 
 def test_returns_the_contents_of_the_spaces_requested():
-    board = Board(['A', 'B', 'C', ' ', ' ', ' ', ' ', ' ', ' '])
+    board = Board(['A', 'B', 'C', '4', '5', '6', '7', '8', '9'])
 
     assert board.retrieve_line((0,1,2)) == ['A', 'B', 'C']

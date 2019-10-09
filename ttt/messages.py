@@ -18,8 +18,8 @@ def invalid_marker_message():
     return "Please select a different marker from your opponent."
 
 
-def turn_start_message(player, available_spaces):
-    return f"{player}'s turn. Available Spaces: {available_spaces}"
+def turn_start_message(player):
+    return f"{player}'s turn."
 
 
 def game_won_message(player):
