@@ -1,8 +1,7 @@
 from ttt.console_ui.menu import Menu
 from ttt.players.human_player import HumanPlayer
 from ttt.players.simple_computer_player import SimpleComputerPlayer
-from ttt.console_ui.console import Console
-from tests.mocks import MockConsole, MockConsoleIO, MockGameRunner
+from tests.mocks import MockConsole, MockGameRunner
 
 
 def test_starting_a_game_requests_the_game_runner_to_run():
