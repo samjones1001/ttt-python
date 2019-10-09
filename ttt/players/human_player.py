@@ -7,7 +7,7 @@ class HumanPlayer(Player):
 
     def get_move(self, game):
         spaces_regex = self._build_space_regex(game.available_spaces())
-        return int(self._console.get_valid_input(spaces_regex, "Please select from available spaces"))
+        return int(self._console.get_validated_input(spaces_regex, "Please select from available spaces"))
 
     def _build_space_regex(self, spaces):
         regex = '^['

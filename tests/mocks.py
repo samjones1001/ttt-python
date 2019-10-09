@@ -19,7 +19,7 @@ class MockConsole:
         self.output_message_call_count = 0
         self.render_board_call_count = 0
 
-    def get_valid_input(self, valid_inputs, error_message):
+    def get_validated_input(self, valid_inputs, error_message):
         self.get_valid_input_call_count += 1
         return self.inputs.pop(0)
 

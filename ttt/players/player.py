@@ -14,7 +14,7 @@ class Player(ABC):
         return self._marker
 
     def set_marker(self):
-        marker_choice = self._console.get_valid_input('^$|[^\d\t/ */]', "Please choose a valid marker")
+        marker_choice = self._console.get_validated_input('^$|[^\d\t/ */]', "Please choose a valid marker")
         if marker_choice != '':
             self._marker = marker_choice
 

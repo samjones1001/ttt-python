@@ -35,7 +35,7 @@ class Menu:
         return player
 
     def _select_player_type(self, name, marker):
-        user_input = self._console.get_valid_input('^[/1/2/3]$', "Please select an option from the menu")
+        user_input = self._console.get_validated_input('^[/1/2/3]$', "Please select an option from the menu")
 
         if user_input == '1':
             return HumanPlayer(name, marker, self._console)

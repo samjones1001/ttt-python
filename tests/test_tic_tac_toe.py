@@ -26,7 +26,7 @@ def test_can_play_a_full_game():
 
 
 def test_gracefully_handles_invalid_user_input():
-    io = MockConsoleIO(['1', '-1', '0', '4', '1', '2', 'not a number', '6', '3', '3000', '5', '7', '8'])
+    io = MockConsoleIO(['1', 'X','-1', '0', '4', '1', '2', 'not a number', '6', '3', '3000', '5', '7', '8'])
     console = Console(io)
     app.interface = Menu(console)
 

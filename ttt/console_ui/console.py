@@ -10,9 +10,9 @@ class Console:
         board_string = self._build_board_output(board_state)
         self._io.print_output(board_string)
 
-    def get_valid_input(self, valid_inputs, error):
+    def get_validated_input(self, valid_inputs, error):
         user_input = self._io.get_input()
-        while not re.search(valid_inputs, user_input):
+        while not re.search(valid_inputs, user_input) or len(user_input) > 1:
             self._io.print_output(error)
             user_input = self._io.get_input()
         return user_input
