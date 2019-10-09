@@ -6,16 +6,16 @@ from tests.mocks import MockConsole, MockGameRunner
 
 def test_starting_a_game_requests_the_game_runner_to_run():
     runner = MockGameRunner('console')
-    menu = Menu(MockConsole(inputs=['1', '', '1', '']))
-    menu.start(runner)
+    menu = Menu(MockConsole(inputs=['1', '', '1', '']), runner)
+    menu.start()
 
     assert runner.run_call_count == 1
 
 
 def test_user_can_select_player_types():
     runner = MockGameRunner('console')
-    menu = Menu(MockConsole(inputs=['1', '', '2', '']))
-    menu.start(runner)
+    menu = Menu(MockConsole(inputs=['1', '', '2', '']), runner)
+    menu.start()
 
     assert isinstance(runner.player_1, HumanPlayer)
     assert isinstance(runner.player_2, SimpleComputerPlayer)
@@ -23,15 +23,15 @@ def test_user_can_select_player_types():
 
 def test_if_player_one_selects_x_as_marker_player_two_default_marker_changes_to_o():
     runner = MockGameRunner('console')
-    menu = Menu(MockConsole(inputs=['1', 'X', '1', '']))
-    menu.start(runner)
+    menu = Menu(MockConsole(inputs=['1', 'X', '1', '']), runner)
+    menu.start()
 
     assert runner.player_2.get_marker() == 'O'
 
 
 def test_user_cannot_select_the_same_marker_as_their_opponent():
     runner = MockGameRunner('console')
-    menu = Menu(MockConsole(inputs=['1', 'X', '2', 'X', 'O']))
-    menu.start(runner)
+    menu = Menu(MockConsole(inputs=['1', 'X', '2', 'X', 'O']), runner)
+    menu.start()
 
     assert runner.player_2.get_marker() == 'O'

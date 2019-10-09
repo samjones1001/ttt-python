@@ -4,13 +4,13 @@ from ttt.messages import turn_start_message, game_won_message, game_tied_message
 
 
 class Game:
-    def __init__(self, player_one, player_two, game_board=Board()):
+    def __init__(self, player_one, player_two, game_board=Board(), rules=GameRules()):
         self._player_one = player_one
         self._player_two = player_two
         self._board = game_board
         self._current_player = player_one
         self._opponent = player_two
-        self._rules = GameRules()
+        self._rules = rules
 
     def get_current_player_name(self):
         return self._current_player.get_name()
