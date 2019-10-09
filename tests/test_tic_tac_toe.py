@@ -17,7 +17,7 @@ def win_state_board_output():
 
 
 def test_can_play_a_full_game():
-    io = MockConsoleIO(['1', '', '1', '', '0', '4', '1', '2', '6', '3', '5', '7', '8'])
+    io = MockConsoleIO(['1', '', '1', '', '1', '5', '2', '3', '7', '4', '6', '8', '9'])
     console = Console(io)
     app.menu = Menu(console)
     app.main()
@@ -26,7 +26,7 @@ def test_can_play_a_full_game():
 
 
 def test_gracefully_handles_invalid_user_input():
-    io = MockConsoleIO(['1', '', '1', '', '-1', '0', '4', '1', '2', 'not a number', '6', '3', '3000', '5', '7', '8'])
+    io = MockConsoleIO(['1', '', '1', '', '-1', '1', '5', '2', '3', 'not a number', '7', '4', '3000', '6', '8', '9'])
     console = Console(io)
     app.menu = Menu(console)
 
@@ -36,7 +36,7 @@ def test_gracefully_handles_invalid_user_input():
 
 
 def test_game_ends_if_a_player_wins():
-    io = MockConsoleIO(['1', '', '1', '', '0', '1', '2', '3', '4', '5', '6', '7', '8'])
+    io = MockConsoleIO(['1', '', '1', '', '1', '2', '3', '4', '5', '6', '7'])
     console = Console(io)
     app.menu = Menu(console)
 
