@@ -28,6 +28,7 @@ class SmartComputerPlayer(Player):
 
     def _set_fields(self, game):
         self._game = game
+        self._rules = game.get_rules()
         self._this_player_marker = game.get_current_player_marker()
         self._opponent_marker = game.get_opponent_marker()
 
@@ -42,9 +43,9 @@ class SmartComputerPlayer(Player):
             return self._minimise(board, next_marker)
 
     def _get_score(self, board):
-        if self._game.is_won(board, self._this_player_marker):
+        if self._rules.is_won(board, self._this_player_marker):
             return 1
-        elif self._game.is_won(board, self._opponent_marker):
+        elif self._rules.is_won(board, self._opponent_marker):
             return -1
         elif board.is_full():
             return 0

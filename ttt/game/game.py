@@ -1,15 +1,16 @@
 from ttt.game.board import Board
+from ttt.game.game_rules import GameRules
 from ttt.messages import turn_start_message, game_won_message, game_tied_message
 
 
 class Game:
-    def __init__(self, player_one, player_two, game_board=Board()):
+    def __init__(self, player_one, player_two, game_board=Board(), rules=GameRules()):
         self._player_one = player_one
         self._player_two = player_two
         self._board = game_board
         self._current_player = player_one
         self._opponent = player_two
-        self._win_conditions = ((0,1,2), (3,4,5), (6,7,8), (0,3,6), (1,4,7), (2,5,8), (0,4,8), (2,4,6))
+        self._rules = rules
 
     def get_current_player_name(self):
         return self._current_player.get_name()
@@ -26,6 +27,9 @@ class Game:
     def get_board(self):
         return self._board
 
+    def get_rules(self):
+        return self._rules
+
     def available_spaces(self):
         return self._board.available_spaces()
 
@@ -38,25 +42,15 @@ class Game:
         self._switch_current_player()
 
     def game_over(self, console):
-        if self.is_tie(self._board) or self.is_won(self._board, self.get_opponent_marker()):
+        if self._rules.game_over(self._board, self.get_opponent_marker()):
             self._game_over_screen(console)
             return True
-        return False
-
-    def is_tie(self, board):
-        return board.is_full()
-
-    def is_won(self, board, marker):
-        for condition in self._win_conditions:
-            line = board.retrieve_line(condition)
-            if len(set(line)) == 1 and line[0] == marker:
-                return True
         return False
 
     def _game_over_screen(self, console):
         console.render_board(self._board.get_spaces())
         message = game_won_message(self.get_opponent_name()) if \
-            self.is_won(self._board, self.get_opponent_marker()) else \
+            self._rules.is_won(self._board, self.get_opponent_marker()) else \
             game_tied_message()
         console.output_message(message)
 

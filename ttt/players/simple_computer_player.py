@@ -9,3 +9,4 @@ class SimpleComputerPlayer(Player):
     def get_move(self, game):
         spaces = game.available_spaces()
         return spaces[random.randint(0, len(spaces) - 1)]
+
