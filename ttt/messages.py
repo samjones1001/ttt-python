@@ -14,6 +14,10 @@ def marker_message(name, default_marker):
            f"To use the default {default_marker}, just hit enter\n"
 
 
+def invalid_marker_message():
+    return "Please select a different marker from your opponent."
+
+
 def turn_start_message(player, available_spaces):
     return f"{player}'s turn. Available Spaces: {available_spaces}"
 

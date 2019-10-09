@@ -2,7 +2,7 @@ from ttt.players.human_player import HumanPlayer
 from ttt.players.simple_computer_player import SimpleComputerPlayer
 from ttt.players.smart_computer_player import SmartComputerPlayer
 from ttt.game.game_runner import GameRunner
-from ttt.messages import welcome_message, player_type_message, marker_message
+from ttt.messages import welcome_message, player_type_message, marker_message, invalid_marker_message
 
 
 class Menu:
@@ -14,8 +14,10 @@ class Menu:
         self._set_runner(game_runner)
         self._console.output_message(welcome_message())
 
-        player_1 = HumanPlayer('Player 1', 'O', self._console)
-        player_2 = self._setup_player('Player 2', 'X')
+        player_1 = self._setup_player('Player 1', 'O', None)
+        player_2 = self._setup_player('Player 2',
+                                      self._select_default_marker(player_1.get_marker()),
+                                      player_1.get_marker())
 
         self._runner.run(player_1, player_2)
 
@@ -25,12 +27,13 @@ class Menu:
         else:
             self._runner = game_runner
 
-    def _setup_player(self, name, marker):
+    def _setup_player(self, name, marker, unavailable_marker):
         self._console.output_message(player_type_message(name))
         player = self._select_player_type(name, marker)
 
         self._console.output_message(marker_message(name, marker))
         player.set_marker()
+        player = self._check_marker_validity(player, unavailable_marker)
 
         return player
 
@@ -43,4 +46,14 @@ class Menu:
             return SimpleComputerPlayer(name, marker, self._console)
         elif user_input == '3':
             return SmartComputerPlayer(name, marker, self._console)
+
+    def _select_default_marker(self, taken_marker):
+        return 'O' if taken_marker == 'X' else 'X'
+
+    def _check_marker_validity(self, player, unavailable_marker):
+        while player.get_marker() == unavailable_marker:
+            self._console.output_message(invalid_marker_message())
+            player.set_marker()
+        return player
+
 
