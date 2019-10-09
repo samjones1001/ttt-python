@@ -13,15 +13,15 @@ class MockConsoleIO:
 
 
 class MockConsole:
-    def __init__(self, input_return='1'):
-        self.input_return = input_return
+    def __init__(self, inputs=['1']):
+        self.inputs = inputs
         self.get_valid_input_call_count = 0
         self.output_message_call_count = 0
         self.render_board_call_count = 0
 
-    def get_valid_input(self, valid_inputs, error_message):
+    def get_validated_input(self, valid_inputs, error_message):
         self.get_valid_input_call_count += 1
-        return self.input_return
+        return self.inputs.pop(0)
 
     def output_message(self, message):
         self.output_message_call_count += 1
@@ -33,10 +33,12 @@ class MockConsole:
 class MockGameRunner():
     def __init__(self, console):
         self.run_call_count = 0
+        self.player_1 = None
         self.player_2 = None
 
     def run(self, player_1, player_2):
         self.run_call_count += 1
+        self.player_1 = player_1
         self.player_2 = player_2
 
 
@@ -82,9 +84,6 @@ class MockGame:
 
     def play_turn(self, console):
         self.play_turn_call_count += 1
-
-    # def game_over_screen(self, console):
-    #     self.show_game_over_screen_call_count += 1
 
     def _set_board_state(self, board_state):
         if board_state is None:

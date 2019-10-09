@@ -12,7 +12,7 @@ class Board:
         return len(self.available_spaces()) == 0
 
     def available_spaces(self):
-        return [index for index, space in enumerate(self._spaces) if space == "-"]
+        return [index for index, space in enumerate(self._spaces) if space == " "]
 
     def place_marker(self, space, marker):
         state = copy.deepcopy(self._spaces)
@@ -23,7 +23,7 @@ class Board:
         return [self._spaces[index] for index in line]
 
     def _set_spaces(self, state):
-        spaces = ['-']*9 if state is None else state
+        spaces = [' ']*9 if state is None else state
         return spaces
 
     def _get_markers_for_line(self, spaces):

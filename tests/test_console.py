@@ -1,6 +1,5 @@
 import pytest
 from ttt.console_ui.console import Console
-from ttt.game.board import Board
 from tests.mocks import MockConsoleIO
 
 
@@ -33,13 +32,13 @@ def runner():
 
 
 def test_prints_an_empty_grid_correctly(empty_board_output, runner):
-    empty_board_state = ['-', '-', '-', '-', '-', '-', '-', '-', '-']
+    empty_board_state = [' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ']
 
     assert runner.render_board(empty_board_state) == empty_board_output
 
 
 def test_prints_a_part_filled_grid_correctly(part_filled_board_output, runner):
-    part_filled_board_state = ['x', 'o', '-', '-', '-', '-', '-', '-', '-']
+    part_filled_board_state = ['x', 'o', ' ', ' ', ' ', ' ', ' ', ' ', ' ']
 
     assert runner.render_board(part_filled_board_state) == part_filled_board_output
 
@@ -51,28 +50,38 @@ def test_prints_a_fully_filled_grid(filled_board_output, runner):
 
 
 def test_returns_valid_user_input():
-    mock_io = MockConsoleIO(inputs=['valid'])
+    mock_io = MockConsoleIO(inputs=['1'])
     console = Console(mock_io)
 
-    output = console.get_valid_input(['valid'], 'error message')
-    assert output == 'valid'
+    output = console.get_validated_input('^[/1]$', 'error message')
+    assert output == '1'
 
 
 def test_continues_to_prompt_for_input_until_valid_input_provided():
-    mock_io = MockConsoleIO(inputs=['invalid', 'valid'])
+    mock_io = MockConsoleIO(inputs=['-1', '1'])
     console = Console(mock_io)
 
-    output = console.get_valid_input(['valid'], 'error message')
+    output = console.get_validated_input('^[/1]$', 'error message')
 
     assert mock_io.get_input_call_count == 2
-    assert output == 'valid'
+    assert output == '1'
+
+
+def test_rejects_input_greater_than_a_single_character_in_length():
+    mock_io = MockConsoleIO(inputs=['1111111', '1'])
+    console = Console(mock_io)
+
+    output = console.get_validated_input('[1]', 'error message')
+
+    assert mock_io.get_input_call_count == 2
+    assert output == '1'
 
 
 def prints_an_error_message_if_provided_invalid_input():
     mock_io = MockConsoleIO(inputs=['invalid', 'valid'])
     console = Console(mock_io)
 
-    console.get_valid_input(['valid'], 'error message')
+    console.get_validated_input(['valid'], 'error message')
 
     assert mock_io.last_output == 'error message'
 

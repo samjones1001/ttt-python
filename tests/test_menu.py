@@ -1,46 +1,38 @@
 from ttt.console_ui.menu import Menu
 from ttt.players.human_player import HumanPlayer
 from ttt.players.simple_computer_player import SimpleComputerPlayer
-from ttt.players.smart_computer_player import SmartComputerPlayer
-from tests.mocks import MockConsole, MockGameRunner
-
-
-def test_starting_a_game_requests_a_welcome_message_be_displayed():
-    runner = MockGameRunner('console')
-    console = MockConsole(input_return='1')
-    interface = Menu(console)
-    interface.start(runner)
-
-    assert console.output_message_call_count == 1
+from ttt.console_ui.console import Console
+from tests.mocks import MockConsole, MockConsoleIO, MockGameRunner
 
 
 def test_starting_a_game_requests_the_game_runner_to_run():
     runner = MockGameRunner('console')
-    interface = Menu(MockConsole(input_return='1'))
-    interface.start(runner)
+    menu = Menu(MockConsole(inputs=['1', '', '1', '']))
+    menu.start(runner)
 
     assert runner.run_call_count == 1
 
 
-def test_user_can_select_a_human_opponent():
+def test_user_can_select_player_types():
     runner = MockGameRunner('console')
-    interface = Menu(MockConsole(input_return='1'))
-    interface.start(runner)
+    menu = Menu(MockConsole(inputs=['1', '', '2', '']))
+    menu.start(runner)
 
-    assert isinstance(runner.player_2, HumanPlayer)
-
-
-def test_user_can_select_a_simple_computer_opponent():
-    runner = MockGameRunner('console')
-    interface = Menu(MockConsole(input_return='2'))
-    interface.start(runner)
-
+    assert isinstance(runner.player_1, HumanPlayer)
     assert isinstance(runner.player_2, SimpleComputerPlayer)
 
 
-def test_user_can_select_a_smart_computer_opponent():
+def test_if_player_one_selects_x_as_marker_player_two_default_marker_changes_to_o():
     runner = MockGameRunner('console')
-    interface = Menu(MockConsole(input_return='3'))
-    interface.start(runner)
+    menu = Menu(MockConsole(inputs=['1', 'X', '1', '']))
+    menu.start(runner)
 
-    assert isinstance(runner.player_2, SmartComputerPlayer)
+    assert runner.player_2.get_marker() == 'O'
+
+
+def test_user_cannot_select_the_same_marker_as_their_opponent():
+    runner = MockGameRunner('console')
+    menu = Menu(MockConsole(inputs=['1', 'X', '2', 'X', 'O']))
+    menu.start(runner)
+
+    assert runner.player_2.get_marker() == 'O'

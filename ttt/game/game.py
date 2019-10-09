@@ -1,5 +1,5 @@
 from ttt.game.board import Board
-from ttt.messages import TURN_START_MESSAGE, GAME_WON_MESSAGE, GAME_TIED_MESSAGE
+from ttt.messages import turn_start_message, game_won_message, game_tied_message
 
 
 class Game:
@@ -31,7 +31,7 @@ class Game:
 
     def play_turn(self, console):
         console.render_board(self._board.get_spaces())
-        console.output_message(self._turn_start_message())
+        console.output_message(turn_start_message(self.get_current_player_name(), self.available_spaces()))
 
         space = self._current_player.get_move(self)
         self._board = self._board.place_marker(space=space, marker=self._current_player.get_marker())
@@ -55,13 +55,10 @@ class Game:
 
     def _game_over_screen(self, console):
         console.render_board(self._board.get_spaces())
-        message = f"{self.get_opponent_name()}{GAME_WON_MESSAGE}" if \
+        message = game_won_message(self.get_opponent_name()) if \
             self.is_won(self._board, self.get_opponent_marker()) else \
-            f"{GAME_TIED_MESSAGE}"
+            game_tied_message()
         console.output_message(message)
 
     def _switch_current_player(self):
         self._current_player, self._opponent = self._opponent, self._current_player
-
-    def _turn_start_message(self):
-        return f'{self.get_current_player_name()}{TURN_START_MESSAGE}{self.available_spaces()}'
