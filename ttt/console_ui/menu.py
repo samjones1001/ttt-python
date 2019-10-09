@@ -1,6 +1,4 @@
-from ttt.players.human_player import HumanPlayer
-from ttt.players.simple_computer_player import SimpleComputerPlayer
-from ttt.players.smart_computer_player import SmartComputerPlayer
+from ttt.players.player_factory import PlayerFactory
 from ttt.game.game_runner import GameRunner
 from ttt.messages import welcome_message, player_type_message, marker_message, invalid_marker_message
 
@@ -33,24 +31,20 @@ class Menu:
 
         self._console.output_message(marker_message(name, marker))
         player.set_marker()
-        player = self._check_marker_validity(player, unavailable_marker)
+        player = self._check_marker_availability(player, unavailable_marker)
 
         return player
 
     def _select_player_type(self, name, marker):
-        user_input = self._console.get_validated_input('^[/1/2/3]$', "Please select an option from the menu")
+        choices = {'1': 'human', '2': 'simpleComputer', '3': 'smartComputer'}
 
-        if user_input == '1':
-            return HumanPlayer(name, marker, self._console)
-        elif user_input == '2':
-            return SimpleComputerPlayer(name, marker, self._console)
-        elif user_input == '3':
-            return SmartComputerPlayer(name, marker, self._console)
+        user_input = self._console.get_validated_input('^[/1/2/3]$', "Please select an option from the menu")
+        return PlayerFactory().create(choices[user_input], name, marker, self._console)
 
     def _select_default_marker(self, taken_marker):
         return 'O' if taken_marker == 'X' else 'X'
 
-    def _check_marker_validity(self, player, unavailable_marker):
+    def _check_marker_availability(self, player, unavailable_marker):
         while player.get_marker() == unavailable_marker:
             self._console.output_message(invalid_marker_message())
             player.set_marker()
