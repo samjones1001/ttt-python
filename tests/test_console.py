@@ -4,10 +4,10 @@ from tests.mocks import MockConsoleIO
 
 
 class TestRunner:
-    def render_board(self, game):
+    def render_board(self, board):
         console_io = MockConsoleIO()
         console = Console(console_io)
-        console.render_board(game)
+        console.render_board(board)
         return console_io.last_output
 
 
@@ -29,6 +29,14 @@ def filled_board_output():
 @pytest.fixture
 def runner():
     return TestRunner()
+
+
+def test_the_screen_is_cleared_each_time_the_board_is_printed():
+    console_io = MockConsoleIO()
+    console = Console(console_io)
+    console.render_board([])
+
+    assert console_io.clear_call_count == 1
 
 
 def test_prints_an_empty_grid_correctly(empty_board_output, runner):

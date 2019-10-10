@@ -3,6 +3,7 @@ class MockConsoleIO:
         self.inputs = inputs
         self.get_input_call_count = 0
         self.last_output = None
+        self.clear_call_count = 0
 
     def get_input(self, message=""):
         self.get_input_call_count += 1
@@ -11,6 +12,9 @@ class MockConsoleIO:
     def print_output(self, output):
         self.last_output = output
 
+    def clear(self):
+        self.clear_call_count += 1
+
 
 class MockConsole:
     def __init__(self, inputs=['1']):
@@ -18,6 +22,7 @@ class MockConsole:
         self.get_valid_input_call_count = 0
         self.output_message_call_count = 0
         self.render_board_call_count = 0
+        self.clear_output_call_count = 0
 
     def get_validated_input(self, valid_inputs, error_message):
         self.get_valid_input_call_count += 1
@@ -28,6 +33,9 @@ class MockConsole:
 
     def render_board(self, _):
         self.render_board_call_count += 1
+
+    def clear_output(self):
+        self.clear_output_call_count += 1
 
 
 class MockGameRunner():

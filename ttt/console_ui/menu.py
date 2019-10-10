@@ -26,10 +26,12 @@ class Menu:
     def _setup_player(self, name, marker, unavailable_marker):
         self._console.output_message(player_type_message(name))
         player = self._select_player_type(name, marker)
+        self._console.clear_output()
 
         self._console.output_message(marker_message(name, marker))
         player.set_marker()
         player = self._check_marker_availability(player, unavailable_marker)
+        self._console.clear_output()
 
         return player
 
@@ -39,6 +41,7 @@ class Menu:
         choices = {'1': 'human', '2': 'simpleComputer', '3': 'smartComputer'}
 
         user_input = self._console.get_validated_input('^[/1/2/3]$', "Please select an option from the menu")
+
         return factory.create(choices[user_input], name, marker, self._console)
 
     def _select_default_marker(self, taken_marker):

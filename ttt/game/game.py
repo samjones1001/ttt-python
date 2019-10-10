@@ -11,6 +11,7 @@ class Game:
         self._current_player = player_one
         self._opponent = player_two
         self._rules = rules
+        self._previous_move = None
 
     def get_current_player_name(self):
         return self._current_player.get_name()
@@ -35,9 +36,13 @@ class Game:
 
     def play_turn(self, console):
         console.render_board(self._board.get_spaces())
-        console.output_message(turn_start_message(self.get_current_player_name()))
+        console.output_message(turn_start_message(self.get_current_player_name(),
+                                                  self.get_opponent_name(),
+                                                  self._previous_move))
 
         space = self._current_player.get_move(self)
+        self._previous_move = space + 1
+
         self._board = self._board.place_marker(space=space, marker=self._current_player.get_marker())
         self._switch_current_player()
 
