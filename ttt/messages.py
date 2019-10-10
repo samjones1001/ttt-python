@@ -26,8 +26,11 @@ def turn_start_message(player, opponent, previous_move):
 
 
 def game_won_message(player):
-    return f"{player} won!"
+    return f"\n{player} won!\n\n {play_again_message()}"
 
 
 def game_tied_message():
-    return "It's a tie!"
+    return f"\nIt's a tie!\n\n{play_again_message()}"
+
+def play_again_message():
+    return "Play again?\n\n(y)es / (n)o"

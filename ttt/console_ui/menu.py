@@ -1,6 +1,6 @@
 from ttt.players.player_factory import PlayerFactory
 from ttt.game.game_runner import GameRunner
-from ttt.messages import welcome_message, player_type_message, marker_message, invalid_marker_message
+from ttt.messages import welcome_message, player_type_message, marker_message, invalid_marker_message, play_again_message
 
 
 class Menu:
@@ -9,6 +9,7 @@ class Menu:
         self._runner = self._set_runner(runner)
 
     def start(self):
+        self._console.clear_output()
         self._console.output_message(welcome_message())
 
         player_1 = self._setup_player('Player 1', 'O', None)
@@ -17,6 +18,7 @@ class Menu:
                                       player_1.get_marker())
 
         self._runner.run(player_1, player_2)
+        self._play_again()
 
     def _set_runner(self, game_runner):
         if game_runner is None:
@@ -53,4 +55,8 @@ class Menu:
             player.set_marker()
         return player
 
+    def _play_again(self):
+        user_choice = self._console.get_validated_input('^[/y/n/Y/N]$', "Please select an option from the menu")
+        if user_choice.lower() == 'y':
+            self.start()
 
