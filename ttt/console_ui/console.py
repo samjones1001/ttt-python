@@ -21,6 +21,9 @@ class Console:
     def output_message(self, message):
         self._io.print_output(message)
 
+    def clear_output(self):
+        self._io.clear()
+
     def _build_board_output(self, board_state):
         lines = self._build_lines(board_state)
         dividers = self._build_dividers()

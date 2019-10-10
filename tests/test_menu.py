@@ -35,3 +35,13 @@ def test_user_cannot_select_the_same_marker_as_their_opponent():
     menu.start()
 
     assert runner.player_2.get_marker() == 'O'
+
+
+def test_console_is_clearer_after_each_message_is_printed():
+    number_of_messages = 4
+    console = MockConsole(['1', '', '1', ''])
+    runner = MockGameRunner('console')
+    menu = Menu(console, runner)
+    menu.start()
+
+    assert console.clear_output_call_count == number_of_messages
