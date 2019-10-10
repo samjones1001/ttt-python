@@ -3,6 +3,7 @@ class MockConsoleIO:
         self.inputs = inputs
         self.get_input_call_count = 0
         self.last_output = None
+        self.clear_call_count = 0
 
     def get_input(self, message=""):
         self.get_input_call_count += 1
@@ -10,6 +11,9 @@ class MockConsoleIO:
 
     def print_output(self, output):
         self.last_output = output
+
+    def clear(self):
+        self.clear_call_count += 1
 
 
 class MockConsole:

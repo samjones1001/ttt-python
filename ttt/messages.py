@@ -19,7 +19,7 @@ def invalid_marker_message():
 
 
 def turn_start_message(player, opponent, previous_move):
-    message = f"{player}'s turn."
+    message = f"\n{player}'s turn."
     if previous_move is not None:
         message += f" {opponent} chose space {previous_move}"
     return message

@@ -53,7 +53,7 @@ def test_on_first_turn_outputs_a_message_with_no_previous_move(game):
 
     game.play_turn(console)
 
-    assert io.last_output == "player 1's turn."
+    assert io.last_output == "\nplayer 1's turn."
 
 
 def test_on_subsequent_turns_outputs_a_message_with_previous_move():
@@ -66,7 +66,7 @@ def test_on_subsequent_turns_outputs_a_message_with_previous_move():
     game.play_turn(console)
     game.play_turn(console)
 
-    assert io.last_output == "player 2's turn. player 1 chose space 1"
+    assert io.last_output == "\nplayer 2's turn. player 1 chose space 1"
 
 
 def test_playing_a_turn_prompts_player_for_a_move(game, players):

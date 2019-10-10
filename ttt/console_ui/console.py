@@ -7,6 +7,7 @@ class Console:
         self._io = io
 
     def render_board(self, board_state):
+        self._io.clear()
         board_string = self._build_board_output(board_state)
         self._io.print_output(board_string)
 
