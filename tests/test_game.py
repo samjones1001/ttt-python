@@ -2,6 +2,7 @@ import pytest
 from ttt.game.game import Game
 from ttt.game.board import Board
 from ttt.console_ui.console import Console
+from ttt.players.human_player import HumanPlayer
 from tests.mocks import MockConsoleIO, MockConsole, MockPlayer, MockBoard
 
 
@@ -46,11 +47,26 @@ def test_playing_a_turn_outputs_the_current_state_of_the_board(game):
     assert console.render_board_call_count == 1
 
 
-def test_playing_a_turn_outputs_a_message(game):
-    console = MockConsole()
+def test_on_first_turn_outputs_a_message_with_no_previous_move(game):
+    io = MockConsoleIO([0])
+    console = Console(io)
+
     game.play_turn(console)
 
-    assert console.output_message_call_count == 1
+    assert io.last_output == "player 1's turn."
+
+
+def test_on_subsequent_turns_outputs_a_message_with_previous_move():
+    io = MockConsoleIO(['1', '2'])
+    console = Console(io)
+    player_1 = HumanPlayer('player 1', 'O', console)
+    player_2 = HumanPlayer('player 2', 'X', console)
+    game = Game(player_1, player_2)
+
+    game.play_turn(console)
+    game.play_turn(console)
+
+    assert io.last_output == "player 2's turn. player 1 chose space 1"
 
 
 def test_playing_a_turn_prompts_player_for_a_move(game, players):
