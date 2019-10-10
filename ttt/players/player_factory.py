@@ -13,7 +13,10 @@ class PlayerFactory:
         }
 
     def create(self, player_type, name, marker, console):
-        return self._types.get(player_type)(name, marker, console)
+        selected_type = self._types.get(player_type)
+        if not selected_type:
+            raise ValueError(f"{player_type} is not a valid player type")
+        return selected_type(name, marker, console)
 
 
 

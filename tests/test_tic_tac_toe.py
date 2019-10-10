@@ -1,7 +1,5 @@
 import pytest
 import tic_tac_toe as app
-from ttt.console_ui.menu import Menu
-from ttt.console_ui.console import Console
 from ttt.messages import game_tied_message
 from tests.mocks import MockConsoleIO
 
@@ -17,29 +15,21 @@ def win_state_board_output():
 
 
 def test_can_play_a_full_game():
-    io = MockConsoleIO(['1', '', '1', '', '1', '5', '2', '3', '7', '4', '6', '8', '9'])
-    console = Console(io)
-    app.menu = Menu(console)
+    app.consoleio = MockConsoleIO(['1', '', '1', '', '1', '5', '2', '3', '7', '4', '6', '8', '9'])
     app.main()
 
-    assert io.last_output == game_tied_message()
+    assert app.consoleio.last_output == game_tied_message()
 
 
 def test_gracefully_handles_invalid_user_input():
-    io = MockConsoleIO(['1', '', '1', '', '-1', '1', '5', '2', '3', 'not a number', '7', '4', '3000', '6', '8', '9'])
-    console = Console(io)
-    app.menu = Menu(console)
-
+    app.consoleio = MockConsoleIO(['1', '', '1', '', '-1', '1', '5', '2', '3', 'not a number', '7', '4', '3000', '6', '8', '9'])
     app.main()
 
-    assert io.last_output == game_tied_message()
+    assert app.consoleio.last_output == game_tied_message()
 
 
 def test_game_ends_if_a_player_wins():
-    io = MockConsoleIO(['1', '', '1', '', '1', '2', '3', '4', '5', '6', '7'])
-    console = Console(io)
-    app.menu = Menu(console)
-
+    app.consoleio = MockConsoleIO(['1', '', '1', '', '1', '2', '3', '4', '5', '6', '7'])
     app.main()
 
-    assert io.last_output == "Player 1 won!"
+    assert app.consoleio.last_output == "Player 1 won!"
