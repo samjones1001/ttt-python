@@ -1,6 +1,22 @@
+import pytest
 from ttt.players.human_player import HumanPlayer
 from ttt.console_ui.console import Console
 from tests.mocks import MockConsole, MockGame, MockConsoleIO
+
+
+class TestRunner:
+    def set_player_marker(self, inputs):
+        io = MockConsoleIO(inputs)
+        console = Console(io)
+        player = HumanPlayer('Player 1', 'X', console)
+        player.set_marker()
+
+        return player.get_marker()
+
+
+@pytest.fixture
+def runner():
+    return TestRunner()
 
 
 def test_human_player_moves_get_an_integer_from_the_console():
@@ -12,38 +28,17 @@ def test_human_player_moves_get_an_integer_from_the_console():
     assert console.get_valid_input_call_count == 1
 
 
-def test_a_player_can_select_a_custom_marker():
-    io = MockConsoleIO(['!'])
-    console = Console(io)
-    player = HumanPlayer('Player 1', 'X', console);
-    player.set_marker()
-
-    assert player.get_marker() == '!'
+def test_a_player_can_select_a_custom_marker(runner):
+    assert runner.set_player_marker(['!']) == '!'
 
 
-def test_a_player_will_continue_to_be_prompted_if_they_provide_an_integer_as_a_marker():
-    io = MockConsoleIO(['1', '3', '5', '!'])
-    console = Console(io)
-    player = HumanPlayer('Player 1', 'X', console);
-    player.set_marker()
-
-    assert player.get_marker() == '!'
+def test_a_player_will_continue_to_be_prompted_if_they_provide_an_integer_as_a_marker(runner):
+    assert runner.set_player_marker(['1', '3', '5', '!']) == '!'
 
 
-def test_a_player_will_continue_to_be_prompted_if_they_provide_whitespace_as_a_marker():
-    io = MockConsoleIO([' ', ' ', '   ', '!'])
-    console = Console(io)
-    player = HumanPlayer('Player 1', 'X', console);
-    player.set_marker()
-
-    assert player.get_marker() == '!'
+def test_a_player_will_continue_to_be_prompted_if_they_provide_whitespace_as_a_marker(runner):
+    assert runner.set_player_marker([' ', ' ', '   ', '!']) == '!'
 
 
-def test_a_player_will_retain_their_default_marker_if_they_provide_an_empty_string():
-    io = MockConsoleIO([''])
-    console = Console(io)
-    player = HumanPlayer('Player 1', 'X', console);
-    player.set_marker()
-
-    assert player.get_marker() == 'X'
-
+def test_a_player_will_retain_their_default_marker_if_they_provide_an_empty_string(runner):
+    assert runner.set_player_marker(['']) == 'X'

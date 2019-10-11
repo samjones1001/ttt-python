@@ -1,41 +1,49 @@
+import pytest
 from ttt.console_ui.menu import Menu
 from ttt.players.human_player import HumanPlayer
 from ttt.players.simple_computer_player import SimpleComputerPlayer
-from ttt.console_ui.console import Console
-from tests.mocks import MockConsole, MockGameRunner, MockConsoleIO
-from ttt.messages import welcome_message
-
-def test_starting_a_game_requests_the_game_runner_to_run():
-    runner = MockGameRunner('console')
-    menu = Menu(MockConsole(inputs=['1', '', '1', '', 'n']), runner)
-    menu.start()
-
-    assert runner.run_call_count == 1
+from tests.mocks import MockConsole, MockGameRunner
 
 
-def test_user_can_select_player_types():
-    runner = MockGameRunner('console')
-    menu = Menu(MockConsole(inputs=['1', '', '2', '', 'n']), runner)
-    menu.start()
-
-    assert isinstance(runner.player_1, HumanPlayer)
-    assert isinstance(runner.player_2, SimpleComputerPlayer)
+class TestRunner:
+    def start_menu(self, inputs, game_runner):
+        menu = Menu(MockConsole(inputs), game_runner)
+        menu.start()
 
 
-def test_if_player_one_selects_x_as_marker_player_two_default_marker_changes_to_o():
-    runner = MockGameRunner('console')
-    menu = Menu(MockConsole(inputs=['1', 'X', '1', '', 'n']), runner)
-    menu.start()
-
-    assert runner.player_2.get_marker() == 'O'
+@pytest.fixture
+def test_runner():
+    return TestRunner()
 
 
-def test_user_cannot_select_the_same_marker_as_their_opponent():
-    runner = MockGameRunner('console')
-    menu = Menu(MockConsole(inputs=['1', 'X', '2', 'X', 'O', 'n']), runner)
-    menu.start()
+@pytest.fixture
+def game_runner():
+    return MockGameRunner('console')
 
-    assert runner.player_2.get_marker() == 'O'
+
+def test_starting_a_game_requests_the_game_runner_to_run(test_runner, game_runner):
+    test_runner.start_menu(['1', '', '1', '', 'n'], game_runner)
+
+    assert game_runner.run_call_count == 1
+
+
+def test_user_can_select_player_types(test_runner, game_runner):
+    test_runner.start_menu(['1', '', '2', '', 'n'], game_runner)
+
+    assert isinstance(game_runner.player_1, HumanPlayer)
+    assert isinstance(game_runner.player_2, SimpleComputerPlayer)
+
+
+def test_if_player_one_selects_x_as_marker_player_two_default_marker_changes_to_o(test_runner, game_runner):
+    test_runner.start_menu(['1', 'X', '1', '', 'n'], game_runner)
+
+    assert game_runner.player_2.get_marker() == 'O'
+
+
+def test_user_cannot_select_the_same_marker_as_their_opponent(test_runner, game_runner):
+    test_runner.start_menu(['1', 'X', '2', 'X', 'O', 'n'], game_runner)
+
+    assert game_runner.player_2.get_marker() == 'O'
 
 
 def test_console_is_cleared_after_each_message_is_printed():

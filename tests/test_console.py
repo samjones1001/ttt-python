@@ -10,6 +10,11 @@ class TestRunner:
         console.render_board(board)
         return console_io.last_output
 
+    def get_validated_input(self, inputs, input_regex, error):
+        console_io = MockConsoleIO(inputs = inputs)
+        console = Console(console_io)
+        return console.get_validated_input(input_regex, error)
+
 
 @pytest.fixture
 def empty_board_output():
@@ -57,32 +62,16 @@ def test_prints_a_fully_filled_grid(filled_board_output, runner):
     assert runner.render_board(filled_board_state) == filled_board_output
 
 
-def test_returns_valid_user_input():
-    mock_io = MockConsoleIO(inputs=['1'])
-    console = Console(mock_io)
-
-    output = console.get_validated_input('^[/1]$', 'error message')
-    assert output == '1'
+def test_returns_valid_user_input(runner):
+    assert runner.get_validated_input(['1'], '^[/1]$', 'error message') == '1'
 
 
-def test_continues_to_prompt_for_input_until_valid_input_provided():
-    mock_io = MockConsoleIO(inputs=['-1', '1'])
-    console = Console(mock_io)
-
-    output = console.get_validated_input('^[/1]$', 'error message')
-
-    assert mock_io.get_input_call_count == 2
-    assert output == '1'
+def test_continues_to_prompt_for_input_until_valid_input_provided(runner):
+    assert runner.get_validated_input(['-1', '1'], '^[/1]$', 'error message') == '1'
 
 
-def test_rejects_input_greater_than_a_single_character_in_length():
-    mock_io = MockConsoleIO(inputs=['1111111', '1'])
-    console = Console(mock_io)
-
-    output = console.get_validated_input('[1]', 'error message')
-
-    assert mock_io.get_input_call_count == 2
-    assert output == '1'
+def test_rejects_input_greater_than_a_single_character_in_length(runner):
+    assert runner.get_validated_input(['1111111', '1'], '[1]', 'error message') == '1'
 
 
 def prints_an_error_message_if_provided_invalid_input():

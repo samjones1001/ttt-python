@@ -2,6 +2,7 @@ class MockConsoleIO:
     def __init__(self, inputs=None):
         self.inputs = inputs
         self.get_input_call_count = 0
+        self.print_output_call_count = 0
         self.last_output = None
         self.clear_call_count = 0
 
@@ -10,6 +11,7 @@ class MockConsoleIO:
         return self.inputs.pop(0)
 
     def print_output(self, output):
+        self.print_output_call_count += 1
         self.last_output = output
 
     def clear(self):
@@ -51,10 +53,11 @@ class MockGameRunner():
 
 
 class MockPlayer:
-    def __init__(self, name, marker):
+    def __init__(self, name, marker, input=1):
         self._name = name
         self._marker = marker
         self.get_move_call_count = 0
+        self._input = input
 
     def get_name(self):
         return self._name
@@ -64,7 +67,7 @@ class MockPlayer:
 
     def get_move(self, game):
         self.get_move_call_count += 1
-        return 1
+        return self._input
 
 
 class MockGame:
@@ -72,15 +75,10 @@ class MockGame:
                  board_state=None,
                  available_spaces=None,
                  turns_remaining=1):
-        self._board_state = self._set_board_state(board_state)
         self._available_spaces = available_spaces
         self._turns_remaining = turns_remaining
         self.game_over_call_count = 0
         self.play_turn_call_count = 0
-        self.show_game_over_screen_call_count = 0
-
-    def get_board_state(self):
-        return self._board_state
 
     def available_spaces(self):
         return self._available_spaces
@@ -92,25 +90,3 @@ class MockGame:
 
     def play_turn(self, console):
         self.play_turn_call_count += 1
-
-    def _set_board_state(self, board_state):
-        if board_state is None:
-            return []
-        return board_state
-
-
-class MockBoard:
-    def __init__(self):
-        self.place_marker_call_count = 0
-        self.get_spaces_call_count = 0
-        self.available_spaces_call_count = 0
-
-    def get_spaces(self):
-        self.get_spaces_call_count += 1
-        return []
-
-    def place_marker(self, space, marker):
-        self.place_marker_call_count += 1
-
-    def available_spaces(self):
-        self.available_spaces_call_count += 1

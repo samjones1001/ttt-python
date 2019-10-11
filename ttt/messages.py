@@ -32,5 +32,6 @@ def game_won_message(player):
 def game_tied_message():
     return f"\nIt's a tie!\n\n{play_again_message()}"
 
+
 def play_again_message():
     return "Play again?\n\n(y)es / (n)o"
