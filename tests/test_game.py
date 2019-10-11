@@ -2,13 +2,12 @@ import pytest
 from ttt.game.game import Game
 from ttt.game.board import Board
 from ttt.console_ui.console import Console
-from ttt.players.human_player import HumanPlayer
-from tests.mocks import MockConsoleIO, MockConsole, MockPlayer, MockBoard
+from tests.mocks import MockConsoleIO, MockConsole, MockPlayer
 
 
 @pytest.fixture
 def players():
-    return [MockPlayer('player 1', 'O'), MockPlayer('player 2', 'X')]
+    return [MockPlayer('player 1', 'O', 0), MockPlayer('player 2', 'X', 1)]
 
 
 @pytest.fixture
@@ -25,19 +24,18 @@ def test_current_player_switches_to_player_two_after_player_one_turn(game, playe
 
 def test_current_player_reverts_to_player_one_after_player_two_turn(game, players):
     current_player_on_turn_three = players[0].get_name()
-    console = Console(MockConsoleIO(['1']))
+    console = Console(MockConsoleIO(['1', '0']))
     game.play_turn(console)
     game.play_turn(console)
 
     assert game.get_current_player_name() == current_player_on_turn_three
 
 
-def test_play_turn_instructs_board_to_occupy_space(players):
-    board = MockBoard()
-    game = Game(game_board=board, player_one=players[0], player_two=players[1])
+def test_play_turn_occupies_a_space_on_the_board(game):
+    available_space_count = len(game.available_spaces())
     game.play_turn(Console(MockConsoleIO(['1'])))
 
-    assert board.place_marker_call_count == 1
+    assert len(game.available_spaces()) == available_space_count - 1
 
 
 def test_playing_a_turn_outputs_the_current_state_of_the_board(game):
@@ -48,47 +46,35 @@ def test_playing_a_turn_outputs_the_current_state_of_the_board(game):
 
 
 def test_on_first_turn_outputs_a_message_with_no_previous_move(game):
-    io = MockConsoleIO([0])
-    console = Console(io)
+    console_io = MockConsoleIO()
+    console = Console(console_io)
 
     game.play_turn(console)
 
-    assert io.last_output == "\nplayer 1's turn."
+    assert console_io.last_output == "\nplayer 1's turn."
 
 
-def test_on_subsequent_turns_outputs_a_message_with_previous_move():
-    io = MockConsoleIO(['1', '2'])
-    console = Console(io)
-    player_1 = HumanPlayer('player 1', 'O', console)
-    player_2 = HumanPlayer('player 2', 'X', console)
-    game = Game(player_1, player_2)
+def test_on_subsequent_turns_outputs_a_message_with_previous_move(game):
+    console_io = MockConsoleIO()
+    console = Console(console_io)
 
     game.play_turn(console)
     game.play_turn(console)
 
-    assert io.last_output == "\nplayer 2's turn. player 1 chose space 1"
+    assert console_io.last_output == "\nplayer 2's turn. player 1 chose space 1"
 
 
 def test_playing_a_turn_prompts_player_for_a_move(game, players):
-    console = MockConsole()
-    game.play_turn(console)
+    game.play_turn(Console(MockConsoleIO()))
 
     assert players[0].get_move_call_count == 1
-
-
-def test_playing_a_turn_places_a_marker_on_the_board(game):
-    space_to_fill = 1
-    console = MockConsole()
-    game.play_turn(console)
-
-    assert space_to_fill not in game.get_board().available_spaces()
 
 
 def test_displays_the_board_and_a_message_on_game_over(players):
     game_over_board = Board(['X', 'X', 'X', ' ', ' ', ' ', ' ', ' ', ' '])
     game = Game(players[0], players[1], game_over_board)
-    console = MockConsole()
+    console_io = MockConsoleIO()
+    console = Console(console_io)
     game.game_over(console)
 
-    assert console.render_board_call_count == 1
-    assert console.output_message_call_count == 1
+    assert console_io.print_output_call_count == 2
