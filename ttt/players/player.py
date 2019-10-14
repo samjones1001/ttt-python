@@ -13,10 +13,8 @@ class Player(ABC):
     def get_marker(self):
         return self._marker
 
-    def set_marker(self):
-        marker_choice = self._console.get_validated_input('^$|[^\d\t/ */]', "Please choose a valid marker")
-        if marker_choice != '':
-            self._marker = marker_choice
+    def set_marker(self, marker=None):
+        self._marker = marker
 
     @abstractmethod
     def get_move(self, game):

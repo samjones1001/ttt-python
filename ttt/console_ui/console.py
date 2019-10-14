@@ -1,5 +1,6 @@
 import re
 from ttt.console_ui.consoleio import ConsoleIO
+from ttt.console_ui.emoji import is_string_with_emojis
 
 
 class Console:
@@ -13,7 +14,7 @@ class Console:
 
     def get_validated_input(self, valid_inputs, error):
         user_input = self._io.get_input()
-        while not re.search(valid_inputs, user_input) or len(user_input) > 1:
+        while not re.search(valid_inputs, user_input):
             self._io.print_output(error)
             user_input = self._io.get_input()
         return user_input
@@ -39,14 +40,24 @@ class Console:
             yield board_state[i:i + spaces_per_line]
 
     def _build_line_string(self, line_array):
+        line_array = self._resize_cells(line_array)
         line = ' | '.join(line_array)
         return self._pad_string(line)
+
+    def _resize_cells(self, line):
+        output = []
+        for cell in line:
+            if not is_string_with_emojis(cell):
+                output.append(f'{cell} ')
+            else:
+                output.append(cell)
+        return output
 
     def _pad_string(self, string):
         return f" {string} "
 
     def _build_dividers(self):
-        divider_length = 11
+        divider_length = 14
         divider = '-' * divider_length
         return f"\n{divider}\n"
 
