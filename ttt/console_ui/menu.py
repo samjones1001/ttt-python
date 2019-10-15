@@ -2,7 +2,6 @@ import ttt.constants as constants
 from ttt.players.player_factory import PlayerFactory
 from ttt.game.game_runner import GameRunner
 from ttt.messages import welcome_message, player_type_message, marker_message, invalid_marker_message
-from ttt.console_ui.emoji import is_emoji, get_emoji
 
 
 class Menu:
