@@ -45,13 +45,12 @@ class Console:
         return self._pad_string(line)
 
     def _resize_cells(self, line):
-        output = []
-        for cell in line:
-            if not is_string_with_emojis(cell):
-                output.append(f'{cell} ')
-            else:
-                output.append(cell)
-        return output
+        return [self._resize_cell(cell) for cell in line]
+
+    def _resize_cell(self, cell):
+        if not is_string_with_emojis(cell):
+            return f'{cell} '
+        return cell
 
     def _pad_string(self, string):
         return f" {string} "
