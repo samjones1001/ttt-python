@@ -1,7 +1,7 @@
 import ttt.constants as constants
 from ttt.players.player_factory import PlayerFactory
 from ttt.game.game_runner import GameRunner
-from ttt.messages import welcome_message, player_type_message, marker_type_message, normal_marker_message, emoji_marker_message, invalid_marker_message
+from ttt.messages import welcome_message, player_type_message, marker_message, invalid_marker_message
 from ttt.console_ui.emoji import is_emoji, get_emoji
 
 
@@ -32,7 +32,7 @@ class Menu:
         player = self._select_player_type(name, marker)
         self._console.clear_output()
 
-        self._select_marker_type(player, taken_marker)
+        self._select_marker(player, taken_marker)
         self._console.clear_output()
 
         return player
@@ -48,31 +48,13 @@ class Menu:
         user_input = self._console.get_validated_input(constants.PLAYER_SELECTION_REGEX, constants.MENU_ERROR)
         return factory.create(choices[user_input], name, marker, self._console)
 
-    def _select_marker_type(self, player, taken_marker):
-        self._console.output_message(marker_type_message(player.get_name()))
-        user_input = self._console.get_validated_input(constants.MARKER_TYPE_SELECTION_REGEX, constants.MENU_ERROR)
-        self._console.clear_output()
-
-        if user_input == '1':
-            self._select_normal_marker(player, taken_marker)
-        else:
-            self._select_emoji_marker(player, taken_marker)
-
-    def _select_normal_marker(self, player, taken_marker):
-        self._console.output_message(normal_marker_message(player.get_name(), player.get_marker()))
+    def _select_marker(self, player, taken_marker):
+        self._console.output_message(marker_message(player.get_name(), player.get_marker()))
         marker_choice = self._console.get_validated_input(constants.NORMAL_MARKER_REGEX, constants.MARKER_ERROR)
 
         if marker_choice != '':
             player.set_marker(marker_choice)
         return self._check_marker_availability(player, taken_marker)
-
-    def _select_emoji_marker(self, player, taken_marker):
-        self._console.output_message(emoji_marker_message(player.get_name()))
-        emoji_string = self._console.get_validated_input(constants.EMOJI_MARKER_REGEX, constants.EMOJI_ERROR)
-        if is_emoji(emoji_string):
-            player.set_marker(get_emoji(emoji_string))
-        else:
-            self._select_emoji_marker(player, taken_marker)
 
     def _select_default_marker(self, taken_marker):
         return constants.PLAYER_1_MARKER if taken_marker == constants.PLAYER_2_MARKER else constants.PLAYER_2_MARKER
@@ -80,7 +62,7 @@ class Menu:
     def _check_marker_availability(self, player, taken_marker):
         while player.get_marker() == taken_marker:
             self._console.output_message(invalid_marker_message())
-            self._select_marker_type(player, taken_marker)
+            self._select_marker(player, taken_marker)
         return player
 
     def _play_again(self):
