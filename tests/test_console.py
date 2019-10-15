@@ -18,17 +18,22 @@ class TestRunner:
 
 @pytest.fixture
 def empty_board_output():
-    return ' 1 | 2 | 3 \n-----------\n 4 | 5 | 6 \n-----------\n 7 | 8 | 9 '
+    return ' 1  | 2  | 3  \n--------------\n 4  | 5  | 6  \n--------------\n 7  | 8  | 9  '
 
 
 @pytest.fixture
 def part_filled_board_output():
-    return ' x | o | 3 \n-----------\n 4 | 5 | 6 \n-----------\n 7 | 8 | 9 '
+    return ' x  | o  | 3  \n--------------\n 4  | 5  | 6  \n--------------\n 7  | 8  | 9  '
 
 
 @pytest.fixture
 def filled_board_output():
-    return ' x | o | x \n-----------\n o | x | o \n-----------\n x | o | x '
+    return ' x  | o  | x  \n--------------\n o  | x  | o  \n--------------\n x  | o  | x  '
+
+
+@pytest.fixture
+def emoji_board_output():
+    return ' 👍 | x  | 3  \n--------------\n x  | 👍 | 6  \n--------------\n x  | 8  | 👍 '
 
 
 @pytest.fixture
@@ -62,16 +67,18 @@ def test_prints_a_fully_filled_grid(filled_board_output, runner):
     assert runner.render_board(filled_board_state) == filled_board_output
 
 
+def test_prints_a_correctly_aligned_board_with_emoji_markers(emoji_board_output, runner):
+    board_state = ['👍', 'x', '3', 'x', '👍', '6', 'x', '8', '👍',]
+
+    assert runner.render_board(board_state) == emoji_board_output
+
+
 def test_returns_valid_user_input(runner):
     assert runner.get_validated_input(['1'], '^[/1]$', 'error message') == '1'
 
 
 def test_continues_to_prompt_for_input_until_valid_input_provided(runner):
     assert runner.get_validated_input(['-1', '1'], '^[/1]$', 'error message') == '1'
-
-
-def test_rejects_input_greater_than_a_single_character_in_length(runner):
-    assert runner.get_validated_input(['1111111', '1'], '[1]', 'error message') == '1'
 
 
 def prints_an_error_message_if_provided_invalid_input():

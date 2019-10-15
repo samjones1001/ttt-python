@@ -9,9 +9,19 @@ def player_type_message(name):
            f"(3) Tough Computer\n"
 
 
-def marker_message(name, default_marker):
+def marker_type_message(name):
+    return f"What kind of marker would you like to use for {name}\n\n" \
+           f"(1) Normal Characters\n\n" \
+           f"(2) Emoji\n"
+
+
+def normal_marker_message(name, default_marker):
     return f"Select a marker for {name}. " \
            f"To use the default {default_marker}, just hit enter\n"
+
+
+def emoji_marker_message(name):
+    return f"Enter the name of the emoji you would like to use as {name}'s marker"
 
 
 def invalid_marker_message():

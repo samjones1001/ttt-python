@@ -9,6 +9,7 @@ pytest-cov = "==2.7.1"
 coverage = "==4.5.4"
 
 [packages]
+emojis = "==0.4.0"
 
 [requires]
 python_version = "3.7"
