@@ -49,7 +49,7 @@ class Menu:
 
     def _select_marker(self, player, taken_marker):
         self._console.output_message(marker_message(player.get_name(), player.get_marker()))
-        marker_choice = self._console.get_validated_input(constants.NORMAL_MARKER_REGEX, constants.MARKER_ERROR)
+        marker_choice = self._console.get_validated_input(constants.MARKER_REGEX, constants.MARKER_ERROR)
 
         if not self._is_marker_availabile(marker_choice, taken_marker):
             self._console.output_message(invalid_marker_message())

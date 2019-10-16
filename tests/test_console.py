@@ -37,6 +37,11 @@ def emoji_board_output():
 
 
 @pytest.fixture
+def wide_emoji_board_output():
+    return ' ❤️  | x  | 3  \n--------------\n x  | ❤️  | 6  \n--------------\n x  | 8  | ❤️  '
+
+
+@pytest.fixture
 def runner():
     return TestRunner()
 
@@ -68,9 +73,15 @@ def test_prints_a_fully_filled_grid(filled_board_output, runner):
 
 
 def test_prints_a_correctly_aligned_board_with_emoji_markers(emoji_board_output, runner):
-    board_state = ['👍', 'x', '3', 'x', '👍', '6', 'x', '8', '👍',]
+    board_state = ['👍', 'x', '3', 'x', '👍', '6', 'x', '8', '👍']
 
     assert runner.render_board(board_state) == emoji_board_output
+
+
+def test_prints_a_correctly_aligned_board_with_emoji_markers_with_a_width_of_two_characters(wide_emoji_board_output, runner):
+    board_state = ['❤️', 'x', '3', 'x', '❤️', '6', 'x', '8', '❤️']
+
+    assert runner.render_board(board_state) == wide_emoji_board_output
 
 
 def test_returns_valid_user_input(runner):
