@@ -18,7 +18,7 @@ def runner():
     return TestRunner()
 
 
-def test_will_always_pick_the_center_space_if_available(runner):
+def test_will_always_pick_the_center_space_if_opponent_has_played_in_a_corner(runner):
     game = runner.setup_game(['O','2','3','4','5','6','7','8','9'])
     player = SmartComputerPlayer('Player 1', 'X')
     center_space_index = 4
