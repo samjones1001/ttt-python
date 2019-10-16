@@ -2,10 +2,9 @@ from abc import ABC, abstractmethod
 
 
 class Player(ABC):
-    def __init__(self, name, marker, console=None):
+    def __init__(self, name, marker):
         self._name = name
         self._marker = marker
-        self._console = console
 
     def get_name(self):
         return self._name

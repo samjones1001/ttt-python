@@ -4,7 +4,8 @@ from ttt.players.player import Player
 
 class HumanPlayer(Player):
     def __init__(self, name, marker, console):
-        super().__init__(name, marker, console)
+        super().__init__(name, marker)
+        self._console = console
 
     def get_move(self, game):
         one_indexed_spaces = [index + 1 for index in game.available_spaces()]
