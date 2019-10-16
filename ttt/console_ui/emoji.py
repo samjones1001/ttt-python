@@ -1,13 +1,9 @@
 import emojis
-
-
-def is_emoji(emoji_name):
-    return emojis.db.get_emoji_by_alias(emoji_name) is not None
-
-
-def get_emoji(emoji_name):
-    return emojis.encode(f":{emoji_name}:")
-
+from emojis.emojis import RE_EMOJI_TO_TEXT_GROUP
 
 def is_string_with_emojis(string):
     return emojis.count(string) > 0
+
+def emoji_regex():
+    return RE_EMOJI_TO_TEXT_GROUP[1:-1]
+

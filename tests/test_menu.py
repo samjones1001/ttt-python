@@ -56,7 +56,7 @@ def test_a_user_will_continue_to_be_prompted_if_they_provide_an_integer_as_a_mar
 
 
 def test_a_player_will_continue_to_be_prompted_if_they_provide_whitespace_as_a_marker(game_runner):
-    console = Console(MockConsoleIO(['1', '1', ' ', ' ', '   ', '!', '1', '1', '', 'n']))
+    console = Console(MockConsoleIO(['1', ' ', ' ', '   ', '!', '1', '', 'n']))
     menu = Menu(console, game_runner)
     menu.start()
 

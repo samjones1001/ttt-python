@@ -5,19 +5,15 @@ from ttt.players.smart_computer_player import SmartComputerPlayer
 
 
 class PlayerFactory:
-
-    def __init__(self):
-        self._types = {
-            constants.HUMAN_PLAYER_STRING: HumanPlayer,
-            constants.SIMPLE_COMPUTER_STRING: SimpleComputerPlayer,
-            constants.SMART_COMPUTER_STRING: SmartComputerPlayer
-        }
-
     def create(self, player_type, name, marker, console):
-        selected_type = self._types.get(player_type)
-        if not selected_type:
+        if player_type == constants.HUMAN_PLAYER_STRING:
+            return HumanPlayer(name, marker, console)
+        elif player_type == constants.SIMPLE_COMPUTER_STRING:
+            return SimpleComputerPlayer(name, marker)
+        elif player_type == constants.SMART_COMPUTER_STRING:
+            return SmartComputerPlayer(name, marker)
+        else:
             raise ValueError(f"{player_type} is not a valid player type")
-        return selected_type(name, marker, console)
 
 
 

@@ -2,7 +2,6 @@ import ttt.constants as constants
 from ttt.players.player_factory import PlayerFactory
 from ttt.game.game_runner import GameRunner
 from ttt.messages import welcome_message, player_type_message, marker_message, invalid_marker_message
-from ttt.console_ui.emoji import is_emoji, get_emoji
 
 
 class Menu:
@@ -50,20 +49,20 @@ class Menu:
 
     def _select_marker(self, player, taken_marker):
         self._console.output_message(marker_message(player.get_name(), player.get_marker()))
-        marker_choice = self._console.get_validated_input(constants.NORMAL_MARKER_REGEX, constants.MARKER_ERROR)
+        marker_choice = self._console.get_validated_input(constants.MARKER_REGEX, constants.MARKER_ERROR)
 
-        if marker_choice != '':
+        if not self._is_marker_availabile(marker_choice, taken_marker):
+            self._console.output_message(invalid_marker_message())
+            return self._select_marker(player, taken_marker)
+        elif marker_choice != '':
             player.set_marker(marker_choice)
-        return self._check_marker_availability(player, taken_marker)
+        return player
 
     def _select_default_marker(self, taken_marker):
         return constants.PLAYER_1_MARKER if taken_marker == constants.PLAYER_2_MARKER else constants.PLAYER_2_MARKER
 
-    def _check_marker_availability(self, player, taken_marker):
-        while player.get_marker() == taken_marker:
-            self._console.output_message(invalid_marker_message())
-            self._select_marker(player, taken_marker)
-        return player
+    def _is_marker_availabile(self, selected_marker, taken_marker):
+        return selected_marker != taken_marker
 
     def _play_again(self):
         user_choice = self._console.get_validated_input(constants.PLAY_AGAIN_REGEX, constants.MENU_ERROR)

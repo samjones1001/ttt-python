@@ -48,7 +48,7 @@ class Console:
         return [self._resize_cell(cell) for cell in line]
 
     def _resize_cell(self, cell):
-        if not is_string_with_emojis(cell):
+        if not is_string_with_emojis(cell) or len(cell) == 2:
             return f'{cell} '
         return cell
 
