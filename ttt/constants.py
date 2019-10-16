@@ -9,7 +9,7 @@ SMART_COMPUTER_STRING = 'smartComputer'
 
 PLAYER_SELECTION_REGEX = '^[/1/2/3]{1}$'
 MARKER_TYPE_SELECTION_REGEX = '^[/1/2/]{1}$'
-NORMAL_MARKER_REGEX = '^$|^[^\\d\t/ */]{1}$|\ud83d[\ude00-\ude4f]{1}$|\ud83c[\udf00-\uffff]{1}$|\ud83d[\u0000-\uddff]{1}$|\ud83d[\ude80-\udeff]{1}$|\ud83c[\udde0-\uddff]{1}$|\ud83c[\U0001F1E0-\U0001F1FF]{1}$'
+NORMAL_MARKER_REGEX = '^$|^[^\\d\t/ */]{1}$|\ud83d[\ude00-\ude4f]{1}$|\ud83c[\udf00-\uffff]{1}$|\ud83d[\u0000-\uddff]{1}$|\ud83d[\ude80-\udeff]{1}$|\ud83c[\udde0-\uddff]{1}$|\ud83c[\U0001F1E0-\U0001F1FF]{1}$|^\u200d️\u200d\u200d{1}$|^\U000e0067\U000e0062\U000e0065\U000e006e\U000e0067\U000e007f{1}$'
 
 EMOJI_MARKER_REGEX = '^[a-z0-9_]*$'
 PLAY_AGAIN_REGEX = '^[/y/n/Y/N]{1}$'
