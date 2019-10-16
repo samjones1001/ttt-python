@@ -1,6 +1,6 @@
 import re
 from ttt.console_ui.consoleio import ConsoleIO
-from ttt.console_ui.emoji import is_string_with_emojis
+from ttt.constants import EMOJI_REGEX
 
 
 class Console:
@@ -48,7 +48,7 @@ class Console:
         return [self._resize_cell(cell) for cell in line]
 
     def _resize_cell(self, cell):
-        if not is_string_with_emojis(cell) or len(cell) == 2:
+        if not re.search(EMOJI_REGEX, cell) or len(cell) == 2:
             return f'{cell} '
         return cell
 
