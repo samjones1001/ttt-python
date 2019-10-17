@@ -1,3 +1,5 @@
+#!/usr/bin/env python3
+
 from ttt.console_ui.consoleio import ConsoleIO
 from ttt.console_ui.console import Console
 from ttt.console_ui.menu import Menu
