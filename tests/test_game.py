@@ -12,7 +12,7 @@ def players():
 
 @pytest.fixture
 def game(players):
-    return Game(player_one=players[0], player_two=players[1])
+    return Game(first_player=players[0], second_player=players[1])
 
 
 def test_current_player_switches_to_player_two_after_player_one_turn(game, players):
