@@ -17,31 +17,6 @@ class TestRunner:
 
 
 @pytest.fixture
-def empty_board_output():
-    return ' 1  | 2  | 3  \n--------------\n 4  | 5  | 6  \n--------------\n 7  | 8  | 9  '
-
-
-@pytest.fixture
-def part_filled_board_output():
-    return ' x  | o  | 3  \n--------------\n 4  | 5  | 6  \n--------------\n 7  | 8  | 9  '
-
-
-@pytest.fixture
-def filled_board_output():
-    return ' x  | o  | x  \n--------------\n o  | x  | o  \n--------------\n x  | o  | x  '
-
-
-@pytest.fixture
-def emoji_board_output():
-    return ' 👍 | x  | 3  \n--------------\n x  | 👍 | 6  \n--------------\n x  | 8  | 👍 '
-
-
-@pytest.fixture
-def wide_emoji_board_output():
-    return ' ❤️  | x  | 3  \n--------------\n x  | ❤️  | 6  \n--------------\n x  | 8  | ❤️  '
-
-
-@pytest.fixture
 def runner():
     return TestRunner()
 
@@ -54,31 +29,36 @@ def test_the_screen_is_cleared_each_time_the_board_is_printed():
     assert console_io.clear_call_count == 1
 
 
-def test_prints_an_empty_grid_correctly(empty_board_output, runner):
+def test_prints_an_empty_grid_correctly(runner):
+    empty_board_output = ' 1  | 2  | 3  \n--------------\n 4  | 5  | 6  \n--------------\n 7  | 8  | 9  '
     empty_board_state = ['1', '2', '3', '4', '5', '6', '7', '8', '9']
 
     assert runner.render_board(empty_board_state) == empty_board_output
 
 
-def test_prints_a_part_filled_grid_correctly(part_filled_board_output, runner):
+def test_prints_a_part_filled_grid_correctly(runner):
+    part_filled_board_output = ' x  | o  | 3  \n--------------\n 4  | 5  | 6  \n--------------\n 7  | 8  | 9  '
     part_filled_board_state = ['x', 'o', '3', '4', '5', '6', '7', '8', '9']
 
     assert runner.render_board(part_filled_board_state) == part_filled_board_output
 
 
-def test_prints_a_fully_filled_grid(filled_board_output, runner):
+def test_prints_a_fully_filled_grid(runner):
+    filled_board_output = ' x  | o  | x  \n--------------\n o  | x  | o  \n--------------\n x  | o  | x  '
     filled_board_state = ['x', 'o', 'x', 'o', 'x', 'o', 'x', 'o', 'x']
 
     assert runner.render_board(filled_board_state) == filled_board_output
 
 
-def test_prints_a_correctly_aligned_board_with_emoji_markers(emoji_board_output, runner):
+def test_prints_a_correctly_aligned_board_with_emoji_markers(runner):
+    emoji_board_output = ' 👍 | x  | 3  \n--------------\n x  | 👍 | 6  \n--------------\n x  | 8  | 👍 '
     board_state = ['👍', 'x', '3', 'x', '👍', '6', 'x', '8', '👍']
 
     assert runner.render_board(board_state) == emoji_board_output
 
 
-def test_prints_a_correctly_aligned_board_with_emoji_markers_with_a_width_of_two_characters(wide_emoji_board_output, runner):
+def test_prints_a_correctly_aligned_board_with_emoji_markers_with_a_width_of_two_characters(runner):
+    wide_emoji_board_output = ' ❤️  | x  | 3  \n--------------\n x  | ❤️  | 6  \n--------------\n x  | 8  | ❤️  '
     board_state = ['❤️', 'x', '3', 'x', '❤️', '6', 'x', '8', '❤️']
 
     assert runner.render_board(board_state) == wide_emoji_board_output
