@@ -1,7 +1,7 @@
 import ttt.constants as constants
 from ttt.players.player_factory import PlayerFactory
 from ttt.game.game_runner import GameRunner
-from ttt.messages import welcome_message, player_type_message, marker_message, invalid_marker_message
+from ttt.messages import welcome_message, player_type_message, marker_message, invalid_marker_message, player_choice_message
 
 
 class Menu:
@@ -17,8 +17,9 @@ class Menu:
         player_2 = self._setup_player(constants.PLAYER_2_NAME,
                                       self._select_default_marker(player_1.get_marker()),
                                       player_1.get_marker())
+        player_order = self._select_player_order(player_1, player_2)
 
-        self._runner.run(player_1, player_2)
+        self._runner.run(player_order[0], player_order[1])
         self._play_again()
 
     def _set_runner(self, game_runner):
@@ -50,7 +51,9 @@ class Menu:
     def _select_marker(self, player, taken_marker):
         self._console.output_message(marker_message(player.get_name(), player.get_marker()))
         marker_choice = self._console.get_validated_input(constants.MARKER_REGEX, constants.MARKER_ERROR)
+        self._set_marker(player, taken_marker, marker_choice)
 
+    def _set_marker(self, player, taken_marker, marker_choice):
         if not self._is_marker_availabile(marker_choice, taken_marker):
             self._console.output_message(invalid_marker_message())
             return self._select_marker(player, taken_marker)
@@ -63,6 +66,11 @@ class Menu:
 
     def _is_marker_availabile(self, selected_marker, taken_marker):
         return selected_marker != taken_marker
+
+    def _select_player_order(self, player_1, player_2):
+        self._console.output_message(player_choice_message())
+        user_choice = self._console.get_validated_input(constants.DEFAULT_ORDER_REGEX, constants.MENU_ERROR)
+        return [player_1, player_2] if user_choice.lower() == 'y' else [player_2, player_1]
 
     def _play_again(self):
         user_choice = self._console.get_validated_input(constants.PLAY_AGAIN_REGEX, constants.MENU_ERROR)

@@ -4,12 +4,12 @@ from ttt.messages import turn_start_message, game_won_message, game_tied_message
 
 
 class Game:
-    def __init__(self, player_one, player_two, game_board=Board(), rules=GameRules()):
-        self._player_one = player_one
-        self._player_two = player_two
+    def __init__(self, first_player, second_player, game_board=Board(), rules=GameRules()):
+        self._first_player = first_player
+        self._second_player = second_player
         self._board = game_board
-        self._current_player = player_one
-        self._opponent = player_two
+        self._current_player = first_player
+        self._opponent = second_player
         self._rules = rules
         self._previous_move = None
 

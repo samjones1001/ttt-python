@@ -18,6 +18,10 @@ def invalid_marker_message():
     return "Please select a different marker from your opponent."
 
 
+def player_choice_message():
+    return "would you like to play your turns in the default order (Player 1 then Player 2)?\n\n(y)es / (n)o"
+
+
 def turn_start_message(player, opponent, previous_move):
     message = f"\n{player}'s turn."
     if previous_move is not None:

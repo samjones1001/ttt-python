@@ -6,7 +6,7 @@ from tests.mocks import MockConsoleIO
 
 @pytest.fixture
 def game_setup_inputs():
-    return ['1', '1', '', '1', '1', '']
+    return ['1', '', '1', '', 'y']
 
 
 def test_can_play_a_full_game(game_setup_inputs):

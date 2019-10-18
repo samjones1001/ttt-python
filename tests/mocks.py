@@ -43,13 +43,13 @@ class MockConsole:
 class MockGameRunner():
     def __init__(self, console):
         self.run_call_count = 0
-        self.player_1 = None
-        self.player_2 = None
+        self.first_player = None
+        self.second_player = None
 
-    def run(self, player_1, player_2):
+    def run(self, first_player, second_player):
         self.run_call_count += 1
-        self.player_1 = player_1
-        self.player_2 = player_2
+        self.first_player = first_player
+        self.second_player = second_player
 
 
 class MockPlayer:
