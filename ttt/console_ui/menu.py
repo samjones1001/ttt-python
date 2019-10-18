@@ -3,7 +3,7 @@ import sys
 import ttt.constants as constants
 from ttt.players.player_factory import PlayerFactory
 from ttt.game.game_runner import GameRunner
-from ttt.messages import welcome_message, player_type_message, marker_message, invalid_marker_message, player_choice_message, exit_game_message
+from ttt.messages import welcome_message, player_type_message, marker_message, invalid_marker_message, player_choice_message, end_game_message
 
 
 class Menu:
@@ -49,8 +49,8 @@ class Menu:
                    '2': constants.SIMPLE_COMPUTER_STRING,
                    '3': constants.SMART_COMPUTER_STRING}
 
-        user_input = self._console.get_validated_input(constants.PLAYER_SELECTION_REGEX, constants.MENU_ERROR)
-        return factory.create(choices[user_input], name, marker, self._console)
+        user_choice = self._console.get_validated_input(constants.PLAYER_SELECTION_REGEX, constants.MENU_ERROR)
+        return factory.create(choices[user_choice], name, marker, self._console)
 
     def _select_marker(self, player, taken_marker):
         self._console.output_message(marker_message(player.get_name(), player.get_marker()))
@@ -78,7 +78,7 @@ class Menu:
 
     def _play_again(self):
         user_choice = self._console.get_validated_input(constants.PLAY_AGAIN_REGEX, constants.MENU_ERROR)
-        if user_choice.lower() == 'y':
+        if user_choice.lower() == constants.CONFIRMATION_CHAR:
             self.start()
 
     def _signal_handler(self, sig, frame):
@@ -86,5 +86,5 @@ class Menu:
 
     def _exit(self):
         self._console.clear_output()
-        self._console.output_message(exit_game_message())
-        sys.exit(0)
+        self._console.output_message(end_game_message())
+        sys.exit()

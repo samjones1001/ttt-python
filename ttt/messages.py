@@ -1,5 +1,5 @@
 def welcome_message():
-    return "Welcome to Tic-Tac-Toe!\n"
+    return "Welcome to Tic-Tac-Toe!\n\nQuit the game at any time using ctrl+c."
 
 
 def player_type_message(name):
@@ -41,5 +41,5 @@ def play_again_message():
     return "Play again?\n\n(y)es / (n)o"
 
 
-def exit_game_message():
+def end_game_message():
     return "Thanks for playing!"
