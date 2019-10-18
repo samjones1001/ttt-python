@@ -19,7 +19,7 @@ def invalid_marker_message():
 
 
 def player_choice_message():
-    return "would you like to play your turns in the default order (Player 1 then Player 2)?\n\n(y)es / (n)o"
+    return "Which player should go first??\n\nPlayer (1) / Player (2)"
 
 
 def turn_start_message(player, opponent, previous_move):
@@ -39,3 +39,7 @@ def game_tied_message():
 
 def play_again_message():
     return "Play again?\n\n(y)es / (n)o"
+
+
+def exit_game_message():
+    return "Thanks for playing!"

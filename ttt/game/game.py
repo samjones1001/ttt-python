@@ -5,8 +5,6 @@ from ttt.messages import turn_start_message, game_won_message, game_tied_message
 
 class Game:
     def __init__(self, first_player, second_player, game_board=Board(), rules=GameRules()):
-        self._first_player = first_player
-        self._second_player = second_player
         self._board = game_board
         self._current_player = first_player
         self._opponent = second_player

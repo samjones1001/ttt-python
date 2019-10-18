@@ -1,7 +1,9 @@
+import signal
+import sys
 import ttt.constants as constants
 from ttt.players.player_factory import PlayerFactory
 from ttt.game.game_runner import GameRunner
-from ttt.messages import welcome_message, player_type_message, marker_message, invalid_marker_message, player_choice_message
+from ttt.messages import welcome_message, player_type_message, marker_message, invalid_marker_message, player_choice_message, exit_game_message
 
 
 class Menu:
@@ -10,6 +12,8 @@ class Menu:
         self._runner = self._set_runner(runner)
 
     def start(self):
+        signal.signal(signal.SIGINT, self._signal_handler)
+
         self._console.clear_output()
         self._console.output_message(welcome_message())
 
@@ -70,10 +74,17 @@ class Menu:
     def _select_player_order(self, player_1, player_2):
         self._console.output_message(player_choice_message())
         user_choice = self._console.get_validated_input(constants.DEFAULT_ORDER_REGEX, constants.MENU_ERROR)
-        return [player_1, player_2] if user_choice.lower() == 'y' else [player_2, player_1]
+        return [player_1, player_2] if user_choice == '1' else [player_2, player_1]
 
     def _play_again(self):
         user_choice = self._console.get_validated_input(constants.PLAY_AGAIN_REGEX, constants.MENU_ERROR)
         if user_choice.lower() == 'y':
             self.start()
 
+    def _signal_handler(self, sig, frame):
+        self._exit()
+
+    def _exit(self):
+        self._console.clear_output()
+        self._console.output_message(exit_game_message())
+        sys.exit(0)

@@ -1,4 +1,4 @@
-#!/usr/bin/env python3
+#!/usr/bin/env python
 
 from ttt.console_ui.consoleio import ConsoleIO
 from ttt.console_ui.console import Console
@@ -18,4 +18,3 @@ def main():
 
 if __name__ == '__main__':
     main()
-
