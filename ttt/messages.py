@@ -1,5 +1,5 @@
 def welcome_message():
-    return "Welcome to Tic-Tac-Toe!\n\nQuit the game at any time using ctrl+c."
+    return "Welcome to Tic-Tac-Toe!\nQuit the game at any time using ctrl+c.\n"
 
 
 def player_type_message(name):
@@ -30,11 +30,11 @@ def turn_start_message(player, opponent, previous_move):
 
 
 def game_won_message(player):
-    return f"\n{player} won!\n\n {play_again_message()}"
+    return f"\n{player} won!\n\n"
 
 
 def game_tied_message():
-    return f"\nIt's a tie!\n\n{play_again_message()}"
+    return f"\nIt's a tie!\n\n"
 
 
 def play_again_message():

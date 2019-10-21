@@ -1,5 +1,5 @@
-from ttt.game.game import Game
 from ttt.console_ui.console import Console
+from ttt.game.game_config import Config
 
 
 class GameRunner:
@@ -10,10 +10,8 @@ class GameRunner:
     def get_game(self):
         return self._game
 
-    def run(self, first_player, second_player, game=Game):
-        self._game = game(first_player, second_player)
+    def run(self, game_config: Config):
+        self._game = game_config.game(game_config.first_player, game_config.second_player)
 
         while not self._game.game_over(self._console):
             self._game.play_turn(self._console)
-
-
