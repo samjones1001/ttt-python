@@ -13,7 +13,7 @@ console = Console(consoleio)
 
 
 def main():
-    signal.signal(signal.SIGINT, _signal_handler)
+    signal.signal(signal.SIGINT, _exit)
 
     runner = GameRunner(console)
     menu = Menu(console)
@@ -25,11 +25,7 @@ def main():
         playing = menu.play_again()
 
 
-def _signal_handler(sig, frame):
-    _exit()
-
-
-def _exit():
+def _exit(sig, frame):
     console.clear_output()
     console.output_message(end_game_message())
     sys.exit()
