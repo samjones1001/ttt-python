@@ -42,19 +42,6 @@ class MockConsole:
     def clear_output(self):
         self.clear_output_call_count += 1
 
-
-class MockGameRunner():
-    def __init__(self, console):
-        self.run_call_count = 0
-        self.first_player = None
-        self.second_player = None
-
-    def run(self, first_player, second_player):
-        self.run_call_count += 1
-        self.first_player = first_player
-        self.second_player = second_player
-
-
 class MockPlayer:
     def __init__(self, name, marker, inputs=[1]):
         self._name = name

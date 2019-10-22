@@ -9,8 +9,10 @@ class Menu:
     def __init__(self, console, game_config=GameConfig):
         self._console = console
         self._game_config = game_config(console)
+        print(333333333)
 
     def configure_game(self, game=Game):
+        print(33333333)
         self._console.clear_output()
         self._console.output_message(welcome_message())
 
@@ -28,8 +30,12 @@ class Menu:
         user_choice = self._console.get_validated_input(constants.PLAY_AGAIN_REGEX, constants.MENU_ERROR)
         if user_choice.lower() == constants.CONFIRMATION_CHAR:
             return True
-        self._console.output_message(end_game_message())
+        self.exit()
         return False
+
+    def exit(self):
+        self._console.clear_output()
+        self._console.output_message(end_game_message())
 
     def _setup_player(self, name, marker, taken_marker):
         player = self._select_player_type(name, marker)

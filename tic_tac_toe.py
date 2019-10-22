@@ -2,21 +2,19 @@
 import signal
 import sys
 
-from ttt.console_ui.consoleio import ConsoleIO
 from ttt.console_ui.console import Console
+from ttt.console_ui.consoleio import ConsoleIO
 from ttt.console_ui.menu import Menu
 from ttt.game.game_runner import GameRunner
-from ttt.messages import end_game_message
 
 consoleio = ConsoleIO()
 console = Console(consoleio)
-
+menu = Menu(console)
 
 def main():
     signal.signal(signal.SIGINT, _exit)
 
     runner = GameRunner(console)
-    menu = Menu(console)
 
     playing = True
     while playing:
@@ -26,8 +24,7 @@ def main():
 
 
 def _exit(sig, frame):
-    console.clear_output()
-    console.output_message(end_game_message())
+    menu.exit()
     sys.exit()
 
 

@@ -109,3 +109,13 @@ def test_user_has_the_option_not_to_play_again():
 
     assert io.last_output == end_game_message()
     assert not play_again
+
+
+def test_exits_the_game():
+    io = MockConsoleIO([])
+    console = Console(io)
+    menu = Menu(console)
+
+    menu.exit()
+
+    assert io.last_output == end_game_message()
