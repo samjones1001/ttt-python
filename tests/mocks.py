@@ -39,6 +39,7 @@ class MockConsole:
     def clear_output(self):
         self.clear_output_call_count += 1
 
+
 class MockPlayer:
     def __init__(self, name, marker, inputs=[1]):
         self._name = name

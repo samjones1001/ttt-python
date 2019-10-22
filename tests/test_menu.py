@@ -1,4 +1,5 @@
 from tests.mocks import MockConsole, MockConsoleIO
+from ttt import constants
 from ttt.console_ui.console import Console
 from ttt.console_ui.menu import Menu
 from ttt.messages import play_again_message, end_game_message
@@ -21,6 +22,14 @@ def test_user_can_select_a_custom_marker():
     config = menu.configure_game()
 
     assert config.first_player.get_marker() == '!'
+
+
+def test_user_can_select_a_colour_for_their_marker():
+    menu = Menu(MockConsole(['1', '!', '1', '2', '', '', '1']))
+
+    config = menu.configure_game()
+
+    assert config.first_player.get_marker_colour() == constants.COLOURS['1']
 
 
 def test_user_can_select_a_custom_emoji_marker():

@@ -38,7 +38,7 @@ class GameConfig:
         if not self._is_marker_availabile(marker_choice, taken_marker):
             self._console.output_message(invalid_marker_message())
             return None
-        elif marker_choice != '':
+        elif marker_choice is not '':
             player.set_marker(marker_choice)
         return player
 

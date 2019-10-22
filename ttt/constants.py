@@ -22,20 +22,14 @@ SPACES_ERROR = "Please select from available spaces"
 
 CONFIRMATION_CHAR = 'y'
 
-RED_ENCODING = '\033[91m'
-YELLOW_ENCODING = '\033[93m'
-BLUE_ENCODING = '\033[94m'
-GREEN_ENCODING = '\033[92m'
-PINK_ENCODING = '\033[95m'
-END_COLOUR = '\033[0m'
-
 COLOURS = {
-    '1': RED_ENCODING,
-    '2': YELLOW_ENCODING,
-    '3': BLUE_ENCODING,
-    '4': GREEN_ENCODING,
-    '5': PINK_ENCODING,
+    '1': '\033[91m',
+    '2': '\033[93m',
+    '3': '\033[94m',
+    '4': '\033[92m',
+    '5': '\033[95m',
     '': '',
 }
+END_COLOUR = '\033[0m'
 
 
