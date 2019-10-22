@@ -1,6 +1,3 @@
-from ttt.game.game import Game
-
-
 class MockConsoleIO:
     def __init__(self, inputs=None):
         self.inputs = inputs
@@ -60,7 +57,7 @@ class MockPlayer:
         return self._inputs.pop(0)
 
 
-class MockGame(Game):
+class MockGame():
     def __init__(self,
                  board_state=None,
                  available_spaces=None,

@@ -9,10 +9,8 @@ class Menu:
     def __init__(self, console, game_config=GameConfig):
         self._console = console
         self._game_config = game_config(console)
-        print(333333333)
 
     def configure_game(self, game=Game):
-        print(33333333)
         self._console.clear_output()
         self._console.output_message(welcome_message())
 
