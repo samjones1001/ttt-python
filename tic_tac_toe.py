@@ -1,21 +1,32 @@
-#!/usr/bin/env python3
+#!/usr/bin/env python
+import signal
+import sys
 
-from ttt.console_ui.consoleio import ConsoleIO
 from ttt.console_ui.console import Console
+from ttt.console_ui.consoleio import ConsoleIO
 from ttt.console_ui.menu import Menu
 from ttt.game.game_runner import GameRunner
 
 consoleio = ConsoleIO()
-
+console = Console(consoleio)
+menu = Menu(console)
 
 def main():
-    console = Console(consoleio)
-    runner = GameRunner(console)
-    menu = Menu(console, runner)
+    signal.signal(signal.SIGINT, _exit)
 
-    menu.start()
+    runner = GameRunner(console)
+
+    playing = True
+    while playing:
+        config = menu.configure_game()
+        runner.run(config)
+        playing = menu.play_again()
+
+
+def _exit(sig, frame):
+    menu.exit()
+    sys.exit()
 
 
 if __name__ == '__main__':
     main()
-

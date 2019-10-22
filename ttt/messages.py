@@ -1,5 +1,5 @@
 def welcome_message():
-    return "Welcome to Tic-Tac-Toe!\n"
+    return "Welcome to Tic-Tac-Toe!\nQuit the game at any time using ctrl+c.\n"
 
 
 def player_type_message(name):
@@ -19,7 +19,7 @@ def invalid_marker_message():
 
 
 def player_choice_message():
-    return "would you like to play your turns in the default order (Player 1 then Player 2)?\n\n(y)es / (n)o"
+    return "Which player should go first??\n\nPlayer (1) / Player (2)"
 
 
 def turn_start_message(player, opponent, previous_move):
@@ -30,12 +30,16 @@ def turn_start_message(player, opponent, previous_move):
 
 
 def game_won_message(player):
-    return f"\n{player} won!\n\n {play_again_message()}"
+    return f"\n{player} won!\n\n"
 
 
 def game_tied_message():
-    return f"\nIt's a tie!\n\n{play_again_message()}"
+    return f"\nIt's a tie!\n\n"
 
 
 def play_again_message():
     return "Play again?\n\n(y)es / (n)o"
+
+
+def end_game_message():
+    return "Thanks for playing!"

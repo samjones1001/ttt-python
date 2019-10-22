@@ -7,7 +7,7 @@ from tests.mocks import MockConsoleIO, MockConsole, MockPlayer
 
 @pytest.fixture
 def players():
-    return [MockPlayer('player 1', 'O', 0), MockPlayer('player 2', 'X', 1)]
+    return [MockPlayer('player 1', 'O', [0]), MockPlayer('player 2', 'X', [1])]
 
 
 @pytest.fixture
