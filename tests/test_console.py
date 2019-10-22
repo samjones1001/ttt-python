@@ -1,13 +1,13 @@
 import pytest
 from ttt.console_ui.console import Console
-from tests.mocks import MockConsoleIO
+from tests.mocks import MockConsoleIO, MockPlayer
 
 
 class TestRunner:
     def render_board(self, board):
         console_io = MockConsoleIO()
         console = Console(console_io)
-        console.render_board(board)
+        console.render_board(board, 'player_1', 'player_2')
         return console_io.last_output
 
     def get_validated_input(self, inputs, input_regex, error):
@@ -24,7 +24,7 @@ def runner():
 def test_the_screen_is_cleared_each_time_the_board_is_printed():
     console_io = MockConsoleIO()
     console = Console(console_io)
-    console.render_board([])
+    console.render_board([], MockPlayer('Player 1', 'O'), MockPlayer('Player 2', 'X'))
 
     assert console_io.clear_call_count == 1
 

@@ -19,11 +19,11 @@ def test_creates_a_cofig_object_with_passed_attributes():
     assert config_obj.game == game
 
 
-def test_sets_a_marker_to_be_displayed_in_colour():
+def test_sets_the_colout_of_a_players_marker():
     console = MockConsole()
     game_config = GameConfig(console)
     player = MockPlayer('Player 1', 'O')
 
-    game_config.set_marker_colour(player, constants.RED)
+    game_config.set_marker_colour(player, 'colour choice')
 
-    assert player.get_marker() == f"{constants.RED}O{constants.END_COLOUR}"
+    assert player.get_marker_colour() == 'colour choice'

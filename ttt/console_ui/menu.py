@@ -2,7 +2,7 @@ import ttt.constants as constants
 from ttt.game.game import Game
 from ttt.game.game_config import GameConfig
 from ttt.messages import welcome_message, player_type_message, marker_message, player_choice_message, end_game_message, \
-    play_again_message
+    play_again_message, colour_message
 
 
 class Menu:
@@ -50,11 +50,19 @@ class Menu:
     def _select_marker(self, player, taken_marker):
         self._console.output_message(marker_message(player.get_name(), player.get_marker()))
         marker_choice = self._console.get_validated_input(constants.MARKER_REGEX, constants.MARKER_ERROR)
-
         updated_player = self._game_config.set_player_marker(player, taken_marker, marker_choice)
-        if not updated_player:
-            self._select_marker(player, taken_marker)
         self._console.clear_output()
+
+        if not updated_player:
+            return self._select_marker(player, taken_marker)
+        self._select_marker_colour(player)
+
+    def _select_marker_colour(self, player):
+        self._console.output_message(colour_message(player.get_name()))
+        colour_choice = self._console.get_validated_input(constants.COLOUR_REGEX, constants.MENU_ERROR)
+        self._game_config.set_marker_colour(player, colour_choice)
+        self._console.clear_output()
+
 
     def _select_player_order(self, player_1, player_2):
         self._console.output_message(player_choice_message())

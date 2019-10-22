@@ -33,7 +33,7 @@ class Game:
         return self._board.available_spaces()
 
     def play_turn(self, console):
-        console.render_board(self._board.get_spaces())
+        console.render_board(self._board.get_spaces(), self._current_player, self._opponent)
         console.output_message(turn_start_message(self.get_current_player_name(),
                                                   self.get_opponent_name(),
                                                   self._previous_move))
@@ -51,7 +51,7 @@ class Game:
         return False
 
     def _game_over_screen(self, console):
-        console.render_board(self._board.get_spaces())
+        console.render_board(self._board.get_spaces(), self._current_player, self._opponent)
         message = game_won_message(self.get_opponent_name()) if \
             self._rules.is_won(self._board, self.get_opponent_marker()) else \
             game_tied_message()

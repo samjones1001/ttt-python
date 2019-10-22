@@ -33,7 +33,7 @@ class MockConsole:
     def output_message(self, message):
         self.output_message_call_count += 1
 
-    def render_board(self, _):
+    def render_board(self, board, player_1, player_2):
         self.render_board_call_count += 1
 
     def clear_output(self):
@@ -43,6 +43,7 @@ class MockPlayer:
     def __init__(self, name, marker, inputs=[1]):
         self._name = name
         self._marker = marker
+        self._marker_colour = None
         self.get_move_call_count = 0
         self._inputs = inputs
 
@@ -52,12 +53,18 @@ class MockPlayer:
     def get_marker(self):
         return self._marker
 
+    def get_marker_colour(self):
+        return self._marker_colour
+
     def get_move(self, game):
         self.get_move_call_count += 1
         return self._inputs.pop(0)
 
     def set_marker(self, marker):
         self._marker = marker
+
+    def set_marker_colour(self, colour):
+        self._marker_colour = colour
 
 
 class MockGame():
