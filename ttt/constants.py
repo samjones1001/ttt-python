@@ -4,7 +4,7 @@ PLAYER_2_NAME = 'Player 2'
 PLAYER_2_MARKER = 'X'
 
 HUMAN_PLAYER_STRING = 'human'
-SIMPLE_COMPUTER_STRING = 'simpleConputer'
+SIMPLE_COMPUTER_STRING = 'simpleComputer'
 SMART_COMPUTER_STRING = 'smartComputer'
 
 PLAYER_SELECTION_REGEX = '^[/1/2/3]{1}$'
@@ -20,3 +20,10 @@ EMOJI_ERROR = "Please enter a valid emoji name"
 SPACES_ERROR = "Please select from available spaces"
 
 CONFIRMATION_CHAR = 'y'
+
+RED = '\033[91m'
+YELLOW = '\033[93m'
+BLUE = '\033[94m'
+GREEN = '\033[92m'
+PINK = '\033[95m'
+END_COLOUR = '\033[0m'

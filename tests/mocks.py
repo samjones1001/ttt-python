@@ -56,6 +56,9 @@ class MockPlayer:
         self.get_move_call_count += 1
         return self._inputs.pop(0)
 
+    def set_marker(self, marker):
+        self._marker = marker
+
 
 class MockGame():
     def __init__(self,

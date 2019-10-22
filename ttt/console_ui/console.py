@@ -40,8 +40,7 @@ class Console:
             yield board_state[i:i + spaces_per_line]
 
     def _build_line_string(self, line_array):
-        line_array = self._resize_cells(line_array)
-        line = ' | '.join(line_array)
+        line = ' | '.join(self._resize_cells(line_array))
         return self._pad_string(line)
 
     def _resize_cells(self, line):

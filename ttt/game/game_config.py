@@ -42,5 +42,8 @@ class GameConfig:
             player.set_marker(marker_choice)
         return player
 
+    def set_marker_colour(self, player, colour_choice):
+        player.set_marker(f"{colour_choice}{player.get_marker()}{constants.END_COLOUR}")
+
     def _is_marker_availabile(self, selected_marker, taken_marker):
         return selected_marker != taken_marker
