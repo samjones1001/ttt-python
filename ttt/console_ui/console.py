@@ -1,15 +1,15 @@
 import re
 from ttt.console_ui.consoleio import ConsoleIO
-from ttt.constants import EMOJI_REGEX
+import ttt.constants as constants
 
 
 class Console:
     def __init__(self, io=ConsoleIO()):
         self._io = io
 
-    def render_board(self, board_state):
+    def render_board(self, board_state, player_1, player_2):
         self._io.clear()
-        board_string = self._build_board_output(board_state)
+        board_string = self._build_board_output(board_state, player_1, player_2)
         self._io.print_output(board_string)
 
     def get_validated_input(self, valid_inputs, error):
@@ -25,10 +25,29 @@ class Console:
     def clear_output(self):
         self._io.clear()
 
-    def _build_board_output(self, board_state):
-        lines = self._build_lines(board_state)
+    def _build_board_output(self, board_state, player_1, player_2):
+        formatted_board_state = self._format_cells(board_state, player_1, player_2)
+        lines = self._build_lines(formatted_board_state)
         dividers = self._build_dividers()
         return dividers.join(lines)
+
+    def _format_cells(self, board_state, player_1, player_2):
+        return [self._format_cell(cell, player_1, player_2) for cell in board_state]
+
+    def _format_cell(self, cell, player_1, player_2):
+        if not re.match(constants.EMOJI_REGEX, cell) or len(cell) == 2:
+            return f'{self._colourise_cell(cell, player_1, player_2)} '
+        return self._colourise_cell(cell, player_1, player_2)
+
+    def _colourise_cell(self, cell, player_1, player_2):
+        if cell == player_1.get_marker():
+            color = player_1.get_marker_colour()
+        elif cell == player_2.get_marker():
+            color = player_2.get_marker_colour()
+        else:
+            color = ''
+
+        return f"{color}{cell}{constants.END_COLOUR}"
 
     def _build_lines(self, board_state):
         line_arrays = self._split_board_to_lines(board_state)
@@ -40,17 +59,8 @@ class Console:
             yield board_state[i:i + spaces_per_line]
 
     def _build_line_string(self, line_array):
-        line_array = self._resize_cells(line_array)
         line = ' | '.join(line_array)
         return self._pad_string(line)
-
-    def _resize_cells(self, line):
-        return [self._resize_cell(cell) for cell in line]
-
-    def _resize_cell(self, cell):
-        if not re.search(EMOJI_REGEX, cell) or len(cell) == 2:
-            return f'{cell} '
-        return cell
 
     def _pad_string(self, string):
         return f" {string} "

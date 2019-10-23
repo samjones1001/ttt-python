@@ -1,4 +1,5 @@
 from tests.mocks import MockConsole, MockConsoleIO
+from ttt import constants
 from ttt.console_ui.console import Console
 from ttt.console_ui.menu import Menu
 from ttt.messages import play_again_message, end_game_message
@@ -7,7 +8,7 @@ from ttt.players.simple_computer_player import SimpleComputerPlayer
 
 
 def test_user_can_select_player_types():
-    menu = Menu(MockConsole(['1', '', '2', '', '1', 'n']))
+    menu = Menu(MockConsole(['1', '', '', '2', '', '', '1']))
 
     config = menu.configure_game()
 
@@ -16,15 +17,32 @@ def test_user_can_select_player_types():
 
 
 def test_user_can_select_a_custom_marker():
-    menu = Menu(MockConsole(['1', '!', '2', '', '1', 'n']))
+    menu = Menu(MockConsole(['1', '!', '', '2', '', '', '1']))
 
     config = menu.configure_game()
 
     assert config.first_player.get_marker() == '!'
 
 
+def test_user_can_select_a_colour_for_their_marker():
+    menu = Menu(MockConsole(['1', '!', '1', '2', '', '', '1']))
+
+    config = menu.configure_game()
+
+    assert config.first_player.get_marker_colour() == constants.COLOURS['1']
+
+
+def test_users_are_not_prompted_to_select_a_colour_for_emoji_markers():
+    menu = Menu(MockConsole(['1', '👍', '2', '😀', '1']))
+
+    config = menu.configure_game()
+
+    assert config.first_player.get_marker_colour() == constants.COLOURS['']
+    assert config.second_player.get_marker_colour() == constants.COLOURS['']
+
+
 def test_user_can_select_a_custom_emoji_marker():
-    menu = Menu(MockConsole(['1', '👍', '1', '', '1', 'n']))
+    menu = Menu(MockConsole(['1', '👍', '1', '', '', '1']))
 
     config = menu.configure_game()
 
@@ -32,7 +50,7 @@ def test_user_can_select_a_custom_emoji_marker():
 
 
 def test_a_user_will_continue_to_be_prompted_if_they_provide_an_integer_as_a_marker():
-    menu = Menu(Console(MockConsoleIO(['1', '1', '5', '2', '7', '!', '1', '1', '', '1', 'n'])))
+    menu = Menu(Console(MockConsoleIO(['1', '1', '5', '2', '7', '!', '', '1', '', '', '1'])))
 
     config = menu.configure_game()
 
@@ -40,7 +58,7 @@ def test_a_user_will_continue_to_be_prompted_if_they_provide_an_integer_as_a_mar
 
 
 def test_a_player_will_continue_to_be_prompted_if_they_provide_whitespace_as_a_marker():
-    menu = Menu(Console(MockConsoleIO(['1', ' ', ' ', '   ', '!', '1', '', '1', 'n'])))
+    menu = Menu(Console(MockConsoleIO(['1', ' ', ' ', '   ', '!', '', '1', '', '', '1'])))
 
     config = menu.configure_game()
 
@@ -48,7 +66,7 @@ def test_a_player_will_continue_to_be_prompted_if_they_provide_whitespace_as_a_m
 
 
 def test_a_player_will_retain_their_default_marker_if_they_provide_an_empty_string():
-    menu = Menu(Console(MockConsoleIO(['1', '1', '', '1', '1', '', '1', 'n'])))
+    menu = Menu(Console(MockConsoleIO(['1', '', '', '1', '', '', '1'])))
 
     config = menu.configure_game()
 
@@ -56,7 +74,7 @@ def test_a_player_will_retain_their_default_marker_if_they_provide_an_empty_stri
 
 
 def test_if_player_one_selects_x_as_marker_player_two_default_marker_changes_to_o():
-    menu = Menu(Console(MockConsoleIO(['1', 'X', '1', '', '1', 'n'])))
+    menu = Menu(Console(MockConsoleIO(['1', 'X', '', '1', '', '', '1', 'n'])))
 
     config = menu.configure_game()
 
@@ -64,7 +82,7 @@ def test_if_player_one_selects_x_as_marker_player_two_default_marker_changes_to_
 
 
 def test_user_cannot_select_the_same_marker_as_their_opponent():
-    menu = Menu(Console(MockConsoleIO(['1', 'X', '2', 'X', 'O', '1', 'n'])))
+    menu = Menu(Console(MockConsoleIO(['1', 'X', '', '2', 'X', 'O', '', '1'])))
 
     config = menu.configure_game()
 
@@ -72,7 +90,7 @@ def test_user_cannot_select_the_same_marker_as_their_opponent():
 
 
 def test_user_can_reverse_the_order_of_turns():
-    menu = Menu(Console(MockConsoleIO(['1', 'X', '2', 'O', '2', 'n'])))
+    menu = Menu(Console(MockConsoleIO(['1', 'X', '', '2', 'O', '', '2'])))
 
     config = menu.configure_game()
 
@@ -80,7 +98,7 @@ def test_user_can_reverse_the_order_of_turns():
 
 
 def test_console_is_cleared_after_each_message_is_printed():
-    inputs = ['1', 'X', '2', 'O', '2', 'n']
+    inputs = ['1', 'X', '', '2', 'O', '', '2', 'n']
     console = MockConsole(inputs)
     menu = Menu(console)
 

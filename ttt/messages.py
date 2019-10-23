@@ -14,6 +14,10 @@ def marker_message(name, default_marker):
            f"To use the default {default_marker}, just hit enter\n"
 
 
+def colour_message(name):
+    return f"Select a colour for {name}'s marker\n(1) Red\n(2) Yellow\n(3) Blue\n(4) Green\n(5) Pink\n\n Press enter to use the default colour for your terminal."
+
+
 def invalid_marker_message():
     return "Please select a different marker from your opponent."
 
