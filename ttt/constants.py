@@ -22,13 +22,14 @@ SPACES_ERROR = "Please select from available spaces"
 
 CONFIRMATION_CHAR = 'y'
 
+NO_COLOUR = ''
 COLOURS = {
     '1': '\033[91m',
     '2': '\033[93m',
     '3': '\033[94m',
     '4': '\033[92m',
     '5': '\033[95m',
-    '': '',
+    '': NO_COLOUR,
 }
 END_COLOUR = '\033[0m'
 

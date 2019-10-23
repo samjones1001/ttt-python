@@ -32,8 +32,17 @@ def test_user_can_select_a_colour_for_their_marker():
     assert config.first_player.get_marker_colour() == constants.COLOURS['1']
 
 
+def test_users_are_not_prompted_to_select_a_colour_for_emoji_markers():
+    menu = Menu(MockConsole(['1', '👍', '2', '😀', '1']))
+
+    config = menu.configure_game()
+
+    assert config.first_player.get_marker_colour() == constants.COLOURS['']
+    assert config.second_player.get_marker_colour() == constants.COLOURS['']
+
+
 def test_user_can_select_a_custom_emoji_marker():
-    menu = Menu(MockConsole(['1', '👍', '', '1', '', '', '1']))
+    menu = Menu(MockConsole(['1', '👍', '1', '', '', '1']))
 
     config = menu.configure_game()
 

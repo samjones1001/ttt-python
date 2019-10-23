@@ -1,3 +1,5 @@
+import re
+
 import ttt.constants as constants
 from ttt.game.game import Game
 from ttt.game.game_config import GameConfig
@@ -58,11 +60,13 @@ class Menu:
         self._select_marker_colour(player)
 
     def _select_marker_colour(self, player):
-        self._console.output_message(colour_message(player.get_name()))
-        colour_choice = self._console.get_validated_input(constants.COLOUR_REGEX, constants.MENU_ERROR)
-        self._game_config.set_marker_colour(player, colour_choice)
-        self._console.clear_output()
-
+        if not re.match(constants.EMOJI_REGEX, player.get_marker()):
+            self._console.output_message(colour_message(player.get_name()))
+            colour_choice = self._console.get_validated_input(constants.COLOUR_REGEX, constants.MENU_ERROR)
+            self._game_config.set_marker_colour(player, colour_choice)
+            self._console.clear_output()
+        else:
+            self._game_config.set_marker_colour(player, constants.NO_COLOUR)
 
     def _select_player_order(self, player_1, player_2):
         self._console.output_message(player_choice_message())
