@@ -65,17 +65,3 @@ def test_a_game_which_is_stopped_but_not_in_progress_does_not_get_saved():
     game_runner.stop()
 
     assert persister.save_call_count == 0
-
-
-def test_a_game_which_is_stopped_while_in_progress_is_saved():
-    io = MockConsoleIO([])
-    persister = MockPersister()
-    game_runner = GameRunner(Console(io))
-    player_1 = MockPlayer('player 1', 'O', [0])
-    player_2 = MockPlayer('player 2', 'X', [3])
-    config = Config(player_1, player_2, Game)
-
-    game_runner.run(config)
-    game_runner.stop()
-
-    assert persister.save_call_count == 1
