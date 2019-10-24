@@ -88,3 +88,8 @@ class MockGame():
 
     def play_turn(self, console):
         self.play_turn_call_count += 1
+
+
+class MockPersister():
+    def __init__(self):
+        self.save_call_count = 0

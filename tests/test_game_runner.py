@@ -1,6 +1,6 @@
 import pytest
 
-from tests.mocks import MockPlayer, MockConsole, MockGame, MockConsoleIO
+from tests.mocks import MockPlayer, MockConsole, MockGame, MockConsoleIO, MockPersister
 from ttt.console_ui.console import Console
 from ttt.game.game import Game
 from ttt.game.game_runner import GameRunner, Config
@@ -51,3 +51,31 @@ def test_game_ends_if_a_player_wins():
     game_runner.run(config)
 
     assert "player 1 won!" in io.last_output
+
+
+def test_a_game_which_is_stopped_but_not_in_progress_does_not_get_saved():
+    io = MockConsoleIO([])
+    persister = MockPersister()
+    game_runner = GameRunner(Console(io))
+    player_1 = MockPlayer('player 1', 'O', [0, 1, 2])
+    player_2 = MockPlayer('player 2', 'X', [3, 4])
+    config = Config(player_1, player_2, Game)
+
+    game_runner.run(config)
+    game_runner.stop()
+
+    assert persister.save_call_count == 0
+
+
+def test_a_game_which_is_stopped_while_in_progress_is_saved():
+    io = MockConsoleIO([])
+    persister = MockPersister()
+    game_runner = GameRunner(Console(io))
+    player_1 = MockPlayer('player 1', 'O', [0])
+    player_2 = MockPlayer('player 2', 'X', [3])
+    config = Config(player_1, player_2, Game)
+
+    game_runner.run(config)
+    game_runner.stop()
+
+    assert persister.save_call_count == 1
