@@ -44,7 +44,7 @@ class MockPlayer:
     def __init__(self, name, marker, inputs=[1]):
         self._name = name
         self._marker = marker
-        self._marker_colour = None
+        self._marker_colour = ""
         self.get_move_call_count = 0
         self._inputs = inputs
 
