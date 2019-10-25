@@ -1,6 +1,7 @@
 import re
 
 import ttt.constants as constants
+from ttt.game.board import Board
 from ttt.game.game import Game
 from ttt.game.game_config import GameConfig
 from ttt.messages import welcome_message, player_type_message, marker_message, player_choice_message, end_game_message, \
@@ -12,7 +13,7 @@ class Menu:
         self._console = console
         self._game_config = game_config(console)
 
-    def configure_game(self, game=Game):
+    def configure_game(self, game=Game, board=Board()):
         self._console.clear_output()
         self._console.output_message(welcome_message())
 
@@ -22,7 +23,7 @@ class Menu:
                                       player_1.get_marker())
 
         player_order = self._select_player_order(player_1, player_2)
-        return self._game_config.create_config_object(player_order[0], player_order[1], game)
+        return self._game_config.create_config_object(player_order[0], player_order[1], board)
 
     def play_again(self):
         self._console.output_message(play_again_message())
@@ -44,10 +45,10 @@ class Menu:
 
     def _select_player_type(self, name, marker):
         self._console.output_message(player_type_message(name))
-        user_choice = self._console.get_validated_input(constants.PLAYER_SELECTION_REGEX, constants.MENU_ERROR)
+        user_choice = constants.PLAYER_CHOICES[self._console.get_validated_input(constants.PLAYER_SELECTION_REGEX, constants.MENU_ERROR)]
         self._console.clear_output()
 
-        return self._game_config.select_player_type(user_choice, name, marker)
+        return self._game_config.create_player(user_choice, name, marker)
 
     def _select_marker(self, player, taken_marker):
         self._console.output_message(marker_message(player.get_name(), player.get_marker()))
