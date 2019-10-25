@@ -1,10 +1,12 @@
 import pytest
 
-from tests.mocks import MockPlayer, MockConsole, MockConsoleIO, MockPersister, MockGame
+from tests.mocks import MockPlayer, MockConsole, MockConsoleIO, MockPersisterIO, MockGame
 from ttt.console_ui.console import Console
 from ttt.game.board import Board
+from ttt.game.game import Game
 from ttt.game.game_runner import GameRunner, Config
 from ttt.messages import game_tied_message
+from ttt.persister.persister import Persister
 
 
 @pytest.fixture
@@ -56,14 +58,30 @@ def test_game_ends_if_a_player_wins():
 
 
 def test_a_game_which_is_stopped_but_not_in_progress_does_not_get_saved():
-    io = MockConsoleIO([])
-    persister = MockPersister()
-    game_runner = GameRunner(Console(io))
     player_1 = MockPlayer('player 1', 'O', [0, 1, 2])
     player_2 = MockPlayer('player 2', 'X', [3, 4])
+    io = MockConsoleIO([])
+    persister_io = MockPersisterIO()
+    persister = Persister(persister_io)
+    game_runner = GameRunner(Console(io), persister)
+
     config = Config(player_1, player_2, Board())
 
     game_runner.run(config)
     game_runner.stop()
 
-    assert persister.save_call_count == 0
+    assert persister_io.saved_data is None
+
+
+def test_a_game_which_is_stopped_while_in_progress_gets_saved():
+    player_1 = MockPlayer('player 1', 'O', [])
+    player_2 = MockPlayer('player 2', 'X', [])
+    io = MockConsoleIO([])
+    persister_io = MockPersisterIO()
+    persister = Persister(persister_io)
+    game_runner = GameRunner(Console(io), persister)
+    game_runner._game = Game(player_1, player_2)
+
+    game_runner.stop()
+
+    assert persister_io.saved_data is not None

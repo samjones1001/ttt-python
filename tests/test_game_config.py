@@ -1,7 +1,6 @@
 from tests.mocks import MockPlayer, MockConsole
 from ttt import constants
 from ttt.game.board import Board
-from ttt.game.game import Game
 from ttt.game.game_config import GameConfig
 
 

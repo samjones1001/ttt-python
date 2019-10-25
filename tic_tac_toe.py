@@ -19,7 +19,7 @@ def main():
 
     playing = True
     while playing:
-        config = menu.configure_game()
+        config = menu.start()
         runner.run(config)
         playing = menu.play_again()
 

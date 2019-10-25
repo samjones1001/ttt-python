@@ -91,11 +91,6 @@ class MockGame():
         self.play_turn_call_count += 1
 
 
-class MockPersister():
-    def __init__(self):
-        self.save_call_count = 0
-
-
 class MockPersisterIO():
     def __init__(self, saved_data=None):
         self.saved_data = saved_data

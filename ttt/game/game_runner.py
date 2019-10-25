@@ -1,6 +1,8 @@
+from ttt import constants
 from ttt.console_ui.console import Console
 from ttt.game.game import Game
 from ttt.game.game_config import Config
+from ttt.messages import game_saved_message
 from ttt.persister.persister import Persister
 
 
@@ -22,4 +24,5 @@ class GameRunner:
 
     def stop(self):
         if self._game and self._game.in_progress():
-            self._persister.save('./ttt/persister/data.txt', self._game)
+            save_id = self._persister.save(constants.SAVE_GAME_REPO_PATH, self._game)
+            self._console.output_message(game_saved_message(save_id))

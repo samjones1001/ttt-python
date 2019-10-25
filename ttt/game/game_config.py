@@ -1,4 +1,3 @@
-from collections.abc import Callable
 from attr import dataclass
 
 from ttt import constants
