@@ -22,4 +22,4 @@ class GameRunner:
 
     def stop(self):
         if self._game and self._game.in_progress():
-            self._persister.save(self._game)
+            self._persister.save('./ttt/persister/data.txt', self._game)
