@@ -81,7 +81,7 @@ def test_displays_the_board_and_a_message_on_game_over(players):
 
 
 def test_a_game_which_is_not_completed_remains_in_progress(game):
-    assert game.in_progress() is True
+    assert game.in_progress()
 
 
 def test_a_completed_game_is_no_longer_in_progress(players):
@@ -91,4 +91,4 @@ def test_a_completed_game_is_no_longer_in_progress(players):
     console = Console(console_io)
     game.game_over(console)
 
-    assert game.in_progress() is False
+    assert not game.in_progress()

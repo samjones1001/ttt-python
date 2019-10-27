@@ -10,11 +10,6 @@ from ttt.persister.persister import Persister
 
 
 @pytest.fixture
-def game_runner():
-    return GameRunner(MockConsole())
-
-
-@pytest.fixture
 def players():
     return [MockPlayer('player 1', 'O'), MockPlayer('player 2', 'X')]
 

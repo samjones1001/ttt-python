@@ -138,7 +138,7 @@ def test_user_can_choose_to_load_an_existing_game(json_data):
 
     assert config.first_player.get_name() == "Player 1"
     assert config.second_player.get_name() == "Player 2"
-    assert config.board.get_spaces() == ["X", "O", "X", "O", "5", "6", "7", "8", "9"]
+    assert config.board.get_spaces() == ['X', 'O', 'X', 'O', '5', '6', '7', '8', '9']
 
 
 def test_user_will_continue_to_be_prompted_if_they_provide_an_invalid_save_id(json_data):
@@ -152,7 +152,7 @@ def test_user_will_continue_to_be_prompted_if_they_provide_an_invalid_save_id(js
 
     assert config.first_player.get_name() == "Player 1"
     assert config.second_player.get_name() == "Player 2"
-    assert config.board.get_spaces() == ["X", "O", "X", "O", "5", "6", "7", "8", "9"]
+    assert config.board.get_spaces() == ['X', 'O', 'X', 'O', '5', '6', '7', '8', '9']
 
 
 def test_user_has_the_option_to_play_again():

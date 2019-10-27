@@ -62,6 +62,6 @@ def test_converts_a_json_representation_of_the_game_with_the_passed_id_into_a_co
 
     config = persister.load('myfile.txt', '1')
 
-    assert config.board.get_spaces() == ["X", "O", "X", "O", "5", "6", "7", "8", "9"]
+    assert config.board.get_spaces() == ['X', 'O', 'X', 'O', '5', '6', '7', '8', '9']
     assert config.first_player.get_name() == "Player 1"
     assert config.second_player.get_name() == "Player 2"
