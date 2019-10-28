@@ -26,6 +26,7 @@ EMOJI_ERROR = "Please enter a valid emoji name"
 SPACES_ERROR = "Please select from available spaces"
 NUMBER_ERROR = "Please enter a number"
 
+PLAY_NEW_GAME_CHAR = '1'
 CONFIRMATION_CHAR = 'y'
 
 NO_COLOUR = ''

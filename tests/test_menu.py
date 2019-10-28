@@ -1,3 +1,5 @@
+import json
+
 import pytest
 
 from tests.mocks import MockConsole, MockConsoleIO, MockPersisterIO
@@ -11,20 +13,24 @@ from ttt.players.simple_computer_player import SimpleComputerPlayer
 
 
 @pytest.fixture
-def json_data():
-    return '{"1": {"board": ["X", "O", "X", "O", "5", "6", "7", "8", "9"], ' \
-           '"current_player": {' \
-                '"name": "Player 1", ' \
-                '"type": "SimpleComputerPlayer", ' \
-                '"marker": "O", ' \
-                '"colour": ""' \
-           '}, ' \
-           '"opponent": {' \
-                '"name": "Player 2", ' \
-                '"type": "SimpleComputerPlayer", ' \
-                '"marker": "X", ' \
-                '"colour": ""' \
-           '}}}'
+def save_game_json_data():
+    save_data = {'1': {
+                    'board': ['X', 'O', 'X', 'O', '5', '6', '7', '8', '9'],
+                    'current_player': {
+                        'name': 'Player 1',
+                        'type': 'SimpleComputerPlayer',
+                        'marker': 'O',
+                        'colour': ''
+                    },
+                    'opponent': {
+                        'name': 'Player 2',
+                        'type': 'SimpleComputerPlayer',
+                        'marker': 'O',
+                        'colour': ''
+                    }
+                }}
+
+    return json.dumps(save_data)
 
 
 def test_user_can_select_player_types():
@@ -127,9 +133,9 @@ def test_console_is_cleared_after_each_message_is_printed():
     assert console.clear_output_call_count == len(inputs) - 1
 
 
-def test_user_can_choose_to_load_an_existing_game(json_data):
+def test_user_can_choose_to_load_an_existing_game(save_game_json_data):
     inputs = ['2', '1']
-    persister_io = MockPersisterIO(json_data)
+    persister_io = MockPersisterIO(save_game_json_data)
     persister = Persister(persister_io)
     console = MockConsole(inputs)
     menu = Menu(console, persister=persister)
@@ -141,9 +147,9 @@ def test_user_can_choose_to_load_an_existing_game(json_data):
     assert config.board.get_spaces() == ['X', 'O', 'X', 'O', '5', '6', '7', '8', '9']
 
 
-def test_user_will_continue_to_be_prompted_if_they_provide_an_invalid_save_id(json_data):
+def test_user_will_continue_to_be_prompted_if_they_provide_an_invalid_save_id(save_game_json_data):
     inputs = ['2', '2', '5', '1']
-    persister_io = MockPersisterIO(json_data)
+    persister_io = MockPersisterIO(save_game_json_data)
     persister = Persister(persister_io)
     console = MockConsole(inputs)
     menu = Menu(console, persister=persister)

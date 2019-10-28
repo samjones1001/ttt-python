@@ -20,7 +20,7 @@ class Menu:
         selection = self._console.get_validated_input(constants.TWO_OPTION_MENU_REGEX, constants.MENU_ERROR)
         self._console.clear_output()
 
-        return self._configure_game() if selection is '1' else self.load_game()
+        return self._configure_game() if selection is constants.PLAY_NEW_GAME_CHAR else self.load_game()
 
     def load_game(self):
         self._console.output_message(load_game_message())
