@@ -5,7 +5,7 @@ class Player(ABC):
     def __init__(self, name, marker):
         self._name = name
         self._marker = marker
-        self._marker_colour = None
+        self._marker_colour = ""
 
     def get_name(self):
         return self._name

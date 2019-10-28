@@ -8,7 +8,7 @@ def test_creates_a_player_when_provided_a_valid_type():
     console = Console(MockConsoleIO())
     factory = PlayerFactory()
 
-    player = factory.create('human', 'Player 1', 'X', console)
+    player = factory.create('HumanPlayer', 'Player 1', 'X', console)
 
     assert player is not None
 

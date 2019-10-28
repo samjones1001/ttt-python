@@ -78,3 +78,17 @@ def test_displays_the_board_and_a_message_on_game_over(players):
     game.game_over(console)
 
     assert console_io.print_output_call_count == 2
+
+
+def test_a_game_which_is_not_completed_remains_in_progress(game):
+    assert game.in_progress()
+
+
+def test_a_completed_game_is_no_longer_in_progress(players):
+    game_over_board = Board(['X', 'X', 'X', ' ', ' ', ' ', ' ', ' ', ' '])
+    game = Game(players[0], players[1], game_over_board)
+    console_io = MockConsoleIO()
+    console = Console(console_io)
+    game.game_over(console)
+
+    assert not game.in_progress()

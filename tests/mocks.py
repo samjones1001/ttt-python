@@ -44,7 +44,7 @@ class MockPlayer:
     def __init__(self, name, marker, inputs=[1]):
         self._name = name
         self._marker = marker
-        self._marker_colour = None
+        self._marker_colour = ""
         self.get_move_call_count = 0
         self._inputs = inputs
 
@@ -72,6 +72,7 @@ class MockGame():
     def __init__(self,
                  board_state=None,
                  available_spaces=None,
+                 board=None,
                  turns_remaining=1):
         self._available_spaces = available_spaces
         self._turns_remaining = turns_remaining
@@ -88,3 +89,14 @@ class MockGame():
 
     def play_turn(self, console):
         self.play_turn_call_count += 1
+
+
+class MockPersisterIO():
+    def __init__(self, saved_data=None):
+        self.saved_data = saved_data
+
+    def write(self, filename, data):
+        self.saved_data = data
+
+    def read(self, filename):
+        return self.saved_data

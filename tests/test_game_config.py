@@ -1,22 +1,22 @@
 from tests.mocks import MockPlayer, MockConsole
 from ttt import constants
-from ttt.game.game import Game
+from ttt.game.board import Board
 from ttt.game.game_config import GameConfig
 
 
-def test_creates_a_cofig_object_with_passed_attributes():
+def test_creates_a_config_object_with_passed_attributes():
     console = MockConsole()
     game_config = GameConfig(console)
 
     player_1 = MockPlayer('player 1', 'O')
     player_2 = MockPlayer('player 2', 'X')
-    game = Game
+    board = Board()
 
-    config_obj = game_config.create_config_object(player_1, player_2, game)
+    config_obj = game_config.create_config_object(player_1, player_2, board)
 
     assert config_obj.first_player == player_1
     assert config_obj.second_player == player_2
-    assert config_obj.game == game
+    assert config_obj.board == board
 
 
 def test_sets_the_colour_of_a_players_marker():

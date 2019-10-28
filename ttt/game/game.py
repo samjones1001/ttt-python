@@ -8,6 +8,7 @@ class Game:
         self._board = game_board
         self._current_player = first_player
         self._opponent = second_player
+        self._in_progress = True
         self._rules = rules
         self._previous_move = None
 
@@ -32,6 +33,9 @@ class Game:
     def available_spaces(self):
         return self._board.available_spaces()
 
+    def in_progress(self):
+        return self._in_progress
+
     def play_turn(self, console):
         console.render_board(self._board.get_spaces(), self._current_player, self._opponent)
         console.output_message(turn_start_message(self.get_current_player_name(),
@@ -47,6 +51,7 @@ class Game:
     def game_over(self, console):
         if self._rules.game_over(self._board, self.get_opponent_marker()):
             self._game_over_screen(console)
+            self._in_progress = False
             return True
         return False
 
