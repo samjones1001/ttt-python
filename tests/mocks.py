@@ -91,7 +91,7 @@ class MockGame():
         self.play_turn_call_count += 1
 
 
-class MockPersisterIO():
+class MockPersisterIO:
     def __init__(self, saved_data=None):
         self.saved_data = saved_data
 
@@ -100,3 +100,16 @@ class MockPersisterIO():
 
     def read(self, filename):
         return self.saved_data
+
+
+class MockSocket:
+    def __init__(self, host):
+        self.host = host
+        self.sent_data = None
+        self.received_data = None
+
+    def send_data(self, data):
+        self.sent_data = data
+
+    def receive_data(self):
+        return self.received_data
