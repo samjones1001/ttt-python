@@ -1,5 +1,5 @@
 from tests.mocks import MockSocket
-from ttt.networking.tttclient import TTTClient
+from ttt.networking.ttt_client import TTTClient
 
 
 def test_sets_up_a_socket_bound_to_the_passed_ip():

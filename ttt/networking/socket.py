@@ -6,6 +6,11 @@ class Socket:
         self._port = 65432
         self._socket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
 
+    def setup(self):
+        self._socket.bind((self._host, self._port))
+        self._socket.listen()
+        return self._socket.accept()
+
     def connect(self):
         self._socket.connect((self._host, self._port))
 
