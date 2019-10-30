@@ -8,6 +8,9 @@ class TTTClient:
     def set_socket(self, host, socket_type=Socket):
         self._socket = socket_type(host)
 
+    def connect(self):
+        self._socket.connect()
+
     def send_data(self, data):
         encoded_data = data.encode('utf-8')
         self._socket.send_data(encoded_data)

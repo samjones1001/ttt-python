@@ -73,6 +73,7 @@ class MockGame():
                  board_state=None,
                  available_spaces=None,
                  board=None,
+                 server=None,
                  turns_remaining=1):
         self._available_spaces = available_spaces
         self._turns_remaining = turns_remaining
@@ -89,6 +90,9 @@ class MockGame():
 
     def play_turn(self, console):
         self.play_turn_call_count += 1
+
+    def start_server(self, console):
+        pass
 
 
 class MockPersisterIO:
@@ -107,6 +111,15 @@ class MockSocket:
         self.host = host
         self.sent_data = None
         self.received_data = None
+        self.connect_call_count = 0
+        self.setup_call_count = 0
+
+    def connect(self):
+        self.connect_call_count += 1
+
+    def setup(self):
+        self.setup_call_count += 1
+        return(['connection', 'address'])
 
     def send_data(self, data):
         self.sent_data = data

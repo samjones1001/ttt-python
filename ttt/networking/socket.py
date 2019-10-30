@@ -3,7 +3,7 @@ import socket
 class Socket:
     def __init__(self, host):
         self._host = host
-        self._port = 65432
+        self._port = 8080
         self._socket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
 
     def setup(self):

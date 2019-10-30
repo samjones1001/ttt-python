@@ -4,6 +4,7 @@ PLAYER_2_NAME = 'Player 2'
 PLAYER_2_MARKER = 'X'
 
 HUMAN_PLAYER_STRING = 'HumanPlayer'
+NETWORKED_PLAYER_STRING = 'NetworkedHumanPlayer'
 SIMPLE_COMPUTER_STRING = 'SimpleComputerPlayer'
 SMART_COMPUTER_STRING = 'SmartComputerPlayer'
 
@@ -26,7 +27,8 @@ EMOJI_ERROR = "Please enter a valid emoji name"
 SPACES_ERROR = "Please select from available spaces"
 NUMBER_ERROR = "Please enter a number"
 
-PLAY_NEW_GAME_CHAR = '1'
+ONE_CHAR = '1'
+TWO_CHAR = '2'
 CONFIRMATION_CHAR = 'y'
 
 NO_COLOUR = ''

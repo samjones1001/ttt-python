@@ -77,6 +77,7 @@ def test_a_game_which_is_stopped_while_in_progress_gets_saved():
     game_runner = GameRunner(Console(io), persister)
     game_runner._game = Game(player_1, player_2)
 
+
     game_runner.stop()
 
     assert persister_io.saved_data is not None

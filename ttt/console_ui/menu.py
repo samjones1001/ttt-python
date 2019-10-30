@@ -4,7 +4,8 @@ import ttt.constants as constants
 from ttt.game.board import Board
 from ttt.game.game_config import GameConfig
 from ttt.messages import welcome_message, player_type_message, marker_message, player_choice_message, end_game_message, \
-    play_again_message, colour_message, load_game_message, load_game_error_message
+    play_again_message, colour_message, load_game_message, load_game_error_message, new_or_load_message
+from ttt.networking.ttt_server import TTTServer
 from ttt.persister.persister import Persister
 
 
@@ -13,14 +14,17 @@ class Menu:
         self._console = console
         self._game_config = game_config(console)
         self._persister = persister
+        self._server = None
 
     def start(self):
-        self._console.clear_output()
-        self._console.output_message(welcome_message())
-        selection = self._console.get_validated_input(constants.TWO_OPTION_MENU_REGEX, constants.MENU_ERROR)
-        self._console.clear_output()
+        selection = self._select_game_type()
+        if selection == constants.TWO_CHAR:
+            self._server = TTTServer()
+            return self._configure_game(is_networked=True)
 
-        return self._configure_game() if selection is constants.PLAY_NEW_GAME_CHAR else self.load_game()
+        self._console.output_message(new_or_load_message())
+        selection = self._console.get_validated_input(constants.TWO_OPTION_MENU_REGEX, constants.MENU_ERROR)
+        return self._configure_game() if selection is constants.ONE_CHAR else self.load_game()
 
     def load_game(self):
         self._console.output_message(load_game_message())
@@ -46,26 +50,38 @@ class Menu:
         self._console.clear_output()
         self._console.output_message(end_game_message())
 
-    def _configure_game(self, board=Board()):
-        player_1 = self._setup_player(constants.PLAYER_1_NAME, constants.PLAYER_1_MARKER, None)
+    def _select_game_type(self):
+        self._console.clear_output()
+        self._console.output_message(welcome_message())
+        selection = self._console.get_validated_input(constants.TWO_OPTION_MENU_REGEX, constants.MENU_ERROR)
+        self._console.clear_output()
+        return selection
+
+    def _configure_game(self, is_networked=False, board=Board()):
+        player_1 = self._setup_player(constants.PLAYER_1_NAME, constants.PLAYER_1_MARKER)
         player_2 = self._setup_player(constants.PLAYER_2_NAME,
-                                      self._game_config.select_default_marker(player_1.get_marker()),
-                                      player_1.get_marker())
+                                                self._game_config.select_default_marker(player_1.get_marker()),
+                                                player_1.get_marker(),
+                                                is_networked)
 
         player_order = self._select_player_order(player_1, player_2)
-        return self._game_config.create_config_object(player_order[0], player_order[1], board)
+        return self._game_config.create_config_object(player_order[0], player_order[1], board, self._server)
 
-    def _setup_player(self, name, marker, taken_marker):
-        player = self._select_player_type(name, marker)
+    def _setup_player(self, name, marker, taken_marker=None, is_networked_player=False):
+        player = self._select_player_type(name, marker, is_networked_player)
         self._select_marker(player, taken_marker)
         return player
 
-    def _select_player_type(self, name, marker):
-        self._console.output_message(player_type_message(name))
-        user_choice = constants.PLAYER_CHOICES[self._console.get_validated_input(constants.THREE_OPTION_MENU_REGEX, constants.MENU_ERROR)]
-        self._console.clear_output()
+    def _select_player_type(self, name, marker, is_networked_player):
+        if not is_networked_player:
+            self._console.output_message(player_type_message(name))
+            type = constants.PLAYER_CHOICES[self._console.get_validated_input(constants.THREE_OPTION_MENU_REGEX, constants.MENU_ERROR)]
+            self._console.clear_output()
+            return self._game_config.create_player(type, name, marker)
+        else:
+            type = constants.NETWORKED_PLAYER_STRING
+            return self._game_config.create_player(type, name, marker, self._server)
 
-        return self._game_config.create_player(user_choice, name, marker)
 
     def _select_marker(self, player, taken_marker):
         self._console.output_message(marker_message(player.get_name(), player.get_marker()))

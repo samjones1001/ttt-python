@@ -2,7 +2,8 @@ import pytest
 from ttt.game.game import Game
 from ttt.game.board import Board
 from ttt.console_ui.console import Console
-from tests.mocks import MockConsoleIO, MockConsole, MockPlayer
+from tests.mocks import MockConsoleIO, MockConsole, MockPlayer, MockSocket
+from ttt.networking.ttt_server import TTTServer
 
 
 @pytest.fixture
@@ -13,6 +14,17 @@ def players():
 @pytest.fixture
 def game(players):
     return Game(first_player=players[0], second_player=players[1])
+
+
+def test_starts_a_server_if_required(players):
+    console = Console(MockConsoleIO())
+    server = TTTServer(socket=MockSocket)
+    socket = server.get_socket()
+    game = Game(players[0], players[1], server=server)
+
+    game.start_server(console)
+
+    assert socket.setup_call_count == 1
 
 
 def test_current_player_switches_to_player_two_after_player_one_turn(game, players):

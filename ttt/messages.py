@@ -1,6 +1,12 @@
 def welcome_message():
     return "Welcome to Tic-Tac-Toe!\nQuit the game at any time using ctrl+c.\n\n" \
            "What would you like to do?\n\n" \
+           "(1) Play a local game\n(2) Play a neworked game\n"
+
+
+def new_or_load_message():
+    return "Welcome to Tic-Tac-Toe!\nQuit the game at any time using ctrl+c.\n\n" \
+           "What would you like to do?\n\n" \
            "(1) Play a new game\n(2) Load a game\n"
 
 
