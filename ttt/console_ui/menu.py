@@ -82,7 +82,6 @@ class Menu:
             type = constants.NETWORKED_PLAYER_STRING
             return self._game_config.create_player(type, name, marker, self._server)
 
-
     def _select_marker(self, player, taken_marker):
         self._console.output_message(marker_message(player.get_name(), player.get_marker()))
         marker_choice = self._console.get_validated_input(constants.MARKER_REGEX, constants.MARKER_ERROR)

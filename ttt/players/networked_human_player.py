@@ -7,4 +7,4 @@ class NetworkedHumanPlayer(Player):
         self._server = server
 
     def get_move(self, game):
-        return int(self._server.accept_input()) -1
+        return int(self._server.accept_input()) - 1

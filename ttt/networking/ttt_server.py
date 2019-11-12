@@ -15,3 +15,7 @@ class TTTServer:
 
     def accept_input(self):
         return self._connection.recv(1024).decode('utf-8')
+
+    def send_data(self, data):
+        encoded_data = data.encode('utf-8')
+        self._connection.send(encoded_data)

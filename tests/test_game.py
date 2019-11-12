@@ -16,17 +16,6 @@ def game(players):
     return Game(first_player=players[0], second_player=players[1])
 
 
-def test_starts_a_server_if_required(players):
-    console = Console(MockConsoleIO())
-    server = TTTServer(socket=MockSocket)
-    socket = server.get_socket()
-    game = Game(players[0], players[1], server=server)
-
-    game.start_server(console)
-
-    assert socket.setup_call_count == 1
-
-
 def test_current_player_switches_to_player_two_after_player_one_turn(game, players):
     current_player_after_switch = players[1].get_name()
     game.play_turn(Console(MockConsoleIO(['1'])))

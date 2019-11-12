@@ -4,14 +4,19 @@ from ttt.messages import turn_start_message, game_won_message, game_tied_message
 
 
 class Game:
-    def __init__(self, first_player, second_player, game_board=Board(), server=None, rules=GameRules()):
+    def __init__(self, first_player, second_player, game_board=Board(), rules=GameRules()):
         self._board = game_board
         self._current_player = first_player
         self._opponent = second_player
-        self._server = server
         self._in_progress = True
         self._rules = rules
         self._previous_move = None
+
+    def get_current_player(self):
+        return self._current_player
+
+    def get_opponent(self):
+        return self._opponent
 
     def get_current_player_name(self):
         return self._current_player.get_name()
@@ -31,18 +36,17 @@ class Game:
     def get_rules(self):
         return self._rules
 
+    def get_previous_move(self):
+        return self._previous_move
+
+    def all_spaces(self):
+        return self._board.get_spaces()
+
     def available_spaces(self):
         return self._board.available_spaces()
 
     def in_progress(self):
         return self._in_progress
-
-    def start_server(self, console):
-        if self._server:
-            console.output_message("awaiting connection...")
-            self._server.start()
-            console.output_message("connection received...")
-
 
     def play_turn(self, console):
         console.render_board(self._board.get_spaces(), self._current_player, self._opponent)

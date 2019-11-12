@@ -24,3 +24,12 @@ def tests_gets_a_byte_like_object_from_the_connection_and_decodes_it_to_a_string
     server.start()
 
     assert server.accept_input() == "Some input"
+
+
+def test_encodes_a_string_to_a_bytes_like_object_and_sends_it_to_the_connection():
+    server = TTTServer('127.0.0.1', socket=MockSocket)
+
+    server.start()
+    server.send_data('Some input')
+
+    assert server.get_socket().last_sent_data() == b'Some input'

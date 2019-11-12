@@ -107,11 +107,18 @@ class MockPersisterIO:
 
 
 class MockServer:
-    def __init__(self, input):
+    def __init__(self, input=''):
         self._input = input
+        self.sent_data = None
 
     def accept_input(self):
         return self._input
+
+    def start(self):
+        pass
+
+    def send_data(self, data):
+        self.sent_data = data
 
 
 class MockSocket:
@@ -122,24 +129,33 @@ class MockSocket:
         self.received_data = None
         self.connect_call_count = 0
         self.setup_call_count = 0
+        self.connection = None
 
     def connect(self):
         self.connect_call_count += 1
 
     def setup(self):
         self.setup_call_count += 1
-        return [MockConnection(self.input), 'address']
+        self.connection = MockConnection(self.input)
+        return [self.connection, 'address']
 
     def send_data(self, data):
         self.sent_data = data
 
     def receive_data(self):
-        return self.received_data
+        return self.received_data.pop(0)
+
+    def last_sent_data(self):
+        return self.connection.sent_data
 
 
 class MockConnection:
     def __init__(self, input=None):
         self._input = input
+        self.sent_data = None
 
     def recv(self, size=1024):
         return self._input
+
+    def send(self, data):
+        self.sent_data = data
