@@ -68,19 +68,23 @@ class Menu:
         return self._game_config.create_config_object(player_order[0], player_order[1], board, self._server)
 
     def _setup_player(self, name, marker, taken_marker=None, is_networked_player=False):
-        player = self._select_player_type(name, marker, is_networked_player)
+        player = self._set_player_type(name, marker, is_networked_player)
         self._select_marker(player, taken_marker)
         return player
 
-    def _select_player_type(self, name, marker, is_networked_player):
+    def _set_player_type(self, name, marker, is_networked_player):
         if not is_networked_player:
-            self._console.output_message(player_type_message(name))
-            type = constants.PLAYER_CHOICES[self._console.get_validated_input(constants.THREE_OPTION_MENU_REGEX, constants.MENU_ERROR)]
-            self._console.clear_output()
-            return self._game_config.create_player(type, name, marker)
+            return self._make_player_selection(name, marker)
         else:
             type = constants.NETWORKED_PLAYER_STRING
             return self._game_config.create_player(type, name, marker, self._server)
+
+    def _make_player_selection(self, name, marker):
+        self._console.output_message(player_type_message(name))
+        type = constants.PLAYER_CHOICES[self._console.get_validated_input(constants.THREE_OPTION_MENU_REGEX,
+                                                                          constants.MENU_ERROR)]
+        self._console.clear_output()
+        return self._game_config.create_player(type, name, marker)
 
     def _select_marker(self, player, taken_marker):
         self._console.output_message(marker_message(player.get_name(), player.get_marker()))

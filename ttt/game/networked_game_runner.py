@@ -1,7 +1,7 @@
 from ttt.console_ui.console import Console
 from ttt.game.game import Game
 from ttt.game.game_config import Config
-from ttt.messages import turn_start_message
+from ttt.messages import turn_start_message, awaiting_connection_message
 
 
 class NetworkedGameRunner:
@@ -16,7 +16,7 @@ class NetworkedGameRunner:
 
     def run(self, game_config: Config):
         self._server = game_config.server
-        print("Awaiting connection....")
+        self._console.output_message(awaiting_connection_message())
         self._server.start()
 
         self._game = self._game_class(game_config.first_player, game_config.second_player, game_config.board)

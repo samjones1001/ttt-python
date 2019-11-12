@@ -53,4 +53,8 @@ TYPE_KEY = 'type'
 MARKER_KEY = 'marker'
 COLOUR_KEY = 'colour'
 
+LOCAL_HOST_STRING = '127.0.0.1'
+PORT_STRING = '65432'
+ENCODING_STRING = 'utf-8'
+
 

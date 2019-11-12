@@ -91,9 +91,6 @@ class MockGame():
     def play_turn(self, console):
         self.play_turn_call_count += 1
 
-    def start_server(self, console):
-        pass
-
 
 class MockPersisterIO:
     def __init__(self, saved_data=None):
