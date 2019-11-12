@@ -22,7 +22,7 @@ class TTTClient:
     def play(self):
         while self._game_in_progress():
             self._display_game_state()
-            if self._turns % 2 != 0:
+            if self._is_client_turn():
                 move = self._console.get_validated_input(constants.DIGIT_REGEX, constants.NUMBER_ERROR)
                 self.send_data(move)
             self._turns += 1
@@ -40,6 +40,9 @@ class TTTClient:
         data = self._socket.receive_data().decode(constants.ENCODING_STRING)
         self._console.output_message(data)
         self._last_board_state = data.split('\n\n')[0]
+
+    def _is_client_turn(self):
+        return self._turns % 2 != 0
 
 
 
