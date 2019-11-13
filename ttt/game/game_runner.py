@@ -18,7 +18,6 @@ class GameRunner:
 
     def run(self, game_config: Config):
         self._game = self._game_class(game_config.first_player, game_config.second_player, game_config.board)
-
         while not self._game.game_over(self._console):
             self._game.play_turn(self._console)
 

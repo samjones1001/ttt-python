@@ -2,7 +2,8 @@ import pytest
 from ttt.game.game import Game
 from ttt.game.board import Board
 from ttt.console_ui.console import Console
-from tests.mocks import MockConsoleIO, MockConsole, MockPlayer
+from tests.mocks import MockConsoleIO, MockConsole, MockPlayer, MockSocket
+from ttt.networking.ttt_server import TTTServer
 
 
 @pytest.fixture

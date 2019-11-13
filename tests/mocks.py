@@ -73,6 +73,7 @@ class MockGame():
                  board_state=None,
                  available_spaces=None,
                  board=None,
+                 server=None,
                  turns_remaining=1):
         self._available_spaces = available_spaces
         self._turns_remaining = turns_remaining
@@ -91,7 +92,7 @@ class MockGame():
         self.play_turn_call_count += 1
 
 
-class MockPersisterIO():
+class MockPersisterIO:
     def __init__(self, saved_data=None):
         self.saved_data = saved_data
 
@@ -100,3 +101,58 @@ class MockPersisterIO():
 
     def read(self, filename):
         return self.saved_data
+
+
+class MockServer:
+    def __init__(self, input=''):
+        self._input = input
+        self.sent_data = None
+
+    def accept_input(self):
+        return self._input
+
+    def start(self):
+        pass
+
+    def send_data(self, data):
+        self.sent_data = data
+
+
+class MockSocket:
+    def __init__(self, host, input=None):
+        self.host = host
+        self.input = input
+        self.sent_data = None
+        self.received_data = None
+        self.connect_call_count = 0
+        self.setup_call_count = 0
+        self.connection = None
+
+    def connect(self):
+        self.connect_call_count += 1
+
+    def setup(self):
+        self.setup_call_count += 1
+        self.connection = MockConnection(self.input)
+        return [self.connection, 'address']
+
+    def send_data(self, data):
+        self.sent_data = data
+
+    def receive_data(self):
+        return self.received_data.pop(0)
+
+    def last_sent_data(self):
+        return self.connection.sent_data
+
+
+class MockConnection:
+    def __init__(self, input=None):
+        self._input = input
+        self.sent_data = None
+
+    def recv(self, size=1024):
+        return self._input
+
+    def send(self, data):
+        self.sent_data = data

@@ -12,6 +12,12 @@ class Game:
         self._rules = rules
         self._previous_move = None
 
+    def get_current_player(self):
+        return self._current_player
+
+    def get_opponent(self):
+        return self._opponent
+
     def get_current_player_name(self):
         return self._current_player.get_name()
 
@@ -29,6 +35,12 @@ class Game:
 
     def get_rules(self):
         return self._rules
+
+    def get_previous_move(self):
+        return self._previous_move
+
+    def all_spaces(self):
+        return self._board.get_spaces()
 
     def available_spaces(self):
         return self._board.available_spaces()

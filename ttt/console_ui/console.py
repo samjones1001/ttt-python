@@ -9,7 +9,7 @@ class Console:
 
     def render_board(self, board_state, player_1, player_2):
         self._io.clear()
-        board_string = self._build_board_output(board_state, player_1, player_2)
+        board_string = self.build_board_output(board_state, player_1, player_2)
         self._io.print_output(board_string)
 
     def get_validated_input(self, valid_inputs, error):
@@ -25,7 +25,7 @@ class Console:
     def clear_output(self):
         self._io.clear()
 
-    def _build_board_output(self, board_state, player_1, player_2):
+    def build_board_output(self, board_state, player_1, player_2):
         formatted_board_state = self._format_cells(board_state, player_1, player_2)
         lines = self._build_lines(formatted_board_state)
         dividers = self._build_dividers()
